@@ -5,7 +5,7 @@
 
 import numpy as np
 import pandas as pd
-import scanpy as sc
+"""import scanpy as sc
 import sklearn
 import tensorflow
 import keras
@@ -16,14 +16,14 @@ from sklearn.preprocessing import LabelEncoder
 from keras.models import Sequential
 from keras.layers import Dense
 from tensorflow.keras.utils import to_categorical
-import requests
+import requests"""
 import zipfile
 
 #Unzip files
 with zipfile.ZipFile("Dataset1_interdataset.zip", 'r') as zip_ref:
     zip_ref.extractall()
     
-labels =pd.read_csv("Labels.csv")
+"""labels =pd.read_csv("Labels.csv")
 label_encoder = LabelEncoder()
 labels = label_encoder.fit_transform(labels)
 data = sc.read_csv("Combined_10x_CelSeq2_5cl_data.csv")
@@ -50,4 +50,4 @@ X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.
 y_test = y_test.to_numpy()
 y_train = y_train.to_numpy()
 y_train = to_categorical(y_train, 5)
-y_test = to_categorical(y_test, 5)
+y_test = to_categorical(y_test, 5)"""
