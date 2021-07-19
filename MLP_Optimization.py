@@ -60,7 +60,7 @@ X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.
 #Neural network testing function
 def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation):
   counter = 0
-  MLP_results = open('MLP results.txt', 'w')
+  MLP_results = open('MLP_results.txt', 'w')
   for o in optimizer:
     for l in loss_function:
       for e in epoch:
