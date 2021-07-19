@@ -100,7 +100,7 @@ optimizer = ["Nadam"]
 epoch = [3]
 
 #loss_function = ["categorical_crossentropy","sparse_categorical_crossentropy", "poisson","kl_divergence"]
-loss_function = ["categorical_crossentropy","sparse_categorical_crossentropy"]
+loss_function = ["categorical_crossentropy", "poisson"]
 #consider using custom learning rate
 #may or may not get used. See impact on above results
 regularizer = ["l1", "l2", "l1_l2"]
