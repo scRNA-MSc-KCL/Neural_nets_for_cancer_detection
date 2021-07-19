@@ -72,7 +72,7 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
               for a2 in activation:
                 counter += 1
                 net.add(Dense(n2, activation = a2))
-                net.add(Dense(7, activation='softmax'))
+                net.add(Dense(5, activation='softmax'))   #change so it works for any lable number
                 net.compile(loss=l, optimizer=o)
                 history = net.fit(X_train, y_train,
                             validation_data=(X_test, y_test),
