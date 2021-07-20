@@ -103,12 +103,12 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
   return df
 
 #define variables
-Nodes = np.arange(100, 1000, 200)
+Nodes = np.arange(100, 1200, 400)
 activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 #activation = ["tanh"]
 optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
 #optimizer = ["Nadam"]
-epoch = [5, 10, 20]
+epoch = [5]
 #epoch = [5]
 
 loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
