@@ -59,8 +59,14 @@ X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.
 
 #Neural network testing function
 def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation):
-  counter = 0
-  MLP_results = open('MLP_results.txt', 'w')
+  optimizer_list = []
+  loss_function_list = []
+  epoch_list = []
+  node_1_length_list = []
+  activation_layer_1_list = []
+  node_2_length_list = []
+  activation_layer_2_list = []
+  percentage_misclassified = []
   for o in optimizer:
     for l in loss_function:
       for e in epoch:
@@ -70,26 +76,28 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
             net.add(Dense(n1, activation = a1, input_shape = (data.n_vars,)))
             for n2 in Nodes:
               for a2 in activation:
-                counter += 1
+                optimizer_list.append(o)
+                loss_function_list.append(l)
+                activation_layer_1_list.append(a1)
+                activation_layer_2_list.append(a2)
+                epoch_list.append(e)
+                node_1_length_list.append(n1)
+                node_2_length_list.append(n2)
                 net.add(Dense(n2, activation = a2))
-                net.add(Dense(5, activation='softmax'))   #change so it works for any lable number
+                net.add(Dense(5, activation='softmax'))
                 net.compile(loss=l, optimizer=o)
                 history = net.fit(X_train, y_train,
                             validation_data=(X_test, y_test),
                             epochs=e,batch_size=25)
                 outputs = net.predict(X_test)
                 labels_predicted= np.argmax(outputs, axis=1)
-                misclassified =  np.sum(labels_predicted != y_test)
-                MLP_results.write("counter {}".format(counter))
-                MLP_results.write("\n")
-                MLP_results.write("activation input later = {}, nodes in input layer = {}, nodes in output layer = {}, activation output later = {}".format(a1, n1, n2, a2))
-                MLP_results.write("\n")
-                MLP_results.write('Percentage misclassified = {}'.format(100*misclassified/y_test.size))
-                MLP_results.write("\n")
-                MLP_results.write("optimizer = {}, loss function = {}, epoch = {}".format(o, l, e))
-                MLP_results.write("\n")
-                MLP_results.write("\n")
-    MLP_results.close()
+                y_test= np.argmax(y_test, axis=1)
+                misclassified =  (np.sum(labels_predicted != y_test)/(len(y_test)))*100
+                percentage_misclassified.append(misclassified)
+  print(percentage_misclassified)
+  df = pd.DataFrame(list(zip(optimizer_list, loss_function_list, epoch_list, node_1_length_list, activation_layer_1_list, node_2_length_list, activation_layer_2_list, percentage_misclassified)),
+                        columns =['optimizer', 'loss_function', "epochs", "node1_length", "activation_layer1", "node2_length" , "activation_layer2", "perceptage_misclassified"])
+  return df
 
 #define variables
 Nodes = np.arange(100, 1000, 200)
@@ -105,4 +113,5 @@ loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
 regularizer = ["l1", "l2", "l1_l2"]
 kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "ones", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
 
-MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation)
+results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation)
+results_dataframe.to_csv("MLP_Optimization_results_DS1.csv")
