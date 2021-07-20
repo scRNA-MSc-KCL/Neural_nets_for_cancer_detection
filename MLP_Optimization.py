@@ -2,7 +2,6 @@
 
 #step 1; set it up so it works with dataset 2
 #step2; set it up so it works with any dataset and including functions. 
-pip install scanpy
 import numpy as np
 import pandas as pd
 import scanpy as sc
