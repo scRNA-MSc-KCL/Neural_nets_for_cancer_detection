@@ -1,4 +1,0 @@
-,optimizer,loss_function,epochs,node1_length,activation_layer1,node2_length,activation_layer2,perceptage_misclassified
-0,Nadam,categorical_crossentropy,5,500,tanh,500,tanh,0.0
-1,Nadam,poisson,5,500,tanh,500,tanh,0.0
-2,Nadam,kl_divergence,5,500,tanh,500,tanh,0.0
