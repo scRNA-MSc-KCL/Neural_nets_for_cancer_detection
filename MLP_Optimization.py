@@ -33,7 +33,6 @@ import csv
 with zipfile.ZipFile("Dataset1_interdataset.zip", 'r') as zip_ref:
     zip_ref.extractall()
 
-#read lables
 labels =pd.read_csv("Labels.csv")
 label_encoder = LabelEncoder()
 labels = label_encoder.fit_transform(labels)
