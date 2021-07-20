@@ -95,8 +95,8 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
                             epochs=e,batch_size=25)
                 outputs = net.predict(X_test)
                 labels_predicted= np.argmax(outputs, axis=1)
-                y_test= np.argmax(y_test, axis=1)
-                misclassified =  (np.sum(labels_predicted != y_test)/(len(y_test)))*100
+                y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
+                misclassified =  (np.sum(labels_predicted != y_test_decoded)/(len(y_test_decoded)))*100
                 percentage_misclassified.append(misclassified)
   print(percentage_misclassified)
   df = pd.DataFrame(list(zip(optimizer_list, loss_function_list, epoch_list, node_1_length_list, activation_layer_1_list, node_2_length_list, activation_layer_2_list, percentage_misclassified)),
