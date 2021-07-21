@@ -4,7 +4,6 @@
 #step2; set it up so it works with any dataset and including functions. 
 import numpy as np
 import pandas as pd
-import scanpy as sc
 import sklearn
 import tensorflow
 import keras
@@ -18,6 +17,7 @@ from tensorflow.keras.utils import to_categorical
 import requests
 import zipfile
 import csv
+import scanpy as sc
 
 
 #Create output file
