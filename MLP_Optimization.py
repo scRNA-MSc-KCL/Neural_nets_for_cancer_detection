@@ -27,6 +27,7 @@ import scanpy as sc
 
 #f = open("myfile.txt", "r")
 #print(f.read())
+counter = 0
 
 #Unzip files
 with zipfile.ZipFile("Dataset1_interdataset.zip", 'r') as zip_ref:
@@ -61,7 +62,7 @@ y_test = to_categorical(y_test, num_lab)
 
 
 #Neural network testing function
-def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation):
+def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter):
   optimizer_list = []
   loss_function_list = []
   epoch_list = []
@@ -79,6 +80,7 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
             net.add(Dense(n1, activation = a1, input_shape = (data.n_vars,)))
             for n2 in Nodes:
               for a2 in activation:
+                counter += 1
                 optimizer_list.append(o)
                 loss_function_list.append(l)
                 activation_layer_1_list.append(a1)
@@ -97,13 +99,14 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
                 y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
                 misclassified =  (np.sum(labels_predicted != y_test_decoded)/(len(y_test_decoded)))*100
                 percentage_misclassified.append(misclassified)
+                print("model number", counter)
   print(percentage_misclassified)
   df = pd.DataFrame(list(zip(optimizer_list, loss_function_list, epoch_list, node_1_length_list, activation_layer_1_list, node_2_length_list, activation_layer_2_list, percentage_misclassified)),
                         columns =['optimizer', 'loss_function', "epochs", "node1_length", "activation_layer1", "node2_length" , "activation_layer2", "perceptage_misclassified"])
   return df
 
 #define variables
-Nodes = np.arange(100, 1000, 200)
+Nodes = np.arange(10, 2010, 500)
 activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 #activation = ["tanh"]
 optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
