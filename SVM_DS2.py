@@ -40,8 +40,8 @@ X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.
 
 # build classifier
                                                     
-y_test = y_test.to_numpy()
-y_train = y_train.to_numpy()
+#y_test = y_test.to_numpy()
+#y_train = y_train.to_numpy()
 Classifier = sklearn.svm.SVC(kernel = "linear")
 Classifier.fit(X_train, y_train)
 print("the classification result with the current settings is ",Classifier.score(X_test, y_test))
