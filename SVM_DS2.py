@@ -38,12 +38,13 @@ print("The shape after performing pca is {}".format(data.shape))
 #create training and test sets
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
 
+SVM_list = ["linear", "poly", "rbf", "sigmoid"]
+
 # build classifier
                                                     
-#y_test = y_test.to_numpy()
-#y_train = y_train.to_numpy()
-Classifier = sklearn.svm.SVC(kernel = "linear")
-Classifier.fit(X_train, y_train)
-print("the classification result with the current settings is ",Classifier.score(X_test, y_test))
+for i in SVM_list:
+  Classifier = sklearn.svm.SVC(kernel = i)
+  Classifier.fit(X_train, y_train)
+  print("the classification result with the current settings and a {} kernal is {}".format(i, Classifier.score(X_test, y_test)))
 
 
