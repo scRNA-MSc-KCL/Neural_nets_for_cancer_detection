@@ -11,8 +11,9 @@ import zipfile
 #Unzip files
 import gzip
 with gzip.open('GSE131907_Lung_Cancer_normalized_log2TPM_matrix.txt.gz', 'rb') as f:
-    file = pd.read_csv(f)
+    read_file = pd.read_csv(f)
+    read_file.to_csv('GSE131907_Lung_Cancer_normalized_log2TPM_matrix.csv')
+
     
-print(file.head)
-    
+
  
