@@ -9,10 +9,9 @@ import zipfile
 
 
 #Unzip files
-#import gzip
-#with gzip.open('GSE131907_Lung_Cancer_raw_UMI_matrix.txt.gz', 'rb') as f:
-#    read_file = pd.read_csv(f)
-#    read_file.to_csv('GSE131907_Lung_Cancer_raw_UMI_matrix.csv')
+import gzip
+with gzip.open('GSE131907_Lung_Cancer_raw_UMI_matrix.txt.gz', 'rb') as f:
+    read_file.to_csv(f)
 
     
 l = sc.read_csv("GSE131907_Lung_Cancer_raw_UMI_matrix.csv")
