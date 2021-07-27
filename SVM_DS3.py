@@ -9,5 +9,6 @@ import zipfile
 
 
 #Unzip files
-with zipfile.ZipFile("index.html?acc=GSE131907", 'r') as zip_ref:
-    zip_ref.extractall()
+import gzip
+with gzip.open('GSE131907_Lung_Cancer_normalized_log2TPM_matrix.txt.gz', 'rb') as f:
+    file_content = f.read()
