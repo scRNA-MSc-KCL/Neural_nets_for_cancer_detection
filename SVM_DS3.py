@@ -6,17 +6,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 import anndata
 import zipfile
-
+import gzip
+import shutil
 
 #Unzip files
-import gzip
 
-f_in = open('GSE131907_Lung_Cancer_raw_UMI_matrix.txt')
-f_out = gzip.open('GSE131907_Lung_Cancer_raw_UMI_matrix.txt.gz', 'wb')
-f_out.writelines(f_in)
-f_out.close()
-f_in.close()
-
+with gzip.open('GSE131907_Lung_Cancer_raw_UMI_matrix.txt.gz', 'rb') as f_in:
+    with open('GSE131907_Lung_Cancer_raw_UMI_matrix.txt', 'wb') as f_out:
+        shutil.copyfileobj(f_in, f_out)
     
 #import csv
 
