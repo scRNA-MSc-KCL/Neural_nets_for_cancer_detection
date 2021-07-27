@@ -10,10 +10,20 @@ import zipfile
 
 #Unzip files
 import gzip
-with gzip.open('GSE131907_Lung_Cancer_raw_UMI_matrix.txt.gz', 'rb') as f:
-    read_file.to_csv(f)
+
+f_in = open('GSE131907_Lung_Cancer_raw_UMI_matrix.txt')
+f_out = gzip.open('GSE131907_Lung_Cancer_raw_UMI_matrix.txt.gz', 'wb')
+f_out.writelines(f_in)
+f_out.close()
+f_in.close()
 
     
-l = sc.read_csv("GSE131907_Lung_Cancer_raw_UMI_matrix.csv")
-print(l)
- 
+#import csv
+
+#txt_file = r"mytxt.txt"
+#csv_file = r"mycsv.csv"
+
+#in_txt = csv.reader(open(txt_file, "rb"), delimiter = '\t')
+#out_csv = csv.writer(open(csv_file, 'wb'))
+
+#out_csv.writerows(in_txt)
