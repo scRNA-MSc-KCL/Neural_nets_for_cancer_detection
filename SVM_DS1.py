@@ -34,9 +34,6 @@ data = data[:, data.var.highly_variable]
 #create training and test sets
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
 
-#make labels for neural network catagorical
-y_train = to_categorical(y_train, num_lab)
-y_test = to_categorical(y_test, num_lab)
                                                     
 #create training and test sets
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
