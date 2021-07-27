@@ -4,6 +4,7 @@ import numpy as np
 import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+from sklearn.svm import SVC
 
 
 #Unzip files
