@@ -4,7 +4,6 @@ import numpy as np
 import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-import anndata
 
 
 #Unzip files
@@ -30,10 +29,6 @@ sc.pp.log1p(data)
 #select highly variable genes
 sc.pp.highly_variable_genes(data, n_top_genes=1000)
 data = data[:, data.var.highly_variable]
-
-#create training and test sets
-X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
-
                                                     
 #create training and test sets
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
