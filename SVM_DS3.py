@@ -17,10 +17,10 @@ import shutil
     
 import csv
 
-txt_file = r"GSE131907_Lung_Cancer_raw_UMI_matrix.txt"
-csv_file = r"GSE131907_Lung_Cancer_raw_UMI_matrix.csv"
+txt_file = "GSE131907_Lung_Cancer_raw_UMI_matrix.txt"
+csv_file = "GSE131907_Lung_Cancer_raw_UMI_matrix.csv"
 
-in_txt = csv.reader(open(txt_file, "rb"), delimiter = '\t')
-out_csv = csv.writer(open(csv_file, 'wb'))
+in_txt = csv.reader(open(txt_file, "r"), delimiter = '\t')
+out_csv = csv.writer(open(csv_file, 'w'))
 
 out_csv.writerows(in_txt)
