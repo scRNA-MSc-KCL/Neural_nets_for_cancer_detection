@@ -25,5 +25,5 @@ import shutil
 
 #out_csv.writerows(in_txt)
 
-l = sc.read_csv(""GSE131907_Lung_Cancer_raw_UMI_matrix.csv")
+l = sc.read_csv("GSE131907_Lung_Cancer_raw_UMI_matrix.csv")
 print(l)
