@@ -76,7 +76,7 @@ y_test = to_categorical(y_test, num_lab)
 
 
 #Neural network testing function
-def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter):
+def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab):
   optimizer_list = []
   loss_function_list = []
   epoch_list = []
@@ -103,7 +103,7 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
                 node_1_length_list.append(n1)
                 node_2_length_list.append(n2)
                 net.add(Dense(n2, activation = a2))
-                net.add(Dense(5, activation='softmax'))
+                net.add(Dense(num_lab, activation='softmax'))
                 net.compile(loss=l, optimizer=o)
                 history = net.fit(X_train, y_train,
                             validation_data=(X_test, y_test),
@@ -136,7 +136,7 @@ loss_function = ["categorical_crossentropy"]
 regularizer = ["l1", "l2", "l1_l2"]
 kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "ones", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
 
-results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter)
+results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab)
 if args.path == 1:
   results_dataframe.to_csv("MLP_Optimization_results_DS1_test.csv")
 if args.path ==2:
