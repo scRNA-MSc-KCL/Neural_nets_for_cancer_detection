@@ -121,10 +121,10 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
 #define variables
 #Nodes = np.arange(500, 500, 0)
 Nodes = [500]
-activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
-#activation = ["tanh"]
-optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
-#optimizer = ["Nadam"]
+#activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
+activation = ["tanh"]
+#optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
+optimizer = ["Nadam"]
 epoch = [3]
 #epoch = [5]
 
@@ -137,6 +137,6 @@ kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "
 
 results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter)
 if args.path == 1:
-  results_dataframe.to_csv("MLP_Optimization_results_DS1.csv")
+  results_dataframe.to_csv("MLP_Optimization_results_DS1_test.csv")
 if args.path ==2:
-  results_dataframe.to_csv("MLP_Optimization_results_DS1.csv")
+  results_dataframe.to_csv("MLP_Optimization_results_DS2_test.csv")
