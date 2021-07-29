@@ -1,0 +1,5 @@
+,optimizer,loss_function,epochs,node1_length,activation_layer1,node2_length,activation_layer2,perceptage_misclassified
+0,Adam,categorical_crossentropy,10,200,sigmoid,200,sigmoid,6.213355668925607
+1,Adam,categorical_crossentropy,10,200,sigmoid,600,sigmoid,6.403715830351024
+2,Adam,categorical_crossentropy,10,600,sigmoid,200,sigmoid,7.233686134165842
+3,Adam,categorical_crossentropy,10,600,sigmoid,600,sigmoid,9.487550445442777
