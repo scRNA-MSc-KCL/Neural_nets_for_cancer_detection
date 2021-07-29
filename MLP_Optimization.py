@@ -18,31 +18,40 @@ import requests
 import zipfile
 import csv
 import scanpy as sc
+import argparse
 
 
-#Create output file
-#f = open("myfile.txt", "w")
-#f.write("Interdataset testing!")
-#f.close()
+parser = argparse.ArgumentParser(description='Select dataset')
+parser.add_argument('path', type = int)
 
-#f = open("myfile.txt", "r")
-#print(f.read())
+args = parser.parse_args()
+if args.path = 1:
+  labels =pd.read_csv("Labels.csv")
+  data = pd.read_csv("Combined_10x_CelSeq2_5cl_data.csv")
+if args.path = 2:
+  data = sc.read_csv("human_cell_atlas/krasnow_hlca_10x_UMIs.csv") #26485 x 65662
+  data = anndata.AnnData.transpose(data)
+  #labels = pd.read_csv("human_cell_atlas/krasnow_hlca_facs_metadata.csv") #9409 x 141
+  ##data = sc.read_csv("human_cell_atlas/krasnow_hlca_facs_counts.csv")  #58683 x 9409
+  labels = pd.read_csv("human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
+  labels = labels["free_annotation"]
+
 counter = 0
 
-#Unzip files
-with zipfile.ZipFile("Dataset1_interdataset.zip", 'r') as zip_ref:
-    zip_ref.extractall()
+#Unzip files - for dataset 1
+#with zipfile.ZipFile("Dataset1_interdataset.zip", 'r') as zip_ref:
+#    zip_ref.extractall()
 
-labels =pd.read_csv("Labels.csv")
 label_encoder = LabelEncoder()
 labels = label_encoder.fit_transform(labels)
 labels = pd.Series(labels)
 num_lab = len(pd.unique(labels))
+print("number of labels", num_lab)
 labels = labels.to_numpy()
 
 
 #read data
-data = sc.read_csv("Combined_10x_CelSeq2_5cl_data.csv")
+print("The original shape of the data is {}".format(data))
 
 #normalize data
 sc.pp.normalize_total(data, target_sum=10000)
@@ -52,6 +61,10 @@ sc.pp.log1p(data)
 #select highly variable genes
 sc.pp.highly_variable_genes(data, n_top_genes=1000)
 data = data[:, data.var.highly_variable]
+
+print("The original shape of the data is {}".format(data.shape))
+sc.tl.pca(data, svd_solver='arpack')
+print("The shape after performing pca is {}".format(data.shape))
 
 #create training and test sets
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
@@ -123,4 +136,7 @@ regularizer = ["l1", "l2", "l1_l2"]
 kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "ones", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
 
 results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter)
-results_dataframe.to_csv("MLP_Optimization_results_DS1.csv")
+if args.path == 1:
+  results_dataframe.to_csv("MLP_Optimization_results_DS1.csv")
+if args.path ==2:
+  results_dataframe.to_csv("MLP_Optimization_results_DS1.csv")
