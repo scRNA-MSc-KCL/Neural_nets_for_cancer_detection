@@ -1,14 +1,7 @@
 import numpy as np
 import pandas as pd
-import sklearn
-import tensorflow
-import keras
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-import tensorflow as tf
 from sklearn.preprocessing import LabelEncoder
-from keras.models import Sequential
-from keras.layers import Dense
 from tensorflow.keras.utils import to_categorical
 import requests
 import zipfile
@@ -66,13 +59,13 @@ sc.pp.highly_variable_genes(data, n_top_genes=1000)
 data = data[:, data.var.highly_variable]
 
 print("The original shape of the data is {}".format(data.shape))
-sc.tl.pca(data, svd_solver='arpack')
-print("The shape after performing pca is {}".format(data.shape))
+#sc.tl.pca(data, svd_solver='arpack')
+#print("The shape after performing pca is {}".format(data.shape))
 
-sc.pp.neighbors(data, n_neighbors=10, n_pcs=40)
-print("The shape after doing neightbours things is {}".format(data.shape))
-sc.tl.leiden(data)
-print("The shape after doing leiden thing is {}".format(data.shape))
+#sc.pp.neighbors(data, n_neighbors=10, n_pcs=40)
+#print("The shape after doing neightbours things is {}".format(data.shape))
+#sc.tl.leiden(data)
+#print("The shape after doing leiden thing is {}".format(data.shape))
 
 
 data.write("adata_obj_{}".format(args.path))
