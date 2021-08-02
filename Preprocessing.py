@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
-from tensorflow.keras.utils import to_categorical
 import requests
 import zipfile
 import csv
@@ -70,5 +69,4 @@ print("The final shape of the data is {}".format(data.shape))
 
 data.write("adata_obj_{}".format(args.path))
 np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
-labels.to_csv("labels_{}.csv".format(args.path))
 
