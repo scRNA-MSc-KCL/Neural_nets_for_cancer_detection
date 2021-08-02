@@ -18,7 +18,7 @@ import argparse
 import anndata
 
 
-"""parser = argparse.ArgumentParser(description='Select dataset')
+parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 
 args = parser.parse_args()
@@ -31,7 +31,7 @@ if args.path == 2:
   #labels = pd.read_csv("human_cell_atlas/krasnow_hlca_facs_metadata.csv") #9409 x 141
   ##data = sc.read_csv("human_cell_atlas/krasnow_hlca_facs_counts.csv")  #58683 x 9409
   labels = pd.read_csv("human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
-  labels = labels["free_annotation"]"""
+  labels = labels["free_annotation"]
 if args.path == 3:
   #Unzip files - for dataset 1
   with zipfile.ZipFile("GSE131907_Lung_Cancer_cell_annotation.txt.gz", 'r') as zip_ref:
