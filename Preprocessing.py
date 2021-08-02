@@ -35,8 +35,6 @@ if args.path == 2:
   labels = labels["free_annotation"]
 if args.path == 3:
   #Unzip files - for dataset 3
-  filename = 'GSE131907_Lung_Cancer_cell_annotation.txt.gz'
-  os.system('gunzip ' + filename)
   labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
   data = sc.read_csv("GSE131907_Lung_Cancer_raw_UMI_matrix.csv")
 
