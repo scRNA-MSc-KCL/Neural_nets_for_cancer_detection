@@ -37,12 +37,11 @@ if args.path == 3:
   #Unzip files - for dataset 3
   filename = 'GSE131907_Lung_Cancer_cell_annotation.txt.gz'
   os.system('gunzip ' + filename)
-  print('GSE131907_Lung_Cancer_cell_annotation.txt')
   labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
-  print(labels.head)
+  data = sc.read_csv("GSE131907_Lung_Cancer_raw_UMI_matrix.csv")
 
 
-"""counter = 0
+counter = 0
 
 #Unzip files - for dataset 1
 #with zipfile.ZipFile("Dataset1_interdataset.zip", 'r') as zip_ref:
@@ -70,4 +69,14 @@ data = data[:, data.var.highly_variable]
 
 print("The original shape of the data is {}".format(data.shape))
 sc.tl.pca(data, svd_solver='arpack')
-print("The shape after performing pca is {}".format(data.shape))"""
+print("The shape after performing pca is {}".format(data.shape))
+
+sc.pp.neighbors(data, n_neighbors=10, n_pcs=40)
+print("The shape after doing neightbours things is {}".format(data.shape))
+sc.tl.leiden(data)
+print("The shape after doing leiden thing is {}".format(data.shape))
+
+
+data.write("adata_obj_{}".format(args.path))
+labels.to_csv("labels_{}.csv.format(args.path"))
+
