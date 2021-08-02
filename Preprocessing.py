@@ -29,6 +29,7 @@ if args.path == 3:
   #Unzip files - for dataset 3
   labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
   data = sc.read_csv("GSE131907_Lung_Cancer_raw_UMI_matrix.csv")
+  labels = labels["Cell_type"]
 
 #Unzip files - for dataset 1
 #with zipfile.ZipFile("Dataset1_interdataset.zip", 'r') as zip_ref:
