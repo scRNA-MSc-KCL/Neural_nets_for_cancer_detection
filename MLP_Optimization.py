@@ -122,8 +122,8 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
 #define variables
 #Nodes = np.arange(500, 500, 0)
 Nodes = [500]
-#activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
-activation = ["tanh"]
+activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
+#activation = ["tanh"]
 optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
 #optimizer = ["Nadam"]
 epoch = [3]
