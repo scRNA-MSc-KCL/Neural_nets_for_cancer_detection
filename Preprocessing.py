@@ -34,12 +34,12 @@ if args.path == 2:
   labels = pd.read_csv("human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
   labels = labels["free_annotation"]
 if args.path == 3:
-  print('GSE131907_Lung_Cancer_cell_annotation.csv')
-  labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.csv", sep = "\t")
-  print(labels.head)
   #Unzip files - for dataset 3
-  #filename = 'GSE131907_Lung_Cancer_cell_annotation.txt.gz'
-  #os.system('gunzip ' + filename)
+  filename = 'GSE131907_Lung_Cancer_cell_annotation.txt.gz'
+  os.system('gunzip ' + filename)
+  print('GSE131907_Lung_Cancer_cell_annotation.txt')
+  labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
+  print(labels.head)
 
 
 """counter = 0
