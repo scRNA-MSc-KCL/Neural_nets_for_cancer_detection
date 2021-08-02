@@ -16,6 +16,7 @@ import csv
 import scanpy as sc
 import argparse
 import anndata
+import os
 
 
 parser = argparse.ArgumentParser(description='Select dataset')
@@ -34,8 +35,8 @@ if args.path == 2:
   labels = labels["free_annotation"]
 if args.path == 3:
   #Unzip files - for dataset 1
-  with zipfile.ZipFile("GSE131907_Lung_Cancer_cell_annotation.txt.gz", 'r') as zip_ref:
-    zip_ref.extractall()
+  filename = 'GSE131907_Lung_Cancer_cell_annotation.txt.gz'
+  os.system('gunzip ' + filename)
 
 
 """counter = 0
