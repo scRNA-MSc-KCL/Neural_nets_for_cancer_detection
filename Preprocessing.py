@@ -78,5 +78,5 @@ print("The shape after doing leiden thing is {}".format(data.shape))
 
 
 data.write("adata_obj_{}".format(args.path))
-labels.to_csv("labels_{}.csv.format(args.path"))
+labels.to_csv("labels_{}.csv".format(args.path))
 
