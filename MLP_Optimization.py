@@ -28,7 +28,7 @@ parser.add_argument('path', type = int)
 args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("Labels.csv")
-  data = pd.read_csv("Combined_10x_CelSeq2_5cl_data.csv")
+  data = sc.read_csv("Combined_10x_CelSeq2_5cl_data.csv")
 if args.path == 2:
   data = sc.read_csv("human_cell_atlas/krasnow_hlca_10x_UMIs.csv") #26485 x 65662
   data = anndata.AnnData.transpose(data)
