@@ -38,7 +38,7 @@ if args.path == 3:
   l = sc.read_csv("GSE131907_Lung_Cancer_normalized_log2TPM_matrix.csv")
   print(l)
   labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
-  data = sc.read_csv("GSE131907_Lung_Cancer_raw_UMI_matrix.csv")
+  data = sc.read_csv("GSE131907_Lung_Cancer_normalized_log2TPM_matrix.csv")
   labels = labels["Cell_type"]
 
 #Unzip files - for dataset 1
