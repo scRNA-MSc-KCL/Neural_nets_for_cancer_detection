@@ -27,16 +27,17 @@ if args.path == 2:
   labels = labels["free_annotation"]
 if args.path == 3:
   #Unzip files - for dataset 3
-  #filename = 'GSE131907_Lung_Cancer_normalized_log2TPM_matrix.txt.gz'
-  #os.system('gunzip ' + filename)
+  filename = 'GSE131907_Lung_Cancer_raw_UMI_matrix.txt.gz'
+  os.system('gunzip ' + filename)
   #Unzip files
-  txt_file = "GSE131907_Lung_Cancer_normalized_log2TPM_matrix.txt"
-  csv_file = "GSE131907_Lung_Cancer_normalized_log2TPM_matrix.csv"
+  txt_file = "GSE131907_Lung_Cancer_raw_UMI_matrix.txt"
+  csv_file = "GSE131907_Lung_Cancer_raw_UMI_matrix.csv"
   in_txt = csv.reader(open(txt_file, "r"), delimiter = '\t')
   out_csv = csv.writer(open(csv_file, 'w'))
   out_csv.writerows(in_txt)
   labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
-  data = sc.read_csv("GSE131907_Lung_Cancer_normalized_log2TPM_matrix.csv")
+  data1 = sc.read_csv("GSE131907_Lung_Cancer_normalized_log2TPM_matrix.csv")
+  data2 = sc.read_csv("GSE131907_Lung_Cancer_raw_UMI_matrix.csv")
   labels = labels["Cell_type"]
 
 #Unzip files - for dataset 1
@@ -55,18 +56,23 @@ def label_adaption(labels):
 labels = label_adaption(labels)
 
 #read data
-print("The original shape of the data is {}".format(data))
-
+print("The original shape of the data1 is {}".format(data1))
+print("The original shape of the data2 is {}".format(data2))
 #normalize data
-sc.pp.normalize_total(data, target_sum=10000)
+sc.pp.normalize_total(data1, target_sum=10000)
+sc.pp.normalize_total(data2, target_sum=10000)
 #logarithmize data
-sc.pp.log1p(data)
+sc.pp.log1p(data1)
+sc.pp.log1p(data2)
 
 #select highly variable genes
-sc.pp.highly_variable_genes(data, n_top_genes=1000)
-data = data[:, data.var.highly_variable]
+sc.pp.highly_variable_genes(data1, n_top_genes=1000)
+data1 = data1[:, data1.var.highly_variable
+sc.pp.highly_variable_genes(data2, n_top_genes=1000)
+data2 = data2[:, data2.var.highly_variable]
 
-print("The final shape of the data is {}".format(data.shape))
+print("The final shape of the data1 is {}".format(data1.shape))
+print("The final shape of the data2 is {}".format(data2.shape))
 #sc.tl.pca(data, svd_solver='arpack')
 #print("The shape after performing pca is {}".format(data.shape))
 
