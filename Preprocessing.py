@@ -37,7 +37,7 @@ if args.path == 3:
   #out_csv = csv.writer(open(csv_file, 'w'))
   #out_csv.writerows(in_txt)
   labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
-  data = sc.read_csv("GSE131907_Lung_Cancer_normalized_log2TPM_matrix.csv")
+  data = sc.read_csv("GSE131907_Lung_Cancer_normalized_log2TPM_matrix.csv") #29634 x 208506
   labels = labels["Cell_type"]
 if args.path == 4:
   labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
@@ -63,14 +63,18 @@ labels = label_adaption(labels)
 print("The original shape of the data1 is {}".format(data))
 #normalize data
 sc.pp.normalize_total(data, target_sum=10000)
+print("A")
 #logarithmize data
 sc.pp.log1p(data)
+print("b")
 
 #select highly variable genes
 sc.pp.highly_variable_genes(data, n_top_genes=1000)
+print("c")
 data = data[:, data.var.highly_variable]
 
 print("The final shape of the data1 is {}".format(data.shape))
+print("d")
 #sc.tl.pca(data, svd_solver='arpack')
 #print("The shape after performing pca is {}".format(data.shape))
 
@@ -81,5 +85,6 @@ print("The final shape of the data1 is {}".format(data.shape))
 
 
 data.write("adata_obj_{}".format(args.path))
+print("E")
 np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
 
