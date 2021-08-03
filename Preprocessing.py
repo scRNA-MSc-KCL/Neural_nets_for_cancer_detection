@@ -67,7 +67,7 @@ sc.pp.log1p(data2)
 
 #select highly variable genes
 sc.pp.highly_variable_genes(data1, n_top_genes=1000)
-data1 = data1[:, data1.var.highly_variable
+data1 = data1[:, data1.var.highly_variable]
 sc.pp.highly_variable_genes(data2, n_top_genes=1000)
 data2 = data2[:, data2.var.highly_variable]
 
