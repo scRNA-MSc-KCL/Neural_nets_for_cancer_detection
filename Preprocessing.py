@@ -80,6 +80,6 @@ print("d")#sc.tl.pca(data, svd_solver='arpack')
 #print("The shape after doing leiden thing is {}".format(data.shape))
 
 
-data.write("adata_obj_{}.anndata".format(args.path))
+data.write("adata_obj_{}".format(args.path))
 np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
 
