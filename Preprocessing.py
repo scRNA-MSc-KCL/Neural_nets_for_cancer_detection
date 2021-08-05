@@ -84,7 +84,7 @@ print("d")
 #print("The shape after doing leiden thing is {}".format(data.shape))
 
 
-data.write("adata_obj_{}".format(args.path))
+data.write("adata_obj_{}.anndata".format(args.path))
 print("E")
 np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
 
