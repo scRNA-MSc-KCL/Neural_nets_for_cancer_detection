@@ -80,9 +80,9 @@ print("d")#sc.tl.pca(data, svd_solver='arpack')
 #print("The shape after doing leiden thing is {}".format(data.shape))
 
 if args.path == 1:
-  adata.write(adata_obj1)
+  data.write(adata_obj1)
 if args.path == 2:
-  adata.write(adata_obj2)
+  data.write(adata_obj2)
   
   
 np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
