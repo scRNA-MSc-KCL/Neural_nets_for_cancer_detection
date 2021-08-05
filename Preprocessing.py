@@ -33,7 +33,7 @@ if args.path == 3:
   #Unzip files - for dataset 3
   filename = 'GSE131907_Lung_Cancer_raw_UMI_matrix.txt.gz'
   os.system('gunzip ' + filename)
-  Unzip files
+  #Unzip files
   txt_file = "GSE131907_Lung_Cancer_raw_UMI_matrix.txt"
   csv_file = "GSE131907_Lung_Cancer_raw_UMI_matrix.csv"
   in_txt = csv.reader(open(txt_file, "r"), delimiter = '\t')
