@@ -85,5 +85,5 @@ print("The final shape of the data is {}".format(data.shape))
 data.write(results)
 print("data shape", data)
 np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
-print("labels shape", labels)
+print("labels shape", labels.shape)
 
