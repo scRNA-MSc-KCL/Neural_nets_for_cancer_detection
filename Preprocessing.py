@@ -73,8 +73,8 @@ sc.pp.log1p(data)
 sc.pp.highly_variable_genes(data, n_top_genes=1000)
 data = data[:, data.var.highly_variable]
 
-print("The final shape of the data1 is {}".format(data.shape))
-print("d")#sc.tl.pca(data, svd_solver='arpack')
+print("The final shape of the data is {}".format(data.shape))
+#sc.tl.pca(data, svd_solver='arpack')
 #print("The shape after performing pca is {}".format(data.shape))
 
 #sc.pp.neighbors(data, n_neighbors=10, n_pcs=40)
