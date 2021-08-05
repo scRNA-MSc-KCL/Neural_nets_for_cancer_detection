@@ -37,6 +37,7 @@ if args.path == 2:
   data = sc.read("results_2.h5ad")
 
 num_lab = len(labels)
+counter = 0
 
 #before preprocessing was set up
 """if args.path == 1:
