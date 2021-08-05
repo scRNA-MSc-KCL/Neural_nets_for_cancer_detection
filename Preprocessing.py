@@ -18,7 +18,7 @@ parser.add_argument('path', type = int)
 
 args = parser.parse_args()
 if args.path == 1:
-  labels =pd.read_csv("Labels.csv", names = ["X"])
+  labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read_csv("Combined_10x_CelSeq2_5cl_data.csv")
   results = 'results_1.h5ad'
 if args.path == 2:
