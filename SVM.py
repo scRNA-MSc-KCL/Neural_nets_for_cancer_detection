@@ -6,30 +6,21 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.svm import SVC
 
-
-#Unzip files
-#with zipfile.ZipFile("Dataset1_interdataset.zip", 'r') as zip_ref:
-#    zip_ref.extractall()
-
-labels =pd.read_csv("Labels.csv")
-label_encoder = LabelEncoder()
-labels = label_encoder.fit_transform(labels)
-labels = pd.Series(labels)
-num_lab = len(pd.unique(labels))
-labels = labels.to_numpy()
+import argparse
+import anndata
 
 
-#read data
-data = sc.read_csv("Combined_10x_CelSeq2_5cl_data.csv")
+parser = argparse.ArgumentParser(description='Select dataset')
+parser.add_argument('path', type = int)
 
-#normalize data
-sc.pp.normalize_total(data, target_sum=10000)
-#logarithmize data
-sc.pp.log1p(data)
+args = parser.parse_args()
+if args.path == 1:
+  labels =pd.read_csv("labels_1.csv", names = ["X"])
+  data = sc.read("results_1.h5ad")
+if args.path == 2:
+  labels =pd.read_csv("labels_2.csv", names = ["X"])
+  data = sc.read("results_2.h5ad")
 
-#select highly variable genes
-sc.pp.highly_variable_genes(data, n_top_genes=1000)
-data = data[:, data.var.highly_variable]
                                                     
 #create training and test sets
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
