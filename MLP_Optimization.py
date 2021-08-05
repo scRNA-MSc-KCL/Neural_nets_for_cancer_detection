@@ -28,10 +28,10 @@ parser.add_argument('path', type = int)
 args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv")
-  data = sc.read("adata_obj_1")
+  data = sc.read("adata_obj_1.anndata")
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv")
-  data = sc.read("adata_obj_2")
+  data = sc.read("adata_obj_2.anndata")
 
 
 #before preprocessing was set up
