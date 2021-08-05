@@ -86,4 +86,5 @@ data.write(results)
 print("data shape", data)
 np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
 print("labels shape", labels.shape)
+print(labels)
 
