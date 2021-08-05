@@ -29,6 +29,7 @@ args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv")
   data = sc.read("results_1.h5ad")
+  print("shape", data)
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv")
   data = sc.read("results_2.h5ad")
