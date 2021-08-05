@@ -63,19 +63,15 @@ labels = label_adaption(labels)
 print("The original shape of the data1 is {}".format(data))
 #normalize data
 sc.pp.normalize_total(data, target_sum=10000)
-print("A")
 #logarithmize data
 sc.pp.log1p(data)
-print("b")
 
 #select highly variable genes
 sc.pp.highly_variable_genes(data, n_top_genes=1000)
-print("c")
 data = data[:, data.var.highly_variable]
 
 print("The final shape of the data1 is {}".format(data.shape))
-print("d")
-#sc.tl.pca(data, svd_solver='arpack')
+print("d")#sc.tl.pca(data, svd_solver='arpack')
 #print("The shape after performing pca is {}".format(data.shape))
 
 #sc.pp.neighbors(data, n_neighbors=10, n_pcs=40)
@@ -85,6 +81,5 @@ print("d")
 
 
 data.write("adata_obj_{}.anndata".format(args.path))
-print("E")
 np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
 
