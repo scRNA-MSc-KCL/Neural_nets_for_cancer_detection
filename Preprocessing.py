@@ -12,6 +12,7 @@ import os
 
 #3 is UMI raw
 #4 is normalized
+
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 
@@ -19,6 +20,7 @@ args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("Labels.csv")
   data = sc.read_csv("Combined_10x_CelSeq2_5cl_data.csv")
+  results = 'results_1.h5ad'
 if args.path == 2:
   data = sc.read_csv("human_cell_atlas/krasnow_hlca_10x_UMIs.csv") #26485 x 65662
   data = anndata.AnnData.transpose(data)
@@ -26,6 +28,7 @@ if args.path == 2:
   ##data = sc.read_csv("human_cell_atlas/krasnow_hlca_facs_counts.csv")  #58683 x 9409
   labels = pd.read_csv("human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
   labels = labels["free_annotation"]
+  results = 'results_2.h5ad'
 if args.path == 3:
   #Unzip files - for dataset 3
   #filename = 'GSE131907_Lung_Cancer_raw_UMI_matrix.txt.gz'
@@ -79,11 +82,6 @@ print("d")#sc.tl.pca(data, svd_solver='arpack')
 #sc.tl.leiden(data)
 #print("The shape after doing leiden thing is {}".format(data.shape))
 
-if args.path == 1:
-  data.write(adata_obj1)
-if args.path == 2:
-  data.write(adata_obj2)
-  
-  
+data.write(results)
 np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
 
