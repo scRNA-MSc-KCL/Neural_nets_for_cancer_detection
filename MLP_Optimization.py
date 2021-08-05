@@ -27,6 +27,15 @@ parser.add_argument('path', type = int)
 
 args = parser.parse_args()
 if args.path == 1:
+  labels =pd.read_csv("labels_1.csv")
+  data = sc.read("adata_obj_1")
+if args.path == 2:
+  labels =pd.read_csv("labels_2.csv")
+  data = sc.read("adata_obj_2")
+
+
+#before preprocessing was set up
+"""if args.path == 1:
   labels =pd.read_csv("Labels.csv")
   data = sc.read_csv("Combined_10x_CelSeq2_5cl_data.csv")
 if args.path == 2:
@@ -65,7 +74,7 @@ data = data[:, data.var.highly_variable]
 
 print("The original shape of the data is {}".format(data.shape))
 sc.tl.pca(data, svd_solver='arpack')
-print("The shape after performing pca is {}".format(data.shape))
+print("The shape after performing pca is {}".format(data.shape))"""
 
 #create training and test sets
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
