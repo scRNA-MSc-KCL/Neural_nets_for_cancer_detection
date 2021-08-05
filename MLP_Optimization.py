@@ -28,58 +28,13 @@ parser.add_argument('path', type = int)
 args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
-  print(labels)
-  print("shape labels", labels.shape)
   data = sc.read("results_1.h5ad")
-  print("shape", data)
 if args.path == 2:
-  labels =pd.read_csv("labels_2.csv")
+  labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
 
 num_lab = len(labels)
 counter = 0
-
-#before preprocessing was set up
-"""if args.path == 1:
-  labels =pd.read_csv("Labels.csv")
-  data = sc.read_csv("Combined_10x_CelSeq2_5cl_data.csv")
-if args.path == 2:
-  data = sc.read_csv("human_cell_atlas/krasnow_hlca_10x_UMIs.csv") #26485 x 65662
-  data = anndata.AnnData.transpose(data)
-  #labels = pd.read_csv("human_cell_atlas/krasnow_hlca_facs_metadata.csv") #9409 x 141
-  ##data = sc.read_csv("human_cell_atlas/krasnow_hlca_facs_counts.csv")  #58683 x 9409
-  labels = pd.read_csv("human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
-  labels = labels["free_annotation"]
-
-counter = 0
-
-#Unzip files - for dataset 1
-#with zipfile.ZipFile("Dataset1_interdataset.zip", 'r') as zip_ref:
-#    zip_ref.extractall()
-
-label_encoder = LabelEncoder()
-labels = label_encoder.fit_transform(labels)
-labels = pd.Series(labels)
-num_lab = len(pd.unique(labels))
-print("number of labels", num_lab)
-labels = labels.to_numpy()
-
-
-#read data
-print("The original shape of the data is {}".format(data))
-
-#normalize data
-sc.pp.normalize_total(data, target_sum=10000)
-#logarithmize data
-sc.pp.log1p(data)
-
-#select highly variable genes
-sc.pp.highly_variable_genes(data, n_top_genes=1000)
-data = data[:, data.var.highly_variable]
-
-print("The original shape of the data is {}".format(data.shape))
-sc.tl.pca(data, svd_solver='arpack')
-print("The shape after performing pca is {}".format(data.shape))"""
 
 #create training and test sets
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
@@ -134,17 +89,17 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
   return df
 
 #define variables
-#Nodes = np.arange(500, 500, 0)
-Nodes = [500]
-#activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
-activation = ["tanh"]
-#optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
-optimizer = ["Nadam"]
+#Nodes = np.arange(50, 2050, 500)
+#Nodes = [500]
+activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
+#activation = ["tanh"]
+optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
+#optimizer = ["Nadam"]
 epoch = [3]
 #epoch = [5]
 
-#loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
-loss_function = ["categorical_crossentropy"]
+loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
+#loss_function = ["categorical_crossentropy"]
 #consider using custom learning rate
 #may or may not get used. See impact on above results
 regularizer = ["l1", "l2", "l1_l2"]
@@ -152,6 +107,6 @@ kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "
 
 results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab)
 if args.path == 1:
-  results_dataframe.to_csv("MLP_Optimization_results_DS1_test.csv")
+  results_dataframe.to_csv("MLP_Optimization_results_DS1_2.csv")
 if args.path ==2:
-  results_dataframe.to_csv("MLP_Optimization_results_DS2_test.csv")
+  results_dataframe.to_csv("MLP_Optimization_results_DS2_2.csv")
