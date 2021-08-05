@@ -27,7 +27,7 @@ parser.add_argument('path', type = int)
 
 args = parser.parse_args()
 if args.path == 1:
-  labels =pd.read_csv("labels_1.csv")
+  labels =pd.read_csv("labels_1.csv", names = ["X"])
   print(labels)
   print("shape labels", labels.shape)
   data = sc.read("results_1.h5ad")
