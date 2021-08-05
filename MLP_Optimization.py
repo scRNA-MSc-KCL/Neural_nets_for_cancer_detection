@@ -36,6 +36,7 @@ if args.path == 2:
   labels =pd.read_csv("labels_2.csv")
   data = sc.read("results_2.h5ad")
 
+num_lab = len(labels)
 
 #before preprocessing was set up
 """if args.path == 1:
