@@ -41,11 +41,14 @@ if args.path == 3:
   out_csv.writerows(in_txt)
   labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
   data = sc.read_csv("GSE131907_Lung_Cancer_raw_UMI_matrix.csv") #29634 x 208506
+  data = anndata.AnnData.transpose(data)
   labels = labels["Cell_type"]
+  results = 'results_3.h5ad'
 if args.path == 4:
   labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
   data = sc.read_csv("GSE131907_Lung_Cancer_normalized_log2TPM_matrix.csv")
   labels = labels["Cell_type"]
+
 
 #Unzip files - for dataset 1
 #with zipfile.ZipFile("Dataset1_interdataset.zip", 'r') as zip_ref:
