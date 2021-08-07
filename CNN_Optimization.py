@@ -58,4 +58,20 @@ it = ImageTransformer(feature_extractor='pca',
 fig = plt.figure(figsize=(5, 5))
 _ = it.fit(X_train_norm, plot=True)
 
-fig.savefig('CNN_graphs/test_graph')
+fig.savefig('CNN_graphs/test_graph1')
+
+#convert to pixel image version
+fdm = it.feature_density_matrix()
+fdm[fdm == 0] = np.nan
+fig = plt.figure(figsize=(10, 7))
+
+ax = sns.heatmap(fdm, cmap="viridis", linewidths=0.01, 
+                 linecolor="lightgrey", square=True)
+ax.xaxis.set_major_locator(ticker.MultipleLocator(5))
+ax.yaxis.set_major_locator(ticker.MultipleLocator(5))
+for _, spine in ax.spines.items():
+    spine.set_visible(True)
+_ = plt.title("Genes per pixel")
+
+fig.savefig('CNN_graphs/test_graph2')
+
