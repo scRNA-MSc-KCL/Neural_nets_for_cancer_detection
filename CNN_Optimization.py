@@ -32,10 +32,10 @@ parser.add_argument('path', type = int)
 args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
-  data = sc.read("results_1_cnn.h5ad")
+  data = sc.read("results_1.h5ad")
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
-  data = sc.read("results_2_cnn.h5ad")
+  data = sc.read("results_2.h5ad")
 
 num_lab = len(labels)
 counter = 0
