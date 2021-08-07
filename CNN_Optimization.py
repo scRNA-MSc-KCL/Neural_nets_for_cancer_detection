@@ -24,8 +24,11 @@ import csv
 import scanpy as sc
 import argparse
 import anndata
+import time
 
 #Load data
+start = time.time()
+
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 args = parser.parse_args()
@@ -100,12 +103,17 @@ net.add(Dropout(rate=0.5))
 net.add(Dense(num_lab, activation='softmax'))
 
 net.summary()
+from contextlib import redirect_stdout
+
+with open('CNN_graphs/modelsummary.txt', 'w') as f:
+    with redirect_stdout(f):
+        model.summary()
 
 #train CNN
 net.compile(loss='categorical_crossentropy', optimizer='adam')
 history = net.fit(X_train_img, y_train,
 validation_data=(X_test_img, y_test),
- epochs=20,
+ epochs=1,
  batch_size=256)
 
 #get CNN plot
@@ -122,3 +130,6 @@ labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
 misclassified =  (np.sum(labels_predicted != y_test_decoded)/(len(y_test_decoded)))*100
 print(misclassified)
+
+end = time.time()
+print("The time taken to complete this program was {}".format(end - start))
