@@ -75,7 +75,7 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
                 net.compile(loss=l, optimizer=o)
                 history = net.fit(X_train, y_train,
                             validation_data=(X_test, y_test),
-                            epochs=e,batch_size=25)
+                            epochs=e,batch_size=1500)
                 outputs = net.predict(X_test)
                 labels_predicted= np.argmax(outputs, axis=1)
                 y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
@@ -92,8 +92,8 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
 Nodes = [500]
 #activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 activation = ["tanh"]
-#optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
-optimizer = ["Nadam"]
+optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
+#optimizer = ["Nadam"]
 epoch = [3]
 #epoch = [5]
 
