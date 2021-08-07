@@ -55,7 +55,7 @@ X_test_norm = ln.transform(X_test)
 it = ImageTransformer(feature_extractor='pca', 
                       pixels=50, random_state=1701, 
                       n_jobs=-1)
-plt.figure(figsize=(5, 5))
+fig = plt.figure(figsize=(5, 5))
 _ = it.fit(X_train_norm, plot=True)
 
 fig.savefig('CNN_graphs/test_graph')
