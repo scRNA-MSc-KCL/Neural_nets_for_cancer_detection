@@ -5,11 +5,11 @@ import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.svm import SVC
-
+import time
 import argparse
 import anndata
 
-
+start = time.time()
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 
@@ -20,7 +20,12 @@ if args.path == 1:
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
-
+if args.path == 3:
+  labels =pd.read_csv("labels_3.csv", names = ["X"])
+  data = sc.read("results_3.h5ad")
+if args.path == 4:
+  labels =pd.read_csv("labels_4.csv", names = ["X"])
+  data = sc.read("results_4.h5ad")
                                                     
 #create training and test sets
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
@@ -33,3 +38,7 @@ for i in SVM_list:
   Classifier = sklearn.svm.SVC(kernel = i)
   Classifier.fit(X_train, y_train)
   print("the classification result with the current settings and a {} kernal is {}".format(i, Classifier.score(X_test, y_test)))
+  
+  
+end = time.time()
+print("The time taken to complete this program was {}".format(end - start))
