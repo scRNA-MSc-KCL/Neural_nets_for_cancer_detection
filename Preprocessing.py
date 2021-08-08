@@ -76,7 +76,8 @@ if args.path == 4:
   data = pd.concat([data_pos, data_neg], axis = 1)
   data = data.fillna(0)
   data = sc.AnnData(data)
-  data.obs_names_make_unique
+  data.var_names_make_unique() 
+  data.obs_names_make_unique()
   data = anndata.AnnData.transpose(data)
   l_pos = len(data_pos.columns)
   l_neg = len(data_neg.columns)
