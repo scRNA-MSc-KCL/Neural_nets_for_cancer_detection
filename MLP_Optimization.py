@@ -88,17 +88,17 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
   return df
 
 #define variables
-Nodes = np.arange(50, 2050, 500)
-#Nodes = [500]
-activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
+#Nodes = np.arange(50, 2050, 500)
+Nodes = [500]
+#activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 #activation = ["tanh"]
 optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
 #optimizer = ["Nadam"]
-epoch = [3]
+epoch = [10]
 #epoch = [5]
 
-loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
-#loss_function = ["categorical_crossentropy"]
+#loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
+loss_function = ["categorical_crossentropy"]
 #consider using custom learning rate
 #may or may not get used. See impact on above results
 regularizer = ["l1", "l2", "l1_l2"]
@@ -106,6 +106,6 @@ kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "
 
 results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab)
 if args.path == 1:
-  results_dataframe.to_csv("MLP_Optimization_results_DS1_2.csv")
+  results_dataframe.to_csv("MLP_Optimization_results_DS1_optimizer.csv")
 if args.path ==2:
-  results_dataframe.to_csv("MLP_Optimization_results_DS2_2.csv")
+  results_dataframe.to_csv("MLP_Optimization_results_DS2_optimizer.csv")
