@@ -52,6 +52,8 @@ if args.path == 4:
   #os.system('gunzip ' + filename)"""
   #Unzip files
   #cherry positive
+  filename = 'GSM3783354_4T1_CherryPositive_RawCounts.txt.gz'
+  os.system('gunzip ' + filename)
   txt_file = "GSM3783354_4T1_CherryPositive_RawCounts.txt"
   csv_file = "GSM3783354_4T1_CherryPositive_RawCounts.csv"
   in_txt = csv.reader(open(txt_file, "r"), delimiter = '\t')
@@ -59,6 +61,8 @@ if args.path == 4:
   out_csv.writerows(in_txt)
   data_pos = pd.read_csv("GSM3783354_4T1_CherryPositive_RawCounts.csv")
   #cherry negative
+  filename = 'GSM3783356_4T1_CherryNegative_RawCounts.txt.gz'
+  os.system('gunzip ' + filename)
   txt_file = "GSM3783356_4T1_CherryNegative_RawCounts.txt"
   csv_file = "GSM3783356_4T1_CherryNegative_RawCounts.csv"
   in_txt = csv.reader(open(txt_file, "r"), delimiter = '\t')
