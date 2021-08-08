@@ -46,10 +46,10 @@ if args.path == 3:
   results = 'results_3.h5ad'
 if args.path == 4:
   #unzip gz files
-  #filename = 'GSE131508.gz'
-  import tarfile
-  tf = tarfile.open("index.html?acc=GSE131508")
-  tf.extractall()
+  filename = "index.html?acc=GSE131508"
+  #import tarfile
+  #tf = tarfile.open("index.html?acc=GSE131508")
+  #tf.extractall()
   #os.system('gunzip ' + filename)
   #Unzip files
   #txt_file = "GSE131907_Lung_Cancer_raw_UMI_matrix.txt"
