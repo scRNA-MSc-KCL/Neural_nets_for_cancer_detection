@@ -84,6 +84,7 @@ if args.path == 4:
   label_pos = ["Cherry Positive"]*l_pos
   label_neg = ["Cherry Negative"]*l_neg
   labels = label_pos + label_neg
+  print(labels)
   
  
 #Unzip files - for dataset 1
