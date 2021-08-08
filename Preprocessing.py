@@ -48,7 +48,7 @@ if args.path == 4:
   #unzip gz files
   #filename = 'GSE131508.gz'
   import tarfile
-  tf = tarfile.open("GSE131508.tar")
+  tf = tarfile.open("GSE131508")
   tf.extractall()
   #os.system('gunzip ' + filename)
   #Unzip files
