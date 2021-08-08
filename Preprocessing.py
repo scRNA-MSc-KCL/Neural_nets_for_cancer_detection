@@ -45,16 +45,31 @@ if args.path == 3:
   labels = labels["Cell_type"]
   results = 'results_3.h5ad'
 if args.path == 4:
-  labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
-  data = sc.read_csv("GSE131907_Lung_Cancer_normalized_log2TPM_matrix.csv")
-  labels = labels["Cell_type"]
+  #unzip gz files
+  #filename = 'GSE131508.gz'
+  import tarfile
+  tf = tarfile.open("GSE131508.tar")
+  tf.extractall()
+  #os.system('gunzip ' + filename)
+  #Unzip files
+  #txt_file = "GSE131907_Lung_Cancer_raw_UMI_matrix.txt"
+  #csv_file = "GSE131907_Lung_Cancer_raw_UMI_matrix.csv"
+  #in_txt = csv.reader(open(txt_file, "r"), delimiter = '\t')
+  #out_csv = csv.writer(open(csv_file, 'w'))
+  #out_csv.writerows(in_txt)
+  #labels =pd.read_csv("GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
+  #data = sc.read_csv("GSE131907_Lung_Cancer_raw_UMI_matrix.csv") #29634 x 208506
+  #data = anndata.AnnData.transpose(data)
+  #labels = labels["Cell_type"]
+  
+  
 
 
 #Unzip files - for dataset 1
 #with zipfile.ZipFile("Dataset1_interdataset.zip", 'r') as zip_ref:
 #    zip_ref.extractall()
 
-def label_adaption(labels):
+"""def label_adaption(labels):
   label_encoder = LabelEncoder()
   labels = label_encoder.fit_transform(labels)
   labels = pd.Series(labels)
@@ -87,4 +102,4 @@ print("The final shape of the data is {}".format(data.shape))
 
 data.write(results)
 print("data shape", data)
-np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
+np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")"""
