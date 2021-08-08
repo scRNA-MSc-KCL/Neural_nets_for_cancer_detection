@@ -47,27 +47,27 @@ if args.path == 3:
 if args.path == 4:
   #unzip gz files
   """import tarfile
-  #tf = tarfile.open("GSE131508_RAW.tar")
-  #tf.extractall()
-  #os.system('gunzip ' + filename)"""
+  tf = tarfile.open("GSE131508_RAW.tar")
+  tf.extractall()
+  os.system('gunzip ' + filename)"""
   #Unzip files
   #cherry positive
-  filename = 'GSM3783354_4T1_CherryPositive_RawCounts.txt.gz'
-  os.system('gunzip ' + filename)
-  txt_file = "GSM3783354_4T1_CherryPositive_RawCounts.txt"
-  csv_file = "GSM3783354_4T1_CherryPositive_RawCounts.csv"
-  in_txt = csv.reader(open(txt_file, "r"), delimiter = '\t')
-  out_csv = csv.writer(open(csv_file, 'w'))
-  out_csv.writerows(in_txt)
+  #filename = 'GSM3783354_4T1_CherryPositive_RawCounts.txt.gz'
+  #os.system('gunzip ' + filename)
+  #txt_file = "GSM3783354_4T1_CherryPositive_RawCounts.txt"
+  #csv_file = "GSM3783354_4T1_CherryPositive_RawCounts.csv"
+  #in_txt = csv.reader(open(txt_file, "r"), delimiter = '\t')
+  #out_csv = csv.writer(open(csv_file, 'w'))
+  #out_csv.writerows(in_txt)
   data_pos = pd.read_csv("GSM3783354_4T1_CherryPositive_RawCounts.csv")
   #cherry negative
   filename = 'GSM3783356_4T1_CherryNegative_RawCounts.txt.gz'
   os.system('gunzip ' + filename)
-  txt_file = "GSM3783356_4T1_CherryNegative_RawCounts.txt"
-  csv_file = "GSM3783356_4T1_CherryNegative_RawCounts.csv"
-  in_txt = csv.reader(open(txt_file, "r"), delimiter = '\t')
-  out_csv = csv.writer(open(csv_file, 'w'))
-  out_csv.writerows(in_txt)
+  #txt_file = "GSM3783356_4T1_CherryNegative_RawCounts.txt"
+  #csv_file = "GSM3783356_4T1_CherryNegative_RawCounts.csv"
+  #in_txt = csv.reader(open(txt_file, "r"), delimiter = '\t')
+  #out_csv = csv.writer(open(csv_file, 'w'))
+  #out_csv.writerows(in_txt)
   data_neg = pd.read_csv("GSM3783356_4T1_CherryNegative_RawCounts.csv")
   data_pos = data_pos.drop(["Unnamed: 0"], axis = 1)
   data_neg = data_neg.drop(["Unnamed: 0"], axis = 1)
