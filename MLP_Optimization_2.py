@@ -31,7 +31,7 @@ if args.path == 1:
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
-
+#l
 num_lab = len(labels)
 counter = 0
 
