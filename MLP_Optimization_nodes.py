@@ -16,6 +16,7 @@ import scanpy as sc
 import argparse
 import anndata
 import time
+import os
 
 start = time.time()
 try:
