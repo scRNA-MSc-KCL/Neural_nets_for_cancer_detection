@@ -18,16 +18,6 @@ import anndata
 import time
 import os
 
-start = time.time()
-path = os.getcwd()
-name = "test_results/{}".format(start)
-path = os.path.join(path,name)
-try:
-  os.makedirs(path)
-except OSError:
-  print("Creation of the directory failed")
-else:
-  print("Successfully created the directory")
 
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
@@ -36,15 +26,21 @@ args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
+  file_loc = "DS1/MLP"
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
+  file_loc = "DS2/MLP"
 if args.path == 3:
   labels =pd.read_csv("labels_3.csv", names = ["X"])
   data = sc.read("results_3.h5ad")
+  file_loc = "DS3/MLP"
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
+  file_loc = "DS4/MLP"
+  
+start = time.time()
 
 num_lab = len(labels)
 counter = 0
@@ -102,8 +98,8 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
   return df
 
 #define variables
-Nodes = np.arange(50, 2050, 200)
-#Nodes = [500]
+#Nodes = np.arange(50, 2050, 200)
+Nodes = [500]
 #activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 activation = ["tanh"]
 #optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
@@ -119,8 +115,6 @@ regularizer = ["l1", "l2", "l1_l2"]
 kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "ones", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
 
 results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab)
-results_dataframe.to_csv("test_results/{}/MLP_results.csv".format(start))
-f = open("test_results/{}/run_details.txt".format(start), "w")
-f.write("Dataframe; {}".format(args.path))
-f.close()
+results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))
+
 
