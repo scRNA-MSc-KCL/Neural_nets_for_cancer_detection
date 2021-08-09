@@ -72,6 +72,8 @@ print("The original shape of the data1 is {}".format(data))
 sc.pp.filter_genes(data, min_cells=3)
 print("A", data.shape)
 #remove mitochonrial
+adata.var['mt'] = adata.var_names.str.startswith('MT-')  # annotate the group of mitochondrial genes as 'mt'
+sc.pp.calculate_qc_metrics(adata, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
 if FIGS == "y":
   data.var['mt'] = data.var_names.str.startswith('MT-')
   sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
@@ -79,6 +81,8 @@ if FIGS == "y":
              jitter=0.4, multi_panel=True, save = 'mitochonrial_and_violin_plots.png')
   sc.pl.scatter(data, x='total_counts', y='pct_counts_mt', save = 'mitochonrial_and_violin_plots.png')
   sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts', save ='pct_counts_mt_scatter.png')
+#data = data[data.obs.n_genes_by_counts < 2500, :]
+#data = data[data.obs.pct_counts_mt < 5, :]
 #normalize data
 sc.pp.normalize_total(data, target_sum=10000)
 print("C", data.shape)
