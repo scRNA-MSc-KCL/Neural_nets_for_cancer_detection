@@ -52,8 +52,8 @@ if args.path == 4:
 num_lab = len(labels)
 counter = 0
 
-#path = os.getcwd()
-path = os.path.join(file_loc, start)
+path = os.getcwd()
+path = os.path.join(path, "{}/{}".format(file_loc,start))
 try:
   os.makedirs(path)
 except OSError:
