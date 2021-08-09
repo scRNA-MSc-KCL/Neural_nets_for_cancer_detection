@@ -9,6 +9,7 @@ import scanpy as sc
 import argparse
 import anndata
 import os
+import time
 
 def unzip_file(filename):
   os.system('gunzip ' + filename)
