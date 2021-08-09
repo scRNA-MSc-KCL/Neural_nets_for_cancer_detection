@@ -144,6 +144,8 @@ y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing e
 misclassified =  (np.sum(labels_predicted != y_test_decoded)/(len(y_test_decoded)))*100
 open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'a') as f:
 f.write("percentage missclassified on test set is {}\n".format(misclassified))
+print("misclassified; ", misclassified)
 end = time.time()
 f.write("The time taken to complete this program was {}".format(end - start))
+print("The time taken to complete this program was {}".format(end - start))
 f.close()
