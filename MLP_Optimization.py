@@ -91,11 +91,11 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
 #Nodes = np.arange(50, 2050, 500)
 Nodes = [500]
 #activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
-#activation = ["tanh"]
-optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
-#optimizer = ["Nadam"]
-epoch = [10]
-#epoch = [5]
+activation = ["tanh"]
+#optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
+optimizer = ["RMSprop"]
+#epoch = [10]
+epoch = [3]
 
 #loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
 loss_function = ["categorical_crossentropy"]
