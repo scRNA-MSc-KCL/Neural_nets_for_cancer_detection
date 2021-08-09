@@ -12,6 +12,7 @@ import os
 import time
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
+import sklearn
 
 def unzip_file(filename):
   os.system('gunzip ' + filename)
@@ -70,7 +71,7 @@ print("The original shape of the data1 is {}".format(data))
 
 #filter data 
 sc.pp.filter_genes(data, min_cells=10)
-print("A", data.shape)
+print("after filtering genes with min cells", data.shape)
 #remove mitochonrial
 if FIGS == "y":
   data.var['mt'] = data.var_names.str.startswith('MT-')
@@ -95,11 +96,11 @@ sc.pp.highly_variable_genes(data, min_mean=0.0125, max_mean=3, min_disp=0.5)
 if FIGS == "y":
   sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
 data = data[:, data.var.highly_variable]
-print("E", data.shape)
+print("after removing highly variable genes", data.shape)
 
 #scale to unit variance
 sc.pp.scale(data, max_value=10)
-print("G", data.shape)
+print("clip values with high variance", data.shape)
 
 print("The final shape of the data is {}".format(data.shape))
 
