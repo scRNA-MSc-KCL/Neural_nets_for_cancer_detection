@@ -51,6 +51,15 @@ if args.path == 4:
 num_lab = len(labels)
 counter = 0
 
+path = os.getcwd()
+path = os.path.join(path/file_loc, share)
+try:
+  os.makedirs(path)
+except OSError:
+  print("Creation of the directory %s failed" % path)
+else:
+  print("Successfully created the directory %s" % path)
+
 #perform pca on data
 print("The original shape of the data is {}".format(data.shape))
 sc.tl.pca(data, svd_solver='arpack')
