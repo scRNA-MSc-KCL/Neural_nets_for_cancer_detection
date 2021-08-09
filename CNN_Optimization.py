@@ -130,7 +130,7 @@ from contextlib import redirect_stdout
 
 with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
     with redirect_stdout(f):
-        model.summary()
+        net.summary()
 
 #train CNN
 net.compile(loss='categorical_crossentropy', optimizer='adam')
