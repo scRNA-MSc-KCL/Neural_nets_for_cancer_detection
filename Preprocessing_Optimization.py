@@ -51,14 +51,15 @@ if args.path == 1:
 labels = label_adaption(labels)
 
 filter_genes = [1, 5, 10]
-remove_high_counts = [1000, 2500, 5000]
 normalize = ["yes", "no"]
 filter_method = ["highly_variable", "summary_stat"]
 filter_by_highly_variable_genes = [500, 1000, 2000]
+#min_mean = [0.125, .25]
+#max_mean = [3, 6]
+#mean_disp = [0.5, 1]
 min_mean = 0.125
 max_mean = 3
 mean_disp = 0.5
-regress_data = ["yes", "no"]
 unit_variance = ["yes", "no"]
 FIGS = "n"
 
@@ -69,8 +70,12 @@ if FIGS == "y":
 #read data
 print("The original shape of the data1 is {}".format(data))
 
-#filter data 
-sc.pp.filter_genes(data, min_cells=10)
+def SVM_Optimizer(filter_genes, normalize, filter_method, filter_by_highly_variable_genes, min_mean, max_mean, mean_disp, unit_var, FIGS):
+  if FIGS == "y":
+  sc.pl.highest_expr_genes(data, n_top=20, save ='highly_expressed_genes.png')
+  #filter data 
+  for a in filter_genes:
+  sc.pp.filter_genes(data, min_cells=10)
 print("after filtering genes with min cells", data.shape)
 #remove mitochonrial
 if FIGS == "y":
