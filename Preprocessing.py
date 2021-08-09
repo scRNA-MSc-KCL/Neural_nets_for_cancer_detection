@@ -64,7 +64,7 @@ if args.path == 4:
   #unzip gz files
   import tarfile
   tf = tarfile.open("GSE131508_RAW.tar")
-  #tf.extractall()
+  tf.extractall()
   #Unzip files
   #cherry positive
   unzip_file('GSM3783354_4T1_CherryPositive_RawCounts.txt.gz')
