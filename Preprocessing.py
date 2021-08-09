@@ -63,7 +63,7 @@ if args.path == 3:
 if args.path == 4:
   #unzip gz files
   import tarfile
-  tf = tarfile.open("Original_data/GSE131508_RAW.tar")
+  tf = tarfile.open("GSE131508_RAW.tar")
   #tf.extractall()
   #Unzip files
   #cherry positive
