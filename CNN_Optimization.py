@@ -52,8 +52,8 @@ if args.path == 4:
 num_lab = len(labels)
 counter = 0
 
-path = os.getcwd()
-path = os.path.join(path/file_loc, share)
+#path = os.getcwd()
+path = os.path.join(file_loc, share)
 try:
   os.makedirs(path)
 except OSError:
