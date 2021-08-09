@@ -20,7 +20,7 @@ import os
 
 start = time.time()
 path = os.getcwd()
-name = "test_results/start"
+name = "test_results/{}".format(start)
 path = os.path.join(path,name)
 try:
   os.makedirs(path)
@@ -119,8 +119,8 @@ regularizer = ["l1", "l2", "l1_l2"]
 kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "ones", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
 
 results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab)
-results_dataframe.to_csv("test_results/start/MLP_results.csv")
-f = open("test_results/start/run_details.txt", "w")
+results_dataframe.to_csv("test_results/{}/MLP_results.csv".format(start))
+f = open("test_results/{}/run_details.txt".format(start), "w")
 f.write("Dataframe; {}".format(args.path))
 f.close()
 
