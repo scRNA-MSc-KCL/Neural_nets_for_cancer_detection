@@ -57,7 +57,7 @@ regress_data = ["yes", "no"]
 unit_variance = ["yes", "no"]
 FIGS = "y"
 
-if FIGS = "y":
+if FIGS == "y":
   fig = sc.pl.highest_expr_genes(data, n_top=20, )
   fig.savefig('{}/{}/highly_expressed_genes'.format(file_loc, start))
 
@@ -67,7 +67,7 @@ print("The original shape of the data1 is {}".format(data))
 #filter data 
 sc.pp.filter_genes(data, min_cells=3)
 #remove mitochonrial
-if FIGS = "y":
+if FIGS == "y":
   adata.var['mt'] = data.var_names.str.startswith('MT-')
   sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
   fig = sc.pl.violin(data, ['n_genes_by_counts', 'total_counts', 'pct_counts_mt'],
@@ -90,7 +90,7 @@ sc.pp.log1p(data)
 
 #select highly variable genes based on summary statistics
 sc.pp.highly_variable_genes(data, min_mean=0.0125, max_mean=3, min_disp=0.5)
-if FIGS = "y":
+if FIGS == "y":
   fig = sc.pl.highly_variable_genes(data)
   fig.savefig('{}/{}/highly_variable_summary_stats'.format(file_loc, start))
 data = data[:, data.var.highly_variable]
