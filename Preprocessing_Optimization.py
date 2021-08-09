@@ -59,8 +59,8 @@ unit_variance = ["yes", "no"]
 FIGS = "y"
 
 if FIGS == "y":
-  fig = sc.pl.highest_expr_genes(data, n_top=20, )
-  fig.savefig('{}/{}/highly_expressed_genes'.format(file_loc, start))
+  sc.pl.highest_expr_genes(data, n_top=20, )
+  pl.savefig('{}/{}/highly_expressed_genes'.format(file_loc, start))
 
 #read data
 print("The original shape of the data1 is {}".format(data))
@@ -92,8 +92,8 @@ sc.pp.log1p(data)
 #select highly variable genes based on summary statistics
 sc.pp.highly_variable_genes(data, min_mean=0.0125, max_mean=3, min_disp=0.5)
 if FIGS == "y":
-  fig = sc.pl.highly_variable_genes(data)
-  fig.savefig('{}/{}/highly_variable_summary_stats'.format(file_loc, start))
+  sc.pl.highly_variable_genes(data)
+  pl.savefig('{}/{}/highly_variable_summary_stats'.format(file_loc, start))
 data = data[:, data.var.highly_variable]
 
 #regress out data
