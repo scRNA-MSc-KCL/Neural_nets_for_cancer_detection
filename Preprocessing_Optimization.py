@@ -69,11 +69,9 @@ if FIGS == "y":
 print("The original shape of the data1 is {}".format(data))
 
 #filter data 
-sc.pp.filter_genes(data, min_cells=3)
+sc.pp.filter_genes(data, min_cells=10)
 print("A", data.shape)
 #remove mitochonrial
-data.var['mt'] = data.var_names.str.startswith('MT-')  # annotate the group of mitochondrial genes as 'mt'
-sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
 if FIGS == "y":
   data.var['mt'] = data.var_names.str.startswith('MT-')
   sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
@@ -85,10 +83,8 @@ if FIGS == "y":
 #data = data[data.obs.pct_counts_mt < 5, :]
 #normalize data
 sc.pp.normalize_total(data, target_sum=10000)
-print("C", data.shape)
 #logarithmize data
 sc.pp.log1p(data)
-print("D", data.shape)
 
 #select top x highly variable genes
 #sc.pp.highly_variable_genes(data, n_top_genes=1000)
@@ -100,10 +96,6 @@ if FIGS == "y":
   sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
 data = data[:, data.var.highly_variable]
 print("E", data.shape)
-
-#regress out data
-sc.pp.regress_out(data, ['total_counts', 'pct_counts_mt'])
-print("F", data.shape)
 
 #scale to unit variance
 sc.pp.scale(data, max_value=10)
