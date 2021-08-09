@@ -98,8 +98,8 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
   return df
 
 #define variables
-#Nodes = np.arange(50, 2050, 200)
-Nodes = [500]
+Nodes = np.arange(50, 2050, 200)
+#Nodes = [500]
 #activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 activation = ["tanh"]
 #optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
