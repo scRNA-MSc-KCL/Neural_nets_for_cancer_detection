@@ -35,9 +35,19 @@ args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
+  file_loc = "DS1/CNN"
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
+  file_loc = "DS2/CNN"
+if args.path == 3:
+  labels =pd.read_csv("labels_3.csv", names = ["X"])
+  data = sc.read("results_3.h5ad")
+  file_loc = "DS3/CNN"
+if args.path == 4:
+  labels =pd.read_csv("labels_4.csv", names = ["X"])
+  data = sc.read("results_4.h5ad")
+  file_loc = "DS4/CNN"
 num_lab = len(labels)
 counter = 0
 
@@ -53,9 +63,12 @@ y_train = to_categorical(y_train, num_lab)
 y_test = to_categorical(y_test, num_lab)
 
 #scale data
-ln = LogScaler()
-X_train_norm = ln.fit_transform(X_train)
-X_test_norm = ln.transform(X_test)
+#ln = LogScaler()
+#X_train_norm = ln.fit_transform(X_train)
+#X_test_norm = ln.transform(X_test)
+
+X_train_norm = X_train
+X_test_norm = X_test
 
 #split data using pca
 #thoughts, tsne versus pca for image extraction
@@ -66,7 +79,7 @@ it = ImageTransformer(feature_extractor='pca',
 fig = plt.figure(figsize=(5, 5))
 _ = it.fit(X_train_norm, plot=True)
 
-fig.savefig('CNN_graphs/test_graph1')
+fig.savefig('test_results/{}/{}/fig_1'.format(file_loc, start))
 
 #convert to pixel image version
 fdm = it.feature_density_matrix()
@@ -81,7 +94,7 @@ for _, spine in ax.spines.items():
     spine.set_visible(True)
 _ = plt.title("Genes per pixel")
 
-fig.savefig('CNN_graphs/test_graph2')
+fig.savefig('test_results/{}/{}/fig_2'.format(file_loc, start))
 
 X_train_img = it.transform(X_train_norm)
 X_train_img = it.fit_transform(X_train_norm)
@@ -105,7 +118,7 @@ net.add(Dense(num_lab, activation='softmax'))
 net.summary()
 from contextlib import redirect_stdout
 
-with open('CNN_graphs/modelsummary.txt', 'w') as f:
+with open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
     with redirect_stdout(f):
         model.summary()
 
@@ -123,13 +136,14 @@ plt.plot(history.history['val_loss'], label='validation loss')
 plt.xlabel('epochs')
 plt.ylabel('loss')
 plt.legend()
-fig.savefig('CNN_graphs/test_graph3')
+fig.savefig('test_results/{}/{}/fig_3'.format(file_loc, start))
 
 outputs = net.predict(X_test_img)
 labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
 misclassified =  (np.sum(labels_predicted != y_test_decoded)/(len(y_test_decoded)))*100
-print(misclassified)
-
+open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'a') as f:
+f.write("percentage missclassified on test set is {}\n".format(misclassified))
 end = time.time()
-print("The time taken to complete this program was {}".format(end - start))
+f.write("The time taken to complete this program was {}".format(end - start))
+f.close()
