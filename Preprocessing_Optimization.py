@@ -68,7 +68,7 @@ print("The original shape of the data1 is {}".format(data))
 sc.pp.filter_genes(data, min_cells=3)
 #remove mitochonrial
 if FIGS == "y":
-  adata.var['mt'] = data.var_names.str.startswith('MT-')
+  data.var['mt'] = data.var_names.str.startswith('MT-')
   sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
   sc.pl.violin(data, ['n_genes_by_counts', 'total_counts', 'pct_counts_mt'],
              jitter=0.4, multi_panel=True, save = 'mitochonrial_and_violin_plots.png')
