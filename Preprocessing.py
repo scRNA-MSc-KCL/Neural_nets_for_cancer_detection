@@ -62,19 +62,19 @@ if args.path == 3:
   results = 'results_3.h5ad'
 if args.path == 4:
   #unzip gz files
-  import tarfile
-  tf = tarfile.open("GSE131508_RAW.tar")
-  tf.extractall()
+  #import tarfile
+  #tf = tarfile.open("GSE131508_RAW.tar")
+  #tf.extractall()
   #Unzip files
   #cherry positive
-  unzip_file('GSM3783354_4T1_CherryPositive_RawCounts.txt.gz')
-  unzip_file('GSM3783356_4T1_CherryNegative_RawCounts.txt.gz')
-  unzip_gz_file("GSM3783354_4T1_CherryPositive_RawCounts.txt", "GSM3783354_4T1_CherryPositive_RawCounts.csv")
+  #unzip_file('GSM3783354_4T1_CherryPositive_RawCounts.txt.gz')
+  #unzip_file('GSM3783356_4T1_CherryNegative_RawCounts.txt.gz')
+  #unzip_gz_file("GSM3783354_4T1_CherryPositive_RawCounts.txt", "GSM3783354_4T1_CherryPositive_RawCounts.csv")
   #cherry negative
-  unzip_file('GSM3783356_4T1_CherryNegative_RawCounts.txt.gz')
-  unzip_gz_file("GSM3783356_4T1_CherryNegative_RawCounts.txt", "GSM3783356_4T1_CherryNegative_RawCounts.csv")
-  data_pos = pd.read_csv("Original_data/GSM3783354_4T1_CherryPositive_RawCounts.csv")
-  data_neg = pd.read_csv("Original_data/GSM3783356_4T1_CherryNegative_RawCounts.csv")
+  #unzip_file('GSM3783356_4T1_CherryNegative_RawCounts.txt.gz')
+  #unzip_gz_file("GSM3783356_4T1_CherryNegative_RawCounts.txt", "GSM3783356_4T1_CherryNegative_RawCounts.csv")
+  data_pos = pd.read_csv("GSM3783354_4T1_CherryPositive_RawCounts.csv")
+  data_neg = pd.read_csv("GSM3783356_4T1_CherryNegative_RawCounts.csv")
   data_pos = data_pos.drop(["Unnamed: 0"], axis = 1)
   data_neg = data_neg.drop(["Unnamed: 0"], axis = 1)
   data_pos = data_pos.set_index("Gene_Symbol")
