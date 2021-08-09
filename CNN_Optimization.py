@@ -89,7 +89,7 @@ it = ImageTransformer(feature_extractor='pca',
 fig = plt.figure(figsize=(5, 5))
 _ = it.fit(X_train_norm, plot=True)
 
-fig.savefig('test_results/{}/{}/fig_1'.format(file_loc, start))
+fig.savefig('{}/{}/fig_1'.format(file_loc, start))
 
 #convert to pixel image version
 fdm = it.feature_density_matrix()
@@ -104,7 +104,7 @@ for _, spine in ax.spines.items():
     spine.set_visible(True)
 _ = plt.title("Genes per pixel")
 
-fig.savefig('test_results/{}/{}/fig_2'.format(file_loc, start))
+fig.savefig('{}/{}/fig_2'.format(file_loc, start))
 
 X_train_img = it.transform(X_train_norm)
 X_train_img = it.fit_transform(X_train_norm)
@@ -128,7 +128,7 @@ net.add(Dense(num_lab, activation='softmax'))
 net.summary()
 from contextlib import redirect_stdout
 
-with open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
+with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
     with redirect_stdout(f):
         model.summary()
 
@@ -152,7 +152,7 @@ outputs = net.predict(X_test_img)
 labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
 misclassified =  (np.sum(labels_predicted != y_test_decoded)/(len(y_test_decoded)))*100
-f = open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'a')
+f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
 f.write("percentage missclassified on test set is {}\n".format(misclassified))
 print("misclassified; ", misclassified)
 end = time.time()
