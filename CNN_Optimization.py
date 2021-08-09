@@ -61,7 +61,7 @@ except OSError:
 else:
   print("Successfully created the directory %s" % path)
 
-#perform pca on data
+"""#perform pca on data
 print("The original shape of the data is {}".format(data.shape))
 sc.tl.pca(data, svd_solver='arpack')
 
@@ -158,4 +158,4 @@ print("misclassified; ", misclassified)
 end = time.time()
 f.write("The time taken to complete this program was {}".format(end - start))
 print("The time taken to complete this program was {}".format(end - start))
-f.close()
+f.close()"""
