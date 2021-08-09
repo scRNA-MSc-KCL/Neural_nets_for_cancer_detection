@@ -142,7 +142,7 @@ outputs = net.predict(X_test_img)
 labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
 misclassified =  (np.sum(labels_predicted != y_test_decoded)/(len(y_test_decoded)))*100
-open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'a') as f:
+f = open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'a')
 f.write("percentage missclassified on test set is {}\n".format(misclassified))
 print("misclassified; ", misclassified)
 end = time.time()
