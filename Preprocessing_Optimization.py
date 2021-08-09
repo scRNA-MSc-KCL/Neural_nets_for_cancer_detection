@@ -80,6 +80,7 @@ if FIGS == "y":
   sc.pl.scatter(data, x='total_counts', y='pct_counts_mt', save = 'mitochonrial_and_violin_plots.png')
   sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts', save ='pct_counts_mt_scatter.png')
 #remove genes with high counts
+sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
 data = data[data.obs.n_genes_by_counts < 2500, :]
 print("B", data.shape)
 #normalize data
