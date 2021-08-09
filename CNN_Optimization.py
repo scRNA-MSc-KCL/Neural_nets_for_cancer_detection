@@ -25,6 +25,7 @@ import scanpy as sc
 import argparse
 import anndata
 import time
+import os
 
 #Load data
 start = time.time()
