@@ -71,13 +71,13 @@ sc.pp.filter_genes(data, min_cells=3)
 if FIGS == "y":
   adata.var['mt'] = data.var_names.str.startswith('MT-')
   sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
-  fig = sc.pl.violin(data, ['n_genes_by_counts', 'total_counts', 'pct_counts_mt'],
+  sc.pl.violin(data, ['n_genes_by_counts', 'total_counts', 'pct_counts_mt'],
              jitter=0.4, multi_panel=True)
-  fig.savefig('{}/{}/mitochonrial_and_violin_plots'.format(file_loc, start))
+  pl.savefig('{}/{}/mitochonrial_and_violin_plots'.format(file_loc, start))
   sc.pl.scatter(data, x='total_counts', y='pct_counts_mt')
-  fig.savefig('{}/{}/pct_counts_mt_scatter'.format(file_loc, start))
+  pl.savefig('{}/{}/pct_counts_mt_scatter'.format(file_loc, start))
   sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts')
-  fig.savefig('{}/{}/n_genes_by_count_scatter'.format(file_loc, start))
+  pl.savefig('{}/{}/n_genes_by_count_scatter'.format(file_loc, start))
 #remove genes with high counts
 data = data[data.obs.n_genes_by_counts < 2500, :]
 #normalize data
