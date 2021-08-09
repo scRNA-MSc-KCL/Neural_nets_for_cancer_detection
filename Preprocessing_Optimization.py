@@ -48,6 +48,7 @@ if args.path == 1:
   file_loc = "test_results/DS1/SVM"
 
 labels = label_adaption(labels)
+
 filter_genes = [1, 5, 10]
 remove_high_counts = [1000, 2500, 5000]
 normalize = ["yes", "no"]
@@ -60,6 +61,7 @@ regress_data = ["yes", "no"]
 unit_variance = ["yes", "no"]
 FIGS = "n"
 
+#def SVM_Optimizer(filter_genes, remove_high_counts, normalize, filter_method, filter_by_highly_variable_genes, regress_data, unit
 if FIGS == "y":
   sc.pl.highest_expr_genes(data, n_top=20, save ='highly_expressed_genes.png')
 
@@ -68,6 +70,7 @@ print("The original shape of the data1 is {}".format(data))
 
 #filter data 
 sc.pp.filter_genes(data, min_cells=3)
+print("A", data.shape)
 #remove mitochonrial
 if FIGS == "y":
   data.var['mt'] = data.var_names.str.startswith('MT-')
@@ -76,13 +79,15 @@ if FIGS == "y":
              jitter=0.4, multi_panel=True, save = 'mitochonrial_and_violin_plots.png')
   sc.pl.scatter(data, x='total_counts', y='pct_counts_mt', save = 'mitochonrial_and_violin_plots.png')
   sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts', save ='pct_counts_mt_scatter.png')
-  #pl.savefig('{}/{}/n_genes_by_count_scatter'.format(file_loc, start))
 #remove genes with high counts
 data = data[data.obs.n_genes_by_counts < 2500, :]
+print("B", data.shape)
 #normalize data
 sc.pp.normalize_total(data, target_sum=10000)
+print("C", data.shape)
 #logarithmize data
 sc.pp.log1p(data)
+print("D", data.shape)
 
 #select top x highly variable genes
 #sc.pp.highly_variable_genes(data, n_top_genes=1000)
@@ -92,14 +97,16 @@ sc.pp.log1p(data)
 sc.pp.highly_variable_genes(data, min_mean=0.0125, max_mean=3, min_disp=0.5)
 if FIGS == "y":
   sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
-  #pl.savefig('{}/{}/highly_variable_summary_stats'.format(file_loc, start))
 data = data[:, data.var.highly_variable]
+print("E", data.shape)
 
 #regress out data
 sc.pp.regress_out(data, ['total_counts', 'pct_counts_mt'])
+print("F", data.shape)
 
 #scale to unit variance
 sc.pp.scale(data, max_value=10)
+print("G", data.shape)
 
 print("The final shape of the data is {}".format(data.shape))
 
