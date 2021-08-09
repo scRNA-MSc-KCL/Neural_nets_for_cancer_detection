@@ -136,7 +136,7 @@ with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
 net.compile(loss='categorical_crossentropy', optimizer='adam')
 history = net.fit(X_train_img, y_train,
 validation_data=(X_test_img, y_test),
- epochs=100,
+ epochs=25,
  batch_size=256)
 
 #get CNN plot
