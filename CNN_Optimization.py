@@ -146,7 +146,7 @@ plt.plot(history.history['val_loss'], label='validation loss')
 plt.xlabel('epochs')
 plt.ylabel('loss')
 plt.legend()
-fig.savefig('test_results/{}/{}/fig_3'.format(file_loc, start))
+fig.savefig('{}/{}/fig_3'.format(file_loc, start))
 
 outputs = net.predict(X_test_img)
 labels_predicted= np.argmax(outputs, axis=1)
