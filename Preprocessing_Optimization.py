@@ -10,6 +10,8 @@ import argparse
 import anndata
 import os
 import time
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
 
 def unzip_file(filename):
   os.system('gunzip ' + filename)
@@ -56,7 +58,7 @@ max_mean = 3
 mean_disp = 0.5
 regress_data = ["yes", "no"]
 unit_variance = ["yes", "no"]
-FIGS = "y"
+FIGS = "n"
 
 if FIGS == "y":
   sc.pl.highest_expr_genes(data, n_top=20, save ='highly_expressed_genes.png')
