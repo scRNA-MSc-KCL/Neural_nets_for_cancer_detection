@@ -36,19 +36,19 @@ args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
-  file_loc = "DS1/CNN"
+  file_loc = "test_results/DS1/CNN"
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
-  file_loc = "DS2/CNN"
+  file_loc = "test_results/DS2/CNN"
 if args.path == 3:
   labels =pd.read_csv("labels_3.csv", names = ["X"])
   data = sc.read("results_3.h5ad")
-  file_loc = "DS3/CNN"
+  file_loc = "test_results/DS3/CNN"
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
-  file_loc = "DS4/CNN"
+  file_loc = "test_results/DS4/CNN"
 num_lab = len(labels)
 counter = 0
 
