@@ -58,7 +58,7 @@ def create_figures(data, filter_method, filter_by_highly_variable_genes):
              jitter=0.4, multi_panel=True, save = 'mitochonrial_and_violin_plots.png')
     sc.pl.scatter(data, x='total_counts', y='pct_counts_mt', save = 'mitochonrial_and_violin_plots.png')
     sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts', save ='pct_counts_mt_scatter.png')
-    if filter_method = "highly_variable":
+    if filter_method == "highly_variable":
       sc.pp.highly_variable_genes(data, n_top_genes=filter_by_highly_variable_genes)
       data = data[:, data.var.highly_variable]
       sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
