@@ -1,0 +1,4 @@
+,Min_number_of_cells_per_gene,normalized,filter_method,number_of_top_genes,scaled_to_unit_var,percentage_missclassified
+0,1,yes,highly_variable,500,yes,0.0
+1,5,yes,highly_variable,1000,no,0.0
+2,10,yes,highly_variable,2000,yes,0.0
