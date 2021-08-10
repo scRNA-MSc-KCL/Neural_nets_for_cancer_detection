@@ -48,8 +48,7 @@ def create_figures(data, filter_method, filter_by_highly_variable_genes):
       data = data[:, data.var.highly_variable]
       sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
 
-"""def SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var):
-  adata = data.copy()
+def SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var):
   filter_genes_list = []
   normalize_list = []
   unit_var_list = []
@@ -57,23 +56,28 @@ def create_figures(data, filter_method, filter_by_highly_variable_genes):
   filter_method = []
   #filter data 
   for a in filter_genes:
-    sc.pp.filter_genes(adata, min_cells=a)
-    print("after filtering genes with min cells", adata.shape)
+    filtered_1_data = data.copy()
+    sc.pp.filter_genes(filtered_1_data, min_cells=a)
+    print("after filtering genes with min cells", filtered_1_data.shape)
     #normalize data
     for b in normalize:
+      normalized_data = filtered_1_data.copy()
       if b == "yes":
-        sc.pp.normalize_total(adata, target_sum=10000)
+        sc.pp.normalize_total(normalized_data, target_sum=10000)
         #logarithmize data
-      sc.pp.log1p(adata)
+      logarithmized_data = normalized_data.copy()
+      sc.pp.log1p(logarithmized_data)
       #filter genes
-      sc.pp.highly_variable_genes(adata, min_mean=0.0125, max_mean=3, min_disp=0.5)
-      adata = adata[:, adata.var.highly_variable]
+      filtered_2_data = logarithmized_data.copy()
+      sc.pp.highly_variable_genes(filtered_2_data, min_mean=0.0125, max_mean=3, min_disp=0.5)
+      filtered_2_data = filtered_2_data[:, filtered_2_data.var.highly_variable]
           #filter based on whichever genes are most variable
           #select top x highly variable genes
       for e in unit_var:
+        filtered_3_data = filtered_2_data.copy()
         if e == "yes":
-          sc.pp.scale(adata, max_value=10)
-        print("clip values with high variance", adata.shape)
+          sc.pp.scale(filtered_3_data, max_value=10)
+        print("clip values with high variance", filtered_3_data.shape)
         filter_genes_list.append(a)
         normalize_list.append(b)
         unit_var_list.append(e)
@@ -83,11 +87,10 @@ def create_figures(data, filter_method, filter_by_highly_variable_genes):
         Classifier.fit(X_train, y_train)
         print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
         percentage_missclassified = (1 - Classifier.score(X_test, y_test))*100 
-        percentage_missclassified_list.append(percentage_missclassified)
-        adata = data.copy()    
+        percentage_missclassified_list.append(percentage_missclassified)  
   df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, unit_var_list, percentage_missclassified_list)),
                         columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "scaled_to_unit_var", "percentage_missclassified"])
-  return df"""
+  return df
    
 #filter based on variable genes
 
@@ -175,11 +178,11 @@ mean_disp = 0.5
 unit_var= ["yes", "no"]
 
             
-#results_dataframe_method_1 = SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var)  
-#results_dataframe_method_1.to_csv("{}/{}/Method_1.csv".format(file_loc, start))  
+results_dataframe_method_1 = SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var)  
+results_dataframe_method_1.to_csv("{}/{}/Method_1.csv".format(file_loc, start))  
 
-results_dataframe_method_2 = SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_highly_variable_gene, unit_var)  
-results_dataframe_method_2.to_csv("{}/{}/Method_2.csv".format(file_loc, start))  
+#results_dataframe_method_2 = SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_highly_variable_gene, unit_var)  
+#results_dataframe_method_2.to_csv("{}/{}/Method_2.csv".format(file_loc, start))  
 
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
