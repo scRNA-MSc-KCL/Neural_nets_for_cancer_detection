@@ -43,7 +43,7 @@ args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("Original_data/Labels.csv")
   data = sc.read_csv("Original_data/Combined_10x_CelSeq2_5cl_data.csv")
-  file_loc = "test_results/DS1/SVM"
+  file_loc = "DS1/SVM"
 
 labels = label_adaption(labels)
 
