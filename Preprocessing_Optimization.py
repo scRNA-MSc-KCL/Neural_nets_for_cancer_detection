@@ -104,21 +104,21 @@ def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_b
           if e == "yes":
             sc.pp.scale(adata, max_value=10)
             print("clip values with high variance", adata.shape)
-            filter_genes_list.append(a)
-            normalize_list.append(b)
-            filter_method_list.append(c)
-            unit_var_list.append(e)
-            if c == "summary_stat":
-              filter_by_highly_variable_genes_list.append("na")
-            if c == "highly_variable":
-              filter_by_highly_variable_genes_list.append("d")
-            X_train, X_test, y_train, y_test = train_test_split(adata.X, labels, test_size=0.2, random_state=42)
-            Classifier = sklearn.svm.SVC(kernel = "linear")
-            Classifier.fit(X_train, y_train)
-            print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
-            percentage_missclassified = (1 - Classifier.score(X_test, y_test))*100 
-            percentage_missclassified_list.append(percentage_missclassified)
-            adata = data.copy()    
+          filter_genes_list.append(a)
+          normalize_list.append(b)
+          filter_method_list.append(c)
+          unit_var_list.append(e)
+          if c == "summary_stat":
+            filter_by_highly_variable_genes_list.append("na")
+          if c == "highly_variable":
+            filter_by_highly_variable_genes_list.append("d")
+          X_train, X_test, y_train, y_test = train_test_split(adata.X, labels, test_size=0.2, random_state=42)
+          Classifier = sklearn.svm.SVC(kernel = "linear")
+          Classifier.fit(X_train, y_train)
+          print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
+          percentage_missclassified = (1 - Classifier.score(X_test, y_test))*100 
+          percentage_missclassified_list.append(percentage_missclassified)
+          adata = data.copy()    
   df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method_list, filter_by_highly_variable_genes_list, unit_var_list, percentage_missclassified_list)),
                         columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "number_of_top_genes", "scaled_to_unit_var", "percentage_missclassified"])
   return df
