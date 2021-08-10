@@ -133,9 +133,6 @@ def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_high
                         columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "number_of_top_genes", "scaled_to_unit_var", "percentage_missclassified"])
   return df      
 
-#read data
-print("The original shape of the data1 is {}".format(data))
-
 start = time.time()
 
 parser = argparse.ArgumentParser(description='Select dataset')
