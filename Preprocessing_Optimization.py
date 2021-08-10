@@ -101,24 +101,26 @@ def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_high
   filter_method = []
   #filter data 
   for a in filter_genes:
-    sc.pp.filter_genes(adata, min_cells=a)
-    print("after filtering genes with min cells", adata.shape)
+    filtered_data = sc.pp.filter_genes(adata, min_cells=a)
+    print("after filtering genes with min cells", filtered_data.shape)
     #normalize data
     for b in normalize:
       if b == "yes":
-        sc.pp.normalize_total(adata, target_sum=10000)
+        normalized_data = sc.pp.normalize_total(filtered_data, target_sum=10000)
         #logarithmize data
-      sc.pp.log1p(adata)
+      else: 
+        normalized_data = filtered_data
+      logarithmized_data = sc.pp.log1p(normalized_data)
       #filter genes
       for d in filter_by_highly_variable_gene:
-        sc.pp.highly_variable_genes(adata, n_top_genes=d)
-        print("d", d)
-        adata = adata[:, adata.var.highly_variable]
+        filtered_genes = sc.pp.highly_variable_genes(logarithmized_data, n_top_genes=d)
+        filtered_genes = filtered_genes[:, filtered_genes.var.highly_variable]
         for e in unit_var:
           if e == "yes":
-            sc.pp.scale(adata, max_value=10)
+            clipped_data = sc.pp.scale(filtered_genes, max_value=10)
             print("clip values with high variance", adata.shape)
           else:
+            clipped_data = filtered_genes
             print("not clipped", adata.shape)
           filter_genes_list.append(a)
           normalize_list.append(b)
@@ -130,8 +132,7 @@ def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_high
           Classifier.fit(X_train, y_train)
           print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
           percentage_missclassified = (1 - Classifier.score(X_test, y_test))*100 
-          percentage_missclassified_list.append(percentage_missclassified)
-          adata = data.copy()    
+          percentage_missclassified_list.append(percentage_missclassified) 
   df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, filter_by_highly_variable_genes_list, unit_var_list, percentage_missclassified_list)),
                         columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "number_of_top_genes", "scaled_to_unit_var", "percentage_missclassified"])
   return df      
