@@ -117,7 +117,9 @@ def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_high
         for e in unit_var:
           if e == "yes":
             sc.pp.scale(adata, max_value=10)
-          print("clip values with high variance", adata.shape)
+            print("clip values with high variance", adata.shape)
+          else:
+            print("not clipped", adata.shape)
           filter_genes_list.append(a)
           normalize_list.append(b)
           filter_by_highly_variable_genes_list.append(d)
