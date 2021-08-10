@@ -22,3 +22,5 @@ Total params: 24,826,302
 Trainable params: 24,826,238
 Non-trainable params: 64
 _________________________________________________________________
+percentage missclassified on test set is 9.880474410448107
+The time taken to complete this program was 72384.68415689468

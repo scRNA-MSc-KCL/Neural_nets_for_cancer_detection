@@ -1,0 +1,11 @@
+,optimizer,loss_function,epochs,node1_length,activation_layer1,node2_length,activation_layer2,perceptage_misclassified
+0,RMSprop,categorical_crossentropy,3,50,tanh,50,tanh,14.857142857142858
+1,RMSprop,categorical_crossentropy,3,250,tanh,250,tanh,67.2
+2,RMSprop,categorical_crossentropy,3,450,tanh,450,tanh,67.2
+3,RMSprop,categorical_crossentropy,3,650,tanh,650,tanh,67.2
+4,RMSprop,categorical_crossentropy,3,850,tanh,850,tanh,67.2
+5,RMSprop,categorical_crossentropy,3,1050,tanh,1050,tanh,67.2
+6,RMSprop,categorical_crossentropy,3,1250,tanh,1250,tanh,67.2
+7,RMSprop,categorical_crossentropy,3,1450,tanh,1450,tanh,82.39999999999999
+8,RMSprop,categorical_crossentropy,3,1650,tanh,1650,tanh,77.60000000000001
+9,RMSprop,categorical_crossentropy,3,1850,tanh,1850,tanh,67.2
