@@ -116,7 +116,7 @@ def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_b
           X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
           Classifier = sklearn.svm.SVC(kernel = "linear")
           Classifier.fit(X_train, y_train)
-          print("the classification result with the current settings and a {} kernal is {}".format(i, Classifier.score(X_test, y_test)))
+          print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
           percentage_missclassified = (1 - Classifier.score(X_test, y_test))*100 
           percentage_missclassified_list.append(percentage_missclassified)
   df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method_list, filter_by_highly_variable_genes_list, unit_var_list, percentage_misclassified)),
