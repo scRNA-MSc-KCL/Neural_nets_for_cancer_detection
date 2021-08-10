@@ -129,7 +129,7 @@ def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_b
 filter_genes = [1, 5, 10]
 #filter_genes = [1]
 #normalize = ["yes", "no"]
-normalize = ["yes"]
+normalize = ["no"]
 #filter_method = ["highly_variable", "summary_stat"]
 filter_method = ["highly_variable"]
 filter_by_highly_variable_gene = [500, 1000, 2000]
