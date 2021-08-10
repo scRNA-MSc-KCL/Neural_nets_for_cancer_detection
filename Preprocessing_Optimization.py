@@ -97,7 +97,6 @@ def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_b
           #select top x highly variable genes
         elif c == "highly_variable":
           for d in filter_by_highly_variable_gene:
-            filter_by_highly_variable_genes_list.append(d)
             sc.pp.highly_variable_genes(adata, n_top_genes=d)
             adata = adata[:, adata.var.highly_variable]
         for e in unit_var:
@@ -127,7 +126,7 @@ filter_genes = [1, 5, 10]
 #filter_genes = [1]
 normalize = ["yes", "no"]
 #normalize = ["no"]
-#filter_method = ["highly_variable", "summary_stat"]
+filter_method = ["highly_variable", "summary_stat"]
 filter_method = ["highly_variable"]
 filter_by_highly_variable_gene = [500, 1000, 2000]
 #filter_by_highly_variable_gene = [500]
