@@ -129,9 +129,9 @@ def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_high
           percentage_missclassified = (1 - Classifier.score(X_test, y_test))*100 
           percentage_missclassified_list.append(percentage_missclassified)
           adata = data.copy()    
-  df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, filter_by_highly_variable_genes_list, unit_var_list, percentage_missclassified_list)),
-                        columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "number_of_top_genes", "scaled_to_unit_var", "percentage_missclassified"])
-  return df      
+  #df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, filter_by_highly_variable_genes_list, unit_var_list, percentage_missclassified_list)),
+   #                     columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "number_of_top_genes", "scaled_to_unit_var", "percentage_missclassified"])
+  #return df      
 
 start = time.time()
 
@@ -159,8 +159,6 @@ filter_genes = [1, 5, 10]
 #filter_genes = [1]
 normalize = ["yes", "no"]
 #normalize = ["no"]
-filter_method = ["highly_variable", "summary_stat"]
-#filter_method = ["highly_variable"]
 filter_by_highly_variable_gene = [500, 1000, 2000]
 #filter_by_highly_variable_gene = [500]
 #min_mean = [0.125, .25]
@@ -171,13 +169,12 @@ max_mean = 3
 mean_disp = 0.5
 unit_var= ["yes", "no"]
 
-
             
 #results_dataframe_method_1 = SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var)  
 #results_dataframe_method_1.to_csv("{}/{}/Method_1.csv".format(file_loc, start))  
 
 results_dataframe_method_2 = SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_highly_variable_gene, unit_var)  
-results_dataframe_method_2.to_csv("{}/{}/Method_2.csv".format(file_loc, start))  
+#results_dataframe_method_2.to_csv("{}/{}/Method_2.csv".format(file_loc, start))  
 
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
