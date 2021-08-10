@@ -69,7 +69,7 @@ def create_figures(data, filter_method, filter_by_highly_variable_genes):
       
   
 
-def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_by_highly_variable_genes, unit_var, FIGS):
+def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_by_highly_variable_gene, unit_var, FIGS):
   filter_genes_list = []
   normalize_list = []
   filter_method_list = []
@@ -140,7 +140,7 @@ mean_disp = 0.5
 unit_var= ["yes", "no"]
 FIGS = "n"
             
-results_dataframe = SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_by_highly_variable_genes, unit_var, FIGS)  
+results_dataframe = SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_by_highly_variable_gene, unit_var, FIGS)  
 results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))  
   
 end = time.time()
