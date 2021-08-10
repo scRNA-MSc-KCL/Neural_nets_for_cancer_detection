@@ -31,25 +31,6 @@ def label_adaption(labels):
   labels = labels.to_numpy()
   return labels  
 
-start = time.time()
-
-#3 is UMI raw
-#4 is normalized
-
-parser = argparse.ArgumentParser(description='Select dataset')
-parser.add_argument('path', type = int)
-
-args = parser.parse_args()
-if args.path == 1:
-  labels =pd.read_csv("Original_data/Labels.csv")
-  data = sc.read_csv("Original_data/Combined_10x_CelSeq2_5cl_data.csv")
-  file_loc = "DS1/SVM"
-
-labels = label_adaption(labels)
-
-#read data
-print("The original shape of the data1 is {}".format(data))
-
 def create_figures(data, filter_method, filter_by_highly_variable_genes):
     sc.pl.highest_expr_genes(data, n_top=20, save ='highly_expressed_genes.png')
     data.var['mt'] = data.var_names.str.startswith('MT-')
@@ -66,8 +47,6 @@ def create_figures(data, filter_method, filter_by_highly_variable_genes):
       sc.pp.highly_variable_genes(data, min_mean=0.0125, max_mean=3, min_disp=0.5)
       data = data[:, data.var.highly_variable]
       sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
-      
-#filter based on statistics
 
 def SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var):
   adata = data.copy()
@@ -152,7 +131,33 @@ def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_high
           adata = data.copy()    
   df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, filter_by_highly_variable_genes_list, unit_var_list, percentage_missclassified_list)),
                         columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "number_of_top_genes", "scaled_to_unit_var", "percentage_missclassified"])
-  return df
+  return df      
+
+#read data
+print("The original shape of the data1 is {}".format(data))
+
+start = time.time()
+
+parser = argparse.ArgumentParser(description='Select dataset')
+parser.add_argument('path', type = int)
+args = parser.parse_args()
+if args.path == 1:
+  labels =pd.read_csv("Original_data/Labels.csv")
+  data = sc.read_csv("Original_data/Combined_10x_CelSeq2_5cl_data.csv")
+  file_loc = "test_results/DS1/SVM"
+
+#make directory for results
+path = os.getcwd()
+path = os.path.join(path, "{}/{}".format(file_loc,start))
+try:
+  os.makedirs(path)
+except OSError:
+  print("Creation of the directory %s failed" % path)
+else:
+  print("Successfully created the directory %s" % path)
+
+labels = label_adaption(labels)
+
 filter_genes = [1, 5, 10]
 #filter_genes = [1]
 normalize = ["yes", "no"]
@@ -170,13 +175,12 @@ mean_disp = 0.5
 unit_var= ["yes", "no"]
 
 
-
             
 results_dataframe_method_1 = SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var)  
-results_dataframe_method_1.to_csv("test_results/{}/{}/Method_1.csv".format(file_loc, start))  
+results_dataframe_method_1.to_csv("{}/{}/Method_1.csv".format(file_loc, start))  
 
 results_dataframe_method_2 = SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_highly_variable_gene, unit_var)  
-results_dataframe_method_2.to_csv("test_results/{}/{}/Method_2.csv".format(file_loc, start))  
+results_dataframe_method_2.to_csv("{}/{}/Method_2.csv".format(file_loc, start))  
 
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
