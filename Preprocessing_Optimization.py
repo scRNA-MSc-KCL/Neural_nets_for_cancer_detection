@@ -48,7 +48,7 @@ def create_figures(data, filter_method, filter_by_highly_variable_genes):
       data = data[:, data.var.highly_variable]
       sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
 
-def SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var):
+"""def SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var):
   adata = data.copy()
   filter_genes_list = []
   normalize_list = []
@@ -87,7 +87,7 @@ def SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var):
         adata = data.copy()    
   df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, unit_var_list, percentage_missclassified_list)),
                         columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "scaled_to_unit_var", "percentage_missclassified"])
-  return df
+  return df"""
    
 #filter based on variable genes
 
@@ -173,8 +173,8 @@ unit_var= ["yes", "no"]
 
 
             
-results_dataframe_method_1 = SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var)  
-results_dataframe_method_1.to_csv("{}/{}/Method_1.csv".format(file_loc, start))  
+#results_dataframe_method_1 = SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var)  
+#results_dataframe_method_1.to_csv("{}/{}/Method_1.csv".format(file_loc, start))  
 
 results_dataframe_method_2 = SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_highly_variable_gene, unit_var)  
 results_dataframe_method_2.to_csv("{}/{}/Method_2.csv".format(file_loc, start))  
