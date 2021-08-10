@@ -156,12 +156,12 @@ else:
 
 labels = label_adaption(labels)
 
-filter_genes = [1, 5, 10]
-#filter_genes = [1]
+#filter_genes = [1, 5, 10]
+filter_genes = [1]
 normalize = ["yes", "no"]
 #normalize = ["no"]
-filter_by_highly_variable_gene = [500, 1000, 2000]
-#filter_by_highly_variable_gene = [500]
+#filter_by_highly_variable_gene = [500, 1000, 2000]
+filter_by_highly_variable_gene = [500]
 #min_mean = [0.125, .25]
 #max_mean = [3, 6]
 #mean_disp = [0.5, 1]
