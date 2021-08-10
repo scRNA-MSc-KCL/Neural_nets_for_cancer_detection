@@ -50,14 +50,7 @@ labels = label_adaption(labels)
 #read data
 print("The original shape of the data1 is {}".format(data))
 
-def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_by_highly_variable_genes, unit_var, FIGS):
-  filter_genes_list = []
-  normalize_list = []
-  filter_method_list = []
-  filter_by_highly_variable_genes_list = []
-  unit_var_list = []
-  percentage_missclassified_list = []
-  if FIGS == "y":
+def create_figures(data, filter_method, filter_by_highly_variable_genes):
     sc.pl.highest_expr_genes(data, n_top=20, save ='highly_expressed_genes.png')
     data.var['mt'] = data.var_names.str.startswith('MT-')
     sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
@@ -65,6 +58,24 @@ def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_b
              jitter=0.4, multi_panel=True, save = 'mitochonrial_and_violin_plots.png')
     sc.pl.scatter(data, x='total_counts', y='pct_counts_mt', save = 'mitochonrial_and_violin_plots.png')
     sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts', save ='pct_counts_mt_scatter.png')
+    if filter_method = "highly_variable":
+      sc.pp.highly_variable_genes(data, n_top_genes=filter_by_highly_variable_genes)
+      data = data[:, data.var.highly_variable]
+      sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
+    else:
+      sc.pp.highly_variable_genes(data, min_mean=0.0125, max_mean=3, min_disp=0.5)
+      data = data[:, data.var.highly_variable]
+      sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
+      
+  
+
+def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_by_highly_variable_genes, unit_var, FIGS):
+  filter_genes_list = []
+  normalize_list = []
+  filter_method_list = []
+  filter_by_highly_variable_genes_list = []
+  unit_var_list = []
+  percentage_missclassified_list = []
   #filter data 
   for a in filter_genes:
     filter_genes_list.append(a)
@@ -102,9 +113,6 @@ def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_b
               if e == "yes":
                 sc.pp.scale(data, max_value=10)
                 print("clip values with high variance", data.shape)
-         if FIGS == "y":
-          sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
-          print("after removing highly variable genes", data.shape)
           X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
           Classifier = sklearn.svm.SVC(kernel = "linear")
           Classifier.fit(X_train, y_train)
