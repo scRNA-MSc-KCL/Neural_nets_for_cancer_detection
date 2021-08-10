@@ -103,6 +103,7 @@ def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_b
             if e == "yes":
               sc.pp.scale(data, max_value=10)
               print("clip values with high variance", data.shape)
+              
         elif c == "highly_variable":
           for d in filter_by_highly_variable_gene:
             filter_by_highly_variable_genes_list.append(d)
@@ -119,6 +120,7 @@ def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_b
           print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
           percentage_missclassified = (1 - Classifier.score(X_test, y_test))*100 
           percentage_missclassified_list.append(percentage_missclassified)
+          data = data.raw()
   df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method_list, filter_by_highly_variable_genes_list, unit_var_list, percentage_missclassified_list)),
                         columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "number_of_top_genes", "scaled_to_unit_var", "percentage_missclassified"])
   return df
@@ -138,6 +140,9 @@ min_mean = 0.125
 max_mean = 3
 mean_disp = 0.5
 unit_var= ["yes", "no"]
+
+
+
             
 results_dataframe = SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_by_highly_variable_gene, unit_var)  
 results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))  
