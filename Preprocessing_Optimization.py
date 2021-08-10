@@ -158,7 +158,7 @@ filter_genes = [1, 5, 10]
 normalize = ["yes", "no"]
 #normalize = ["no"]
 filter_method = ["highly_variable", "summary_stat"]
-filter_method = ["highly_variable"]
+#filter_method = ["highly_variable"]
 filter_by_highly_variable_gene = [500, 1000, 2000]
 #filter_by_highly_variable_gene = [500]
 #min_mean = [0.125, .25]
@@ -172,8 +172,11 @@ unit_var= ["yes", "no"]
 
 
             
-results_dataframe = SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_by_highly_variable_gene, unit_var)  
-results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))  
-  
+results_dataframe_method_1 = SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var)  
+results_dataframe_method_1.to_csv("test_results/{}/{}/Method_1.csv".format(file_loc, start))  
+
+results_dataframe_method_2 = SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_highly_variable_gene, unit_var)  
+results_dataframe_method_2.to_csv("test_results/{}/{}/Method_2.csv".format(file_loc, start))  
+
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
