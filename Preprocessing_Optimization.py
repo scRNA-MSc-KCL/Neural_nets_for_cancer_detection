@@ -41,19 +41,88 @@ parser.add_argument('path', type = int)
 
 args = parser.parse_args()
 if args.path == 1:
-  #Unzip files - for dataset 1
-#with zipfile.ZipFile("Dataset1_interdataset.zip", 'r') as zip_ref:
-#    zip_ref.extractall()
   labels =pd.read_csv("Original_data/Labels.csv")
   data = sc.read_csv("Original_data/Combined_10x_CelSeq2_5cl_data.csv")
   file_loc = "test_results/DS1/SVM"
 
 labels = label_adaption(labels)
 
-filter_genes = [1, 5, 10]
-normalize = ["yes", "no"]
-filter_method = ["highly_variable", "summary_stat"]
-filter_by_highly_variable_genes = [500, 1000, 2000]
+#read data
+print("The original shape of the data1 is {}".format(data))
+
+def SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_by_highly_variable_genes, unit_var, FIGS):
+  filter_genes_list = []
+  normalize_list = []
+  filter_method_list = []
+  filter_by_highly_variable_genes_list = []
+  unit_var_list = []
+  percentage_missclassified_list = []
+  if FIGS == "y":
+    sc.pl.highest_expr_genes(data, n_top=20, save ='highly_expressed_genes.png')
+    data.var['mt'] = data.var_names.str.startswith('MT-')
+    sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
+    sc.pl.violin(data, ['n_genes_by_counts', 'total_counts', 'pct_counts_mt'],
+             jitter=0.4, multi_panel=True, save = 'mitochonrial_and_violin_plots.png')
+    sc.pl.scatter(data, x='total_counts', y='pct_counts_mt', save = 'mitochonrial_and_violin_plots.png')
+    sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts', save ='pct_counts_mt_scatter.png')
+  #filter data 
+  for a in filter_genes:
+    filter_genes_list.append(a)
+    sc.pp.filter_genes(data, min_cells=a)
+    print("after filtering genes with min cells", data.shape)
+    #normalize data
+    for b in normalize:
+      normalize_list.append(b)
+      if b == "yes":
+        sc.pp.normalize_total(data, target_sum=10000)
+        #logarithmize data
+      sc.pp.log1p(data)
+      #filter genes
+      for c in filter_method:
+        filter_method_list.append(c)
+        #filter based on summary statistics
+        if c == "summary_stat":
+          filter_by_highly_variable_genes_list.append("na")
+          sc.pp.highly_variable_genes(data, min_mean=0.0125, max_mean=3, min_disp=0.5)
+          data = data[:, data.var.highly_variable]
+          #filter based on whichever genes are most variable
+          #select top x highly variable genes
+          for e in unit_var:
+            unit_var_list.append(e)
+            if e == "yes":
+              sc.pp.scale(data, max_value=10)
+              print("clip values with high variance", data.shape)
+        elif c == "highly_variable":
+          for d in filter_by_highly_variable_gene:
+            filter_by_highly_variable_genes_list.append(d)
+            sc.pp.highly_variable_genes(data, n_top_genes=d)
+            data = data[:, data.var.highly_variable]
+            for e in unit_var:
+              unit_var_list.append(e)
+              if e == "yes":
+                sc.pp.scale(data, max_value=10)
+                print("clip values with high variance", data.shape)
+         if FIGS == "y":
+          sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
+          print("after removing highly variable genes", data.shape)
+          X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
+          Classifier = sklearn.svm.SVC(kernel = "linear")
+          Classifier.fit(X_train, y_train)
+          print("the classification result with the current settings and a {} kernal is {}".format(i, Classifier.score(X_test, y_test)))
+          percentage_missclassified = (1 - Classifier.score(X_test, y_test))*100 
+          percentage_missclassified_list.append(percentage_missclassified)
+  df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method_list, filter_by_highly_variable_genes_list, unit_var_list, percentage_misclassified)),
+                        columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "number_of_top_genes", "scaled_to_unit_var", "percentage_missclassified"])
+  return df
+   
+#filter_genes = [1, 5, 10]
+filter_genes = [1]
+#normalize = ["yes", "no"]
+normalize = ["yes"]
+#filter_method = ["highly_variable", "summary_stat"]
+filter_method = ["highly_variable"]
+#filter_by_highly_variable_genes = [500, 1000, 2000]
+filter_by_highly_variable_genes = [500]
 #min_mean = [0.125, .25]
 #max_mean = [3, 6]
 #mean_disp = [0.5, 1]
@@ -62,65 +131,9 @@ max_mean = 3
 mean_disp = 0.5
 unit_variance = ["yes", "no"]
 FIGS = "n"
-
-#def SVM_Optimizer(filter_genes, remove_high_counts, normalize, filter_method, filter_by_highly_variable_genes, regress_data, unit
-if FIGS == "y":
-  sc.pl.highest_expr_genes(data, n_top=20, save ='highly_expressed_genes.png')
-
-#read data
-print("The original shape of the data1 is {}".format(data))
-
-def SVM_Optimizer(filter_genes, normalize, filter_method, filter_by_highly_variable_genes, min_mean, max_mean, mean_disp, unit_var, FIGS):
-  if FIGS == "y":
-  sc.pl.highest_expr_genes(data, n_top=20, save ='highly_expressed_genes.png')
-  #filter data 
-  for a in filter_genes:
-  sc.pp.filter_genes(data, min_cells=10)
-print("after filtering genes with min cells", data.shape)
-#remove mitochonrial
-if FIGS == "y":
-  data.var['mt'] = data.var_names.str.startswith('MT-')
-  sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
-  sc.pl.violin(data, ['n_genes_by_counts', 'total_counts', 'pct_counts_mt'],
-             jitter=0.4, multi_panel=True, save = 'mitochonrial_and_violin_plots.png')
-  sc.pl.scatter(data, x='total_counts', y='pct_counts_mt', save = 'mitochonrial_and_violin_plots.png')
-  sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts', save ='pct_counts_mt_scatter.png')
-#data = data[data.obs.n_genes_by_counts < 2500, :]
-#data = data[data.obs.pct_counts_mt < 5, :]
-#normalize data
-sc.pp.normalize_total(data, target_sum=10000)
-#logarithmize data
-sc.pp.log1p(data)
-
-#select top x highly variable genes
-#sc.pp.highly_variable_genes(data, n_top_genes=1000)
-#data = data[:, data.var.highly_variable]
-
-#select highly variable genes based on summary statistics
-sc.pp.highly_variable_genes(data, min_mean=0.0125, max_mean=3, min_disp=0.5)
-if FIGS == "y":
-  sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
-data = data[:, data.var.highly_variable]
-print("after removing highly variable genes", data.shape)
-
-#scale to unit variance
-sc.pp.scale(data, max_value=10)
-print("clip values with high variance", data.shape)
-
-print("The final shape of the data is {}".format(data.shape))
-
-#create training and test sets
-X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
-
-SVM_list = ["linear"]
-
-# build classifier
-                                                    
-for i in SVM_list:
-  Classifier = sklearn.svm.SVC(kernel = i)
-  Classifier.fit(X_train, y_train)
-  print("the classification result with the current settings and a {} kernal is {}".format(i, Classifier.score(X_test, y_test)))
-  
+            
+results_dataframe = SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_by_highly_variable_genes, unit_var, FIGS)  
+results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))  
   
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
