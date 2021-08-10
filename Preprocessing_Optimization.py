@@ -137,7 +137,7 @@ filter_by_highly_variable_genes = [500]
 min_mean = 0.125
 max_mean = 3
 mean_disp = 0.5
-unit_variance = ["yes", "no"]
+unit_var= ["yes", "no"]
 FIGS = "n"
             
 results_dataframe = SVM_Optimizer(data, labels, filter_genes, normalize, filter_method, filter_by_highly_variable_genes, unit_var, FIGS)  
