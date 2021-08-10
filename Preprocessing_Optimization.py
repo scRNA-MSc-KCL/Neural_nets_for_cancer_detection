@@ -92,7 +92,6 @@ def create_figures(data, filter_method, filter_by_highly_variable_genes):
 #filter based on variable genes
 
 def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_highly_variable_gene, unit_var):
-  adata = data.copy()
   filter_genes_list = []
   normalize_list = []
   filter_by_highly_variable_genes_list = []
@@ -101,33 +100,35 @@ def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_high
   filter_method = []
   #filter data 
   for a in filter_genes:
-    filtered_data = sc.pp.filter_genes(adata, min_cells=a)
-    print("after filtering genes with min cells", filtered_data.shape)
+    filtered_1_data = data.copy()
+    sc.pp.filter_genes(filtered_1_data, min_cells=a)
+    print("after filtering genes with min cells", filtered_1_data.shape)
     #normalize data
     for b in normalize:
+      normalized_data = filtered_1_data.copy()
       if b == "yes":
-        normalized_data = sc.pp.normalize_total(filtered_data, target_sum=10000)
+        sc.pp.normalize_total(normalized_data, target_sum=10000)
         #logarithmize data
-      else: 
-        normalized_data = filtered_data
-      logarithmized_data = sc.pp.log1p(normalized_data)
+      logarithmized_data = normalized_data.copy()
+      sc.pp.log1p(logarithmized_data)
       #filter genes
       for d in filter_by_highly_variable_gene:
-        filtered_genes = sc.pp.highly_variable_genes(logarithmized_data, n_top_genes=d)
-        filtered_genes = filtered_genes[:, filtered_genes.var.highly_variable]
+        filtered_2_data = logarithmized_data.copy()
+        sc.pp.highly_variable_genes(filtered_2_data, n_top_genes=d)
+        filtered_2_data = filtered_2_data[:, filtered_2_data.var.highly_variable]
         for e in unit_var:
+          filtered_3_data = filtered_2_data.copy()
           if e == "yes":
-            clipped_data = sc.pp.scale(filtered_genes, max_value=10)
-            print("clip values with high variance", adata.shape)
+            sc.pp.scale(filtered_3_data, max_value=10)
+            print("clip values with high variance", filtered_3_data.shape)
           else:
-            clipped_data = filtered_genes
-            print("not clipped", adata.shape)
+            print("not clipped", filtered_3_data.shape)
           filter_genes_list.append(a)
           normalize_list.append(b)
           filter_by_highly_variable_genes_list.append(d)
           unit_var_list.append(e)
           filter_method.append("filter_based_on_variable_genes")
-          X_train, X_test, y_train, y_test = train_test_split(adata.X, labels, test_size=0.2, random_state=42)
+          X_train, X_test, y_train, y_test = train_test_split(filtered_3_data.X, labels, test_size=0.2, random_state=42)
           Classifier = sklearn.svm.SVC(kernel = "linear")
           Classifier.fit(X_train, y_train)
           print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
