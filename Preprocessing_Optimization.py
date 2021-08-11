@@ -54,7 +54,7 @@ def SVM_Optimizer_Method_1(data, labels, filter_genes, min_mean, max_mean, mean_
   filter_genes_list = []
   normalize_list = []
   unit_var_list = []
-  percentage_missclassified_list = []
+  percentage_accuracy_list = []
   filter_method = []
   data_shape_list = []
   print("origional shape {}".format(data.shape))
@@ -90,10 +90,10 @@ def SVM_Optimizer_Method_1(data, labels, filter_genes, min_mean, max_mean, mean_
               Classifier = sklearn.svm.SVC(kernel = "linear")
               Classifier.fit(X_train, y_train)
               print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
-              percentage_missclassified = (1 - Classifier.score(X_test, y_test))*100 
-              percentage_missclassified_list.append(percentage_missclassified)  
+              percentage_accuracy = (Classifier.score(X_test, y_test))*100 
+              percentage_accuracy_list.append(percentage_missclassified)  
               data_shape_list.append(filtered_3_data.shape)
-              df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, unit_var_list, percentage_missclassified_list, data_shape_list)),
+              df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, unit_var_list, percentage_accuracy, data_shape_list)),
                         columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "scaled_to_unit_var", "percentage_missclassified", "data_shape"])
   return df
    
@@ -104,7 +104,7 @@ def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_high
   normalize_list = []
   filter_by_highly_variable_genes_list = []
   unit_var_list = []
-  percentage_missclassified_list = []
+  percentage_accuracy_list = []
   filter_method = []
   data_shape_list = []
   #filter data 
@@ -141,11 +141,11 @@ def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_high
           Classifier = sklearn.svm.SVC(kernel = "linear")
           Classifier.fit(X_train, y_train)
           print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
-          percentage_missclassified = (1 - Classifier.score(X_test, y_test))*100 
-          percentage_missclassified_list.append(percentage_missclassified) 
+          percentage_accuracy = (Classifier.score(X_test, y_test))*100 
+          percentage_accuracy_list.append(percentage_accuracy) 
           data_shape_list.append(filtered_3_data.shape)
-  df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, filter_by_highly_variable_genes_list, unit_var_list, percentage_missclassified_list, data_shape_list)),
-                        columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "number_of_top_genes", "scaled_to_unit_var", "percentage_missclassified", "data_shape"])
+  df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, filter_by_highly_variable_genes_list, unit_var_list, percentage_accuracy_list, data_shape_list)),
+                        columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "number_of_top_genes", "scaled_to_unit_var", "percentage_accuracy", "data_shape"])
   return df      
 
 start = time.time()
