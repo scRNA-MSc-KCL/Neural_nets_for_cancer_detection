@@ -175,9 +175,9 @@ filter_by_highly_variable_gene = [500, 1000]
 #min_mean = [0.125, .25]
 #max_mean = [3, 6]
 #mean_disp = [0.5, 1]
-min_mean = 0.125
-max_mean = 3
-mean_disp = 0.5
+min_mean = [0.125]
+max_mean = [3]
+mean_disp = [0.5]
 unit_var= ["yes", "no"]
 
             
