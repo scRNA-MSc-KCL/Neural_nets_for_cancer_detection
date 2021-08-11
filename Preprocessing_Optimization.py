@@ -48,17 +48,19 @@ def create_figures(data, filter_method, filter_by_highly_variable_genes):
       data = data[:, data.var.highly_variable]
       sc.pl.highly_variable_genes(data, save = 'highly_variable_summary_stats.png')
 
-def SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var):
+# filter based on summary statistics
+
+def SVM_Optimizer_Method_1(data, labels, filter_genes, min_mean, max_mean, mean_disp, normalize, unit_var):
   filter_genes_list = []
   normalize_list = []
   unit_var_list = []
   percentage_missclassified_list = []
   filter_method = []
+  print("origional shape {}".format(data.shape))
   #filter data 
   for a in filter_genes:
     filtered_1_data = data.copy()
     sc.pp.filter_genes(filtered_1_data, min_cells=a)
-    print("after filtering genes with min cells", filtered_1_data.shape)
     #normalize data
     for b in normalize:
       normalized_data = filtered_1_data.copy()
@@ -69,26 +71,27 @@ def SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var):
       sc.pp.log1p(logarithmized_data)
       #filter genes
       filtered_2_data = logarithmized_data.copy()
-      sc.pp.highly_variable_genes(filtered_2_data, min_mean=0.0125, max_mean=3, min_disp=0.5)
-      filtered_2_data = filtered_2_data[:, filtered_2_data.var.highly_variable]
-          #filter based on whichever genes are most variable
-          #select top x highly variable genes
-      for e in unit_var:
-        filtered_3_data = filtered_2_data.copy()
-        if e == "yes":
-          sc.pp.scale(filtered_3_data, max_value=10)
-        print("clip values with high variance", filtered_3_data.shape)
-        filter_genes_list.append(a)
-        normalize_list.append(b)
-        unit_var_list.append(e)
-        filter_method.append("filter_based_on_stats")
-        X_train, X_test, y_train, y_test = train_test_split(filtered_3_data.X, labels, test_size=0.2, random_state=42)
-        Classifier = sklearn.svm.SVC(kernel = "linear")
-        Classifier.fit(X_train, y_train)
-        print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
-        percentage_missclassified = (1 - Classifier.score(X_test, y_test))*100 
-        percentage_missclassified_list.append(percentage_missclassified)  
-  df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, unit_var_list, percentage_missclassified_list)),
+      for c in min_mean:
+        for d in max_mean:
+          for f in mean_disp:
+            sc.pp.highly_variable_genes(filtered_2_data, min_mean=c, max_mean=d, min_disp=f)
+            filtered_2_data = filtered_2_data[:, filtered_2_data.var.highly_variable]
+            for e in unit_var:
+              filtered_3_data = filtered_2_data.copy()
+              if e == "yes":
+                sc.pp.scale(filtered_3_data, max_value=10)
+              print("clip values with high variance", filtered_3_data.shape)
+              filter_genes_list.append(a)
+              normalize_list.append(b)
+              unit_var_list.append(e)
+              filter_method.append("filter_based_on_stats")
+              X_train, X_test, y_train, y_test = train_test_split(filtered_3_data.X, labels, test_size=0.2, random_state=42)
+              Classifier = sklearn.svm.SVC(kernel = "linear")
+              Classifier.fit(X_train, y_train)
+              print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
+              percentage_missclassified = (1 - Classifier.score(X_test, y_test))*100 
+              percentage_missclassified_list.append(percentage_missclassified)  
+              df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, unit_var_list, percentage_missclassified_list)),
                         columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "scaled_to_unit_var", "percentage_missclassified"])
   return df
    
