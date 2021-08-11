@@ -93,7 +93,7 @@ def SVM_Optimizer_Method_1(data, labels, filter_genes, min_mean, max_mean, mean_
               percentage_accuracy = (Classifier.score(X_test, y_test))*100 
               percentage_accuracy_list.append(percentage_accuracy)  
               data_shape_list.append(filtered_3_data.shape)
-              df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, unit_var_list, percentage_accuracy, data_shape_list)),
+              df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, unit_var_list, percentage_accuracy_list, data_shape_list)),
                         columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "scaled_to_unit_var", "percentage_accuracy", "data_shape"])
   return df
    
