@@ -50,7 +50,7 @@ def create_figures(data, filter_method, filter_by_highly_variable_genes):
 
 # filter based on summary statistics
 
-def SVM_Optimizer_Method_1(data, labels, filter_genes, min_mean, max_mean, mean_disp, normalize, unit_var, log):
+"""def SVM_Optimizer_Method_1(data, labels, filter_genes, min_mean, max_mean, mean_disp, normalize, unit_var, log):
   filter_genes_list = []
   normalize_list = []
   unit_var_list = []
@@ -106,7 +106,7 @@ def SVM_Optimizer_Method_1(data, labels, filter_genes, min_mean, max_mean, mean_
     print("data shape", data_shape_list)
     df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, unit_var_list, log_list, percentage_accuracy_list, data_shape_list)),
                     columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "scaled_to_unit_var", "logarithmized", "percentage_accuracy", "data_shape"])
-  return df
+  return df"""
    
 #filter based on variable genes
 
@@ -235,11 +235,11 @@ mean_disp = [0.5]
 unit_var= ["yes", "no"]
 
             
-results_dataframe_method_1 = SVM_Optimizer_Method_1(data, labels, filter_genes,  min_mean, max_mean, mean_disp, normalize, unit_var, log)  
+#results_dataframe_method_1 = SVM_Optimizer_Method_1(data, labels, filter_genes,  min_mean, max_mean, mean_disp, normalize, unit_var, log)  
 #results_dataframe_method_1.to_csv("{}/{}/Method_1.csv".format(file_loc, start))  
 
-#results_dataframe_method_2 = SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_highly_variable_gene, unit_var, log)  
-#results_dataframe_method_2.to_csv("{}/{}/Method_2.csv".format(file_loc, start))  
+results_dataframe_method_2 = SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_highly_variable_gene, unit_var, log)  
+results_dataframe_method_2.to_csv("{}/{}/Method_2.csv".format(file_loc, start))  
 
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
