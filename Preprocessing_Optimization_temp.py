@@ -84,7 +84,7 @@ def SVM_Optimizer_Method_1(data, labels, filter_genes, min_mean, max_mean, mean_
                 filtered_3_data = filtered_2_data.copy()
                 if e == "yes":
                   sc.pp.scale(filtered_3_data, max_value=10)
-                print("clip values with high variance", filtered_3_data.shape)
+                print("final shape", filtered_3_data.shape)
                 filter_genes_list.append(a)
                 normalize_list.append(b)
                 unit_var_list.append(e)
@@ -97,8 +97,8 @@ def SVM_Optimizer_Method_1(data, labels, filter_genes, min_mean, max_mean, mean_
                 percentage_accuracy = (Classifier.score(X_test, y_test))*100 
                 percentage_accuracy_list.append(percentage_accuracy)  
                 data_shape_list.append(filtered_3_data.shape),
-                df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, unit_var_list, log_list, percentage_accuracy_list, data_shape_list)),
-                          columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "scaled_to_unit_var", "logarithmized", "percentage_accuracy", "data_shape"])
+    df = pd.DataFrame(list(zip(filter_genes_list, normalize_list, filter_method, unit_var_list, log_list, percentage_accuracy_list, data_shape_list)),
+                    columns =['Min_number_of_cells_per_gene', 'normalized', "filter_method", "scaled_to_unit_var", "logarithmized", "percentage_accuracy", "data_shape"])
   return df
    
 #filter based on variable genes
