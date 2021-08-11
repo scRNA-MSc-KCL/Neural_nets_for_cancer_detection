@@ -162,7 +162,7 @@ if args.path == 2:
   data = anndata.AnnData.transpose(data)
   #labels = pd.read_csv("human_cell_atlas/krasnow_hlca_facs_metadata.csv") #9409 x 141
   ##data = sc.read_csv("human_cell_atlas/krasnow_hlca_facs_counts.csv")  #58683 x 9409
-  labels = pd.read_csv("human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
+  labels = pd.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
   labels = labels["free_annotation"]
   file_loc = "test_results/DS2/SVM"
 if args.path == 3:
