@@ -82,7 +82,7 @@ def SVM_Optimizer_Method_1(data, labels, filter_genes, normalize, unit_var):
         normalize_list.append(b)
         unit_var_list.append(e)
         filter_method.append("filter_based_on_stats")
-        X_train, X_test, y_train, y_test = train_test_split(adata.X, labels, test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(filtered_3_data.X, labels, test_size=0.2, random_state=42)
         Classifier = sklearn.svm.SVC(kernel = "linear")
         Classifier.fit(X_train, y_train)
         print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
