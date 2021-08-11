@@ -71,10 +71,10 @@ def SVM_Optimizer_Method_1(data, labels, filter_genes, min_mean, max_mean, mean_
       logarithmized_data = normalized_data.copy()
       sc.pp.log1p(logarithmized_data)
       #filter genes
-      filtered_2_data = logarithmized_data.copy()
       for c in min_mean:
         for d in max_mean:
           for f in mean_disp:
+            filtered_2_data = logarithmized_data.copy()
             sc.pp.highly_variable_genes(filtered_2_data, min_mean=c, max_mean=d, min_disp=f)
             filtered_2_data = filtered_2_data[:, filtered_2_data.var.highly_variable]
             for e in unit_var:
