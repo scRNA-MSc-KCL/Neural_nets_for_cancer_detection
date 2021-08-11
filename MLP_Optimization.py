@@ -92,14 +92,14 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
               accuracy_list.append(correctly_classified)
               print("model number", counter)
               print("accuracy", correctly_classified)
-  print(percentage_misclassified)
+  print(accuracy_list)
   df = pd.DataFrame(list(zip(optimizer_list, loss_function_list, epoch_list, node_1_length_list, activation_layer_1_list, node_2_length_list, activation_layer_2_list, accuracy_list)),
                         columns =['optimizer', 'loss_function', "epochs", "node1_length", "activation_layer1", "node2_length" , "activation_layer2", "perceptage_misclassified"])
   return df
 
 #define variables
-Nodes = np.arange(50, 2050, 500)
-#Nodes = [250, 500]
+#Nodes = np.arange(50, 2050, 500)
+Nodes = [250, 500]
 #activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 activation = ["tanh"]
 #optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
