@@ -66,11 +66,11 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
   for o in optimizer:
     for l in loss_function:
       for e in epoch:
-        net = Sequential()
         for n1 in Nodes:
           for a1 in activation:
-            net.add(Dense(n1, activation = a1, input_shape = (data.n_vars,)))
             for a2 in activation:
+              net = Sequential()
+              net.add(Dense(n1, activation = a1, input_shape = (data.n_vars,)))
               counter += 1
               optimizer_list.append(o)
               loss_function_list.append(l)
