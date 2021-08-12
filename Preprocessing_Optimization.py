@@ -81,15 +81,15 @@ def SVM_Optimizer_Method_1(data, labels, filter_genes, min_mean, max_mean, mean_
               filtered_3_data = filtered_2_data.copy()
               if e == "yes":
                 sc.pp.scale(filtered_3_data, max_value=10)
-              print("clip values with high variance", filtered_3_data.shape)
+              print("final data shape", filtered_3_data.shape)
               filter_genes_list.append(a)
               normalize_list.append(b)
               unit_var_list.append(e)
               filter_method.append("filter_based_on_stats")
               X_train, X_test, y_train, y_test = train_test_split(filtered_3_data.X, labels, test_size=0.2, random_state=42)
-              Classifier = sklearn.svm.SVC(kernel = "linear")
+              Classifier = sklearn.svm.SVC(kernel = "rbf")
               Classifier.fit(X_train, y_train)
-              print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
+              print("the classification result with the current settings and a {} kernal is {}".format("rbf", Classifier.score(X_test, y_test)))
               percentage_accuracy = (Classifier.score(X_test, y_test))*100 
               percentage_accuracy_list.append(percentage_accuracy)  
               data_shape_list.append(filtered_3_data.shape)
@@ -129,7 +129,7 @@ def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_high
           filtered_3_data = filtered_2_data.copy()
           if e == "yes":
             sc.pp.scale(filtered_3_data, max_value=10)
-            print("clip values with high variance", filtered_3_data.shape)
+            print("final data shape", filtered_3_data.shape)
           else:
             print("not clipped", filtered_3_data.shape)
           filter_genes_list.append(a)
@@ -138,9 +138,9 @@ def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_high
           unit_var_list.append(e)
           filter_method.append("filter_based_on_variable_genes")
           X_train, X_test, y_train, y_test = train_test_split(filtered_3_data.X, labels, test_size=0.2, random_state=42)
-          Classifier = sklearn.svm.SVC(kernel = "linear")
+          Classifier = sklearn.svm.SVC(kernel = "rbf")
           Classifier.fit(X_train, y_train)
-          print("the classification result with the current settings and a {} kernal is {}".format("linear", Classifier.score(X_test, y_test)))
+          print("the classification result with the current settings and a {} kernal is {}".format("rbf", Classifier.score(X_test, y_test)))
           percentage_accuracy = (Classifier.score(X_test, y_test))*100 
           percentage_accuracy_list.append(percentage_accuracy) 
           data_shape_list.append(filtered_3_data.shape)
