@@ -9,6 +9,7 @@ import time
 import argparse
 import anndata
 from sklearn.neighbors import NearestNeighbors
+from sklearn.neighbors import KNeighborsClassifier
 
 start = time.time()
 labels =pd.read_csv("labels_3.csv", names = ["X"])
