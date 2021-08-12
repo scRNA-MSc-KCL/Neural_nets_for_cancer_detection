@@ -12,7 +12,7 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.neighbors import KNeighborsClassifier
 
 start = time.time()
-labels =pd.read_csv("labels_3.csv", names = ["X"])
+labels =pd.read_csv("labels_3.csv", names = ["x"])
 data = sc.read("results_3.h5ad")
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.1)
 neigh = KNeighborsClassifier(n_neighbors=2000)
