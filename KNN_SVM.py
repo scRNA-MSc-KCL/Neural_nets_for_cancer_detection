@@ -15,7 +15,7 @@ start = time.time()
 labels =pd.read_csv("labels_1.csv", names = ["x"])
 data = sc.read("results_1.h5ad")
 
-X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.1)
+X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2)
 neigh = KNeighborsClassifier(n_neighbors=1000)
 neigh.fit(X_train, y_train)
 y_train = y_train.reset_index()
