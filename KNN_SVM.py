@@ -35,9 +35,9 @@ for i in X_test:
   Classifier.fit(SVM_data[0], SVM_labels)
   y_pred = Classifier.predict([i])
   SVM_list.append(y_pred)
+  
 
-
-print(mode_list)
+print(knn_list)
 print(SVM_list)
 
 knn_accuracy = 0
