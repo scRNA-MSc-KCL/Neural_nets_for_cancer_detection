@@ -15,7 +15,7 @@ start = time.time()
 labels =pd.read_csv("labels_1.csv", names = ["x"])
 data = sc.read("results_1.h5ad")
 
-X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2)
+X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.1)
 neigh = KNeighborsClassifier(n_neighbors=1000)
 neigh.fit(X_train, y_train)
 y_train = y_train.reset_index()
@@ -39,17 +39,19 @@ for i in X_test:
 
 print(knn_list)
 print(SVM_list)
+print(y_train)
 print(len(knn_list))
 print(len(SVM_list))
+print(len(y_train))
 
-knn_accuracy = 0
-knnsvm_accuracy = 0
-for i in range(len(y_train)):
-  if SVM_labels[i] == knn_list[i]:
-    knn_accuracy += 1
-  if SVM_labels[i] == SVM_labels[i]:
-    knnsvm_accuracy += 1
-knn_accuracy = (knn_accuracy/len(y_train))*100
+#knn_accuracy = 0
+#knnsvm_accuracy = 0
+#for i in range(len(SVM_labels)):
+#  if SVM_labels[i] == knn_list[i]:
+#    knn_accuracy += 1
+#  if SVM_labels[i] == SVM_labels[i]:
+#    knnsvm_accuracy += 1
+#knn_accuracy = (knn_accuracy/len(y_train))*100
     
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
