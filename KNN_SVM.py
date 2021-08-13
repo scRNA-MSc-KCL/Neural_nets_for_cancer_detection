@@ -19,7 +19,7 @@ X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.
 neigh = KNeighborsClassifier(n_neighbors=1000)
 neigh.fit(X_train, y_train)
 y_train = y_train.reset_index()
-y_train = y_test.reset_index()
+y_test = y_test.reset_index()
 knn_list = []
 SVM_list = []
 
