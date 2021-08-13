@@ -39,19 +39,18 @@ for i in X_test:
 
 print(knn_list)
 print(SVM_list)
-print(y_train)
 print(len(knn_list))
 print(len(SVM_list))
-print(len(y_train))
 
-#knn_accuracy = 0
-#knnsvm_accuracy = 0
-#for i in range(len(SVM_labels)):
-#  if SVM_labels[i] == knn_list[i]:
-#    knn_accuracy += 1
-#  if SVM_labels[i] == SVM_labels[i]:
-#    knnsvm_accuracy += 1
-#knn_accuracy = (knn_accuracy/len(y_train))*100
+
+knn_accuracy = 0
+knnsvm_accuracy = 0
+for i in range(len(SVM_labels)):
+  if y_test['x'][i] == knn_list[i]:
+    knn_accuracy += 1
+  if y_test['x'][i] == SVM_labels[i]:
+    knnsvm_accuracy += 1
+knn_accuracy = (knn_accuracy/len(y_train))*100
     
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
