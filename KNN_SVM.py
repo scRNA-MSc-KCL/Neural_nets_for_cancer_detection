@@ -34,9 +34,7 @@ for i in X_test:
   #print(SVM_data[0])
   Classifier.fit(SVM_data[0], SVM_labels)
   y_pred = Classifier.predict([i])
-  print(y_pred)
-  print(y_pred[0])
-  SVM_list.append(y_pred)
+  SVM_list.append(y_pred[0])
   
 
 print(knn_list)
