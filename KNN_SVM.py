@@ -39,6 +39,8 @@ for i in X_test:
 
 print(knn_list)
 print(SVM_list)
+print(len(knn_list))
+print(len(SVM_list))
 
 knn_accuracy = 0
 knnsvm_accuracy = 0
