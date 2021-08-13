@@ -20,6 +20,7 @@ import os
 
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
+start = time.time()
 
 args = parser.parse_args()
 if args.path == 1:
@@ -47,8 +48,6 @@ except OSError:
   print("Creation of the directory %s failed" % path)
 else:
   print("Successfully created the directory %s" % path)
-  
-start = time.time()
 
 num_lab = len(labels)
 counter = 0
