@@ -49,7 +49,7 @@ except OSError:
 else:
   print("Successfully created the directory %s" % path)
 
-num_lab = len(labels)
+"""num_lab = len(labels)
 counter = 0
 
 #create training and test sets
@@ -130,5 +130,5 @@ loss_function = ["categorical_crossentropy"]
 #kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "ones", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
 
 results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab)
-results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))
+results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))"""
 
