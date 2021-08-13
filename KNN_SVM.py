@@ -31,9 +31,9 @@ for i in X_test:
 knn_accuracy = 0
 knnsvm_accuracy = 0
 for i in range(len(y_train)):
-  if y_train['x'][i] == mode_list[i]:
+  if SVM_labels[i] == mode_list[i]:
     knn_accuracy += 1
-  if y_train['x'][i] == SVM_labels[i]:
+  if SVM_labels[i] == SVM_labels[i]:
     knnsvm_accuracy += 1
 knn_accuracy = (knn_accuracy/len(y_train))*100
     
