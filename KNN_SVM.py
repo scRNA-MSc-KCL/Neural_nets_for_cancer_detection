@@ -19,6 +19,7 @@ X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.
 neigh = KNeighborsClassifier(n_neighbors=1000)
 neigh.fit(X_train, y_train)
 y_train = y_train.reset_index()
+y_train = y_test.reset_index()
 knn_list = []
 SVM_list = []
 
@@ -50,7 +51,7 @@ for i in range(len(SVM_labels)):
     knn_accuracy += 1
   if y_test['x'][i] == SVM_labels[i]:
     knnsvm_accuracy += 1
-knn_accuracy = (knn_accuracy/len(y_train))*100
+knn_accuracy = (knn_accuracy/len(y_test))*100
     
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
