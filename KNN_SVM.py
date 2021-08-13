@@ -47,7 +47,7 @@ print(len(y_test))
 
 knn_accuracy = 0
 knnsvm_accuracy = 0
-for i in range(len(SVM_labels)-1):
+for i in range(len(SVM_list)-1):
   if y_test['x'][i] == knn_list[i]:
     knn_accuracy += 1
   if y_test['x'][i] == SVM_labels[i]:
