@@ -14,19 +14,31 @@ from sklearn.neighbors import KNeighborsClassifier
 start = time.time()
 labels =pd.read_csv("labels_1.csv", names = ["x"])
 data = sc.read("results_1.h5ad")
-X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.1)
+
+X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2)
 neigh = KNeighborsClassifier(n_neighbors=200)
 neigh.fit(X_train, y_train)
 y_train = y_train.reset_index()
-mode_list = []
+knn_list = []
+SVM_list = []
+
 for i in X_test:
   neighbours = neigh.kneighbors([i], return_distance = False)
   SVM_data = X_train[neighbours]
   indices = neighbours.tolist()
   indices = indices[0]
   SVM_labels = y_train['x'][indices]
-  mode_list.append(SVM_labels.value_counts().idxmax())
+  knn_list.append(SVM_labels.value_counts().idxmax())
   SVM_labels = SVM_labels.to_list()
+  Classifier = sklearn.svm.SVC(kernel = "linear")
+  #print(SVM_data[0])
+  Classifier.fit(SVM_data[0], SVM_labels)
+  y_pred = Classifier.predict([i])
+  SVM_list.append(y_pred)
+
+
+print(mode_list)
+print(SVM_list)
 
 knn_accuracy = 0
 knnsvm_accuracy = 0
