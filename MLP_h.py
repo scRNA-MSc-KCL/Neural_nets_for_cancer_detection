@@ -27,18 +27,22 @@ if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
   file_loc = "DS1/MLP"
+  b = 50
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "DS2/MLP"
+  b = 250
 if args.path == 3:
   labels =pd.read_csv("labels_3.csv", names = ["X"])
   data = sc.read("results_3.h5ad")
   file_loc = "DS3/MLP"
+  b = 500
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
   file_loc = "DS4/MLP"
+  b = 50
   
 path = os.getcwd()
 path = os.path.join(path, "test_results/{}/{}".format(file_loc,start))
@@ -61,7 +65,7 @@ y_test = to_categorical(y_test, num_lab)
 
 
 #Neural network testing function
-def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab):
+def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab, b):
   optimizer_list = []
   loss_function_list = []
   epoch_list = []
@@ -91,7 +95,7 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
               net.compile(loss=l, optimizer=o)
               history = net.fit(X_train, y_train,
                             validation_data=(X_test, y_test),
-                            epochs=e,batch_size=250)
+                            epochs=e,batch_size=b)
               outputs = net.predict(X_test)
               labels_predicted= np.argmax(outputs, axis=1)
               y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
@@ -119,8 +123,8 @@ Nodes = [500]
 activation = ["tanh"]
 #optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
 optimizer = ["Adam"]
-epoch = [100]
-#epoch = [5]
+#epoch = [100]
+epoch = [5]
 
 #loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
 loss_function = ["categorical_crossentropy"]
@@ -129,6 +133,6 @@ loss_function = ["categorical_crossentropy"]
 #regularizer = ["l1", "l2", "l1_l2"]
 #kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "ones", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
 
-results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab)
+results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab, b)
 results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))
 
