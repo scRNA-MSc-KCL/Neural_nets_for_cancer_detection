@@ -32,8 +32,8 @@ if args.path == 4:
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
 print("The data has been split")
 
-#SVM_list = ["linear", "poly", "rbf", "sigmoid"]
-SVM_list = ["linear"]
+SVM_list = ["linear", "poly", "rbf", "sigmoid"]
+#SVM_list = ["linear"]
 # build classifier
                                                     
 for i in SVM_list:
