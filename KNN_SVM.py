@@ -53,6 +53,9 @@ for i in range(len(SVM_list)-1):
   if y_test['x'][i] == SVM_labels[i]:
     knnsvm_accuracy += 1
 knn_accuracy = (knn_accuracy/len(y_test))*100
+print("knn_accuracy", knn_accuracy)
+knnsvm_accuracy = (knnsvm_accuracy/len(y_test))*100
+print("knnsvm_accuracy", knnsvm_accuracy)
     
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
