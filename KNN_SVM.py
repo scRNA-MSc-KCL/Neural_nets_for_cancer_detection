@@ -34,6 +34,8 @@ for i in X_test:
   #print(SVM_data[0])
   Classifier.fit(SVM_data[0], SVM_labels)
   y_pred = Classifier.predict([i])
+  print("y_pred")
+  print("y_pred[0])
   SVM_list.append(y_pred)
   
 
@@ -43,7 +45,7 @@ print(SVM_list)
 knn_accuracy = 0
 knnsvm_accuracy = 0
 for i in range(len(y_train)):
-  if SVM_labels[i] == mode_list[i]:
+  if SVM_labels[i] == knn_list[i]:
     knn_accuracy += 1
   if SVM_labels[i] == SVM_labels[i]:
     knnsvm_accuracy += 1
