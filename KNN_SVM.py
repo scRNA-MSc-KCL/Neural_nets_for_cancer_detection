@@ -12,10 +12,10 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.neighbors import KNeighborsClassifier
 
 start = time.time()
-labels =pd.read_csv("labels_3.csv", names = ["x"])
-data = sc.read("results_3.h5ad")
+labels =pd.read_csv("labels_1.csv", names = ["x"])
+data = sc.read("results_1.h5ad")
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.1)
-neigh = KNeighborsClassifier(n_neighbors=2000)
+neigh = KNeighborsClassifier(n_neighbors=200)
 neigh.fit(X_train, y_train)
 y_train = y_train.reset_index()
 mode_list = []
@@ -31,9 +31,9 @@ for i in X_test:
 knn_accuracy = 0
 knnsvm_accuracy = 0
 for i in range(len(y_train)):
-  if y_train[i] == mode_list[i]:
+  if y_train['x'][i] == mode_list[i]:
     knn_accuracy += 1
-  if y_train[i] == SVM_labels[i]:
+  if y_train['x'][i] == SVM_labels[i]:
     knnsvm_accuracy += 1
 knn_accuracy = (knn_accuracy/len(y_train))*100
     
