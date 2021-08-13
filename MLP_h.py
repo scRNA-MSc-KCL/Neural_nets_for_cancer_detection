@@ -41,7 +41,7 @@ if args.path == 4:
   file_loc = "DS4/MLP"
   
 path = os.getcwd()
-path = os.path.join(path, "{}/{}".format(file_loc,start))
+path = os.path.join(path, "test_results/{}/{}".format(file_loc,start))
 try:
   os.makedirs(path)
 except OSError:
@@ -105,7 +105,7 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
               plt.xlabel('epochs')
               plt.ylabel('loss')
               plt.legend()
-              fig.savefig('{}/{}/fig_1'.format(file_loc, start))
+              fig.savefig('test_results/{}/{}/fig_1'.format(file_loc, start))
   print(accuracy_list)
   df = pd.DataFrame(list(zip(optimizer_list, loss_function_list, epoch_list, node_1_length_list, activation_layer_1_list, node_2_length_list, activation_layer_2_list, accuracy_list)),
                         columns =['optimizer', 'loss_function', "epochs", "node1_length", "activation_layer1", "node2_length" , "activation_layer2", "perceptage_misclassified"])
