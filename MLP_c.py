@@ -90,7 +90,7 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
               epoch_list.append(e)
               node_1_length_list.append(n1)
               node_2_length_list.append(n1)
-              net.add(Dense(n2, activation = a2))
+              net.add(Dense(n1, activation = a2))
               net.add(Dense(num_lab, activation='softmax'))
               net.compile(loss=l, optimizer=o)
               history = net.fit(X_train, y_train,
