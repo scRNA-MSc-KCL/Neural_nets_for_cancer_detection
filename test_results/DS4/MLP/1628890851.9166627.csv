@@ -1,0 +1,9 @@
+,optimizer,loss_function,epochs,node1_length,activation_layer1,node2_length,activation_layer2,perceptage_misclassified
+0,Adam,categorical_crossentropy,5,50,tanh,50,tanh,96.68587896253602
+1,Adam,categorical_crossentropy,5,100,tanh,100,tanh,96.97406340057637
+2,Adam,categorical_crossentropy,5,250,tanh,250,tanh,96.54178674351584
+3,Adam,categorical_crossentropy,5,500,tanh,500,tanh,96.54178674351584
+4,Adam,categorical_crossentropy,5,550,tanh,550,tanh,96.54178674351584
+5,Adam,categorical_crossentropy,5,1000,tanh,1000,tanh,96.54178674351584
+6,Adam,categorical_crossentropy,5,1500,tanh,1500,tanh,97.26224783861672
+7,Adam,categorical_crossentropy,5,2050,tanh,2050,tanh,95.38904899135446
