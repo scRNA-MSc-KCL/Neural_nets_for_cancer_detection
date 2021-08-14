@@ -101,6 +101,7 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
                     net.add(Dense(num_lab, activation='softmax', kernel_initializer = k, kernel_regularizer=r))
                     counter += 1
                     layer_number_list.append(lr)
+                    regulizer_init.append(r)
                     optimizer_list.append(o)
                     loss_function_list.append(l)
                     activation_layer_1_list.append(a1)
@@ -128,8 +129,8 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
                     plt.legend()
                     fig.savefig('test_results/{}/{}/fig_{}'.format(file_loc, start, counter))
   print(accuracy_list)
-  df = pd.DataFrame(list(zip(optimizer_list, loss_function_list, epoch_list, node_1_length_list, activation_layer_1_list, node_2_length_list, activation_layer_2_list, accuracy_list, layer_number_list, kernal_initializer_list)),
-                        columns =['optimizer', 'loss_function', "epochs", "node1_length", "activation_layer1", "node2_length" , "activation_layer2", "perceptage_misclassified", "layer_number", "kernal_initializer"])
+  df = pd.DataFrame(list(zip(optimizer_list, loss_function_list, epoch_list, node_1_length_list, activation_layer_1_list, node_2_length_list, activation_layer_2_list, accuracy_list, layer_number_list, kernal_initializer_list, regulizer_init)),
+                        columns =['optimizer', 'loss_function', "epochs", "node1_length", "activation_layer1", "node2_length" , "activation_layer2", "perceptage_misclassified", "layer_number", "kernal_initializer", "regulizer list"])
   return df
 
 #define variables
@@ -152,5 +153,5 @@ loss_function = ["categorical_crossentropy"]
 regularizer = ["l1", "l2", "l1_l2"]
 #kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "ones", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
 kernal_init = ["glorot_normal"]
-results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab, b, layer_number, kernal_init)
+results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab, b, layer_number, kernal_init, regularizer)
 results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))
