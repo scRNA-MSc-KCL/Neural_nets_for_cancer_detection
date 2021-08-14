@@ -122,7 +122,7 @@ Nodes = [500]
 #activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 activation = ["tanh"]
 #optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
-#optimizer = ["Adam"]
+optimizer = ["Adam"]
 #epoch = [100]
 epoch = [5]
 
