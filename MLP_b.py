@@ -32,12 +32,12 @@ if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "DS2/MLP"
-  b = 250
+  b = 500
 if args.path == 3:
   labels =pd.read_csv("labels_3.csv", names = ["X"])
   data = sc.read("results_3.h5ad")
   file_loc = "DS3/MLP"
-  b = 500
+  b = 2000
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
@@ -79,37 +79,38 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
       for e in epoch:
         for n1 in Nodes:
           for a1 in activation:
-            for a2 in activation:
-              net = Sequential()
-              net.add(Dense(n1, activation = a1, input_shape = (data.n_vars,)))
-              counter += 1
-              optimizer_list.append(o)
-              loss_function_list.append(l)
-              activation_layer_1_list.append(a1)
-              activation_layer_2_list.append(a2)
-              epoch_list.append(e)
-              node_1_length_list.append(n1)
-              node_2_length_list.append(n1)
-              net.add(Dense(n1, activation = a2))
-              net.add(Dense(num_lab, activation='softmax'))
-              net.compile(loss=l, optimizer=o)
-              history = net.fit(X_train, y_train,
-                            validation_data=(X_test, y_test),
-                            epochs=e,batch_size=b)
-              outputs = net.predict(X_test)
-              labels_predicted= np.argmax(outputs, axis=1)
-              y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
-              correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
-              accuracy_list.append(correctly_classified)
-              print("model number", counter)
-              print("accuracy", correctly_classified)
-              fig = plt.figure()
-              plt.plot(history.history['loss'], label='training loss')
-              plt.plot(history.history['val_loss'], label='validation loss')
-              plt.xlabel('epochs')
-              plt.ylabel('loss')
-              plt.legend()
-              fig.savefig('test_results/{}/{}/fig_1'.format(file_loc, start))
+            for n2 in Nodes:
+              for a2 in activation:
+                net = Sequential()
+                net.add(Dense(n1, activation = a1, input_shape = (data.n_vars,)))
+                counter += 1
+                optimizer_list.append(o)
+                loss_function_list.append(l)
+                activation_layer_1_list.append(a1)
+                activation_layer_2_list.append(a2)
+                epoch_list.append(e)
+                node_1_length_list.append(n1)
+                node_2_length_list.append(n2)
+                net.add(Dense(n2, activation = a2))
+                net.add(Dense(num_lab, activation='softmax'))
+                net.compile(loss=l, optimizer=o)
+                history = net.fit(X_train, y_train,
+                              validation_data=(X_test, y_test),
+                              epochs=e,batch_size=b)
+                outputs = net.predict(X_test)
+                labels_predicted= np.argmax(outputs, axis=1)
+                y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
+                correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
+                accuracy_list.append(correctly_classified)
+                print("model number", counter)
+                print("accuracy", correctly_classified)
+                fig = plt.figure()
+                plt.plot(history.history['loss'], label='training loss')
+                plt.plot(history.history['val_loss'], label='validation loss')
+                plt.xlabel('epochs')
+                plt.ylabel('loss')
+                plt.legend()
+                fig.savefig('test_results/{}/{}/fig_1'.format(file_loc, start))
   print(accuracy_list)
   df = pd.DataFrame(list(zip(optimizer_list, loss_function_list, epoch_list, node_1_length_list, activation_layer_1_list, node_2_length_list, activation_layer_2_list, accuracy_list)),
                         columns =['optimizer', 'loss_function', "epochs", "node1_length", "activation_layer1", "node2_length" , "activation_layer2", "perceptage_misclassified"])
