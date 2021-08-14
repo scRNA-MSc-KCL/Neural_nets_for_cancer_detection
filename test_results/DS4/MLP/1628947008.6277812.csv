@@ -1,0 +1,13 @@
+,optimizer,loss_function,epochs,node1_length,activation_layer1,node2_length,activation_layer2,perceptage_misclassified,layer_number,kernal_initializer
+0,Adam,categorical_crossentropy,5,500,tanh,500,tanh,96.82997118155619,2,random_normal
+1,Adam,categorical_crossentropy,5,500,tanh,500,tanh,96.97406340057637,2,random_uniform
+2,Adam,categorical_crossentropy,5,500,tanh,500,tanh,97.26224783861672,2,truncated_normal
+3,Adam,categorical_crossentropy,5,500,tanh,500,tanh,55.04322766570605,2,zeros
+4,Adam,categorical_crossentropy,5,500,tanh,500,tanh,44.95677233429395,2,ones
+5,Adam,categorical_crossentropy,5,500,tanh,500,tanh,96.54178674351584,2,glorot_normal
+6,Adam,categorical_crossentropy,5,500,tanh,500,tanh,96.82997118155619,2,glorot_uniform
+7,Adam,categorical_crossentropy,5,500,tanh,500,tanh,96.82997118155619,2,he_normal
+8,Adam,categorical_crossentropy,5,500,tanh,500,tanh,97.69452449567724,2,he_uniform
+9,Adam,categorical_crossentropy,5,500,tanh,500,tanh,96.68587896253602,2,identity
+10,Adam,categorical_crossentropy,5,500,tanh,500,tanh,96.54178674351584,2,orthogonal
+11,Adam,categorical_crossentropy,5,500,tanh,500,tanh,95.96541786743515,2,variance_scaling
