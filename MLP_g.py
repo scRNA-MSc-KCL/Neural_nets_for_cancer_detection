@@ -87,15 +87,15 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
                 for k in kernal_init:
                   net = Sequential()
                   if lr == 1:
-                    net.add(Dense(n1, activation = a1, kernal_initializer = k, input_shape = (data.n_vars,)))
+                    net.add(Dense(n1, kernel_initializer = k, activation = a1, input_shape = (data.n_vars,)))
                   if lr == 2:
-                    net.add(Dense(n1, activation = a1, kernal_initializer = k, input_shape = (data.n_vars,)))
-                    net.add(Dense(n1, activation = a2, kernal_initializer = k))
+                    net.add(Dense(n1, kernel_initializer = k, activation = a1, input_shape = (data.n_vars,)))
+                    net.add(Dense(n1, activation = a2, kernel_initializer = k))
                   if lr == 3:
-                    net.add(Dense(n1, activation = a1, kernal_initializer = k, input_shape = (data.n_vars,)))
-                    net.add(Dense(n1, activation = a2, kernal_initializer = k))
-                    net.add(Dense(n1, activation = a2, kernal_initializer = k))
-                  net.add(Dense(num_lab, activation='softmax'))
+                    net.add(Dense(n1, kernel_initializer = k, activation = a1, input_shape = (data.n_vars,)))
+                    net.add(Dense(n1, kernel_initializer = k, activation = a2))
+                    net.add(Dense(n1, kernel_initializer = k, activation = a2))
+                  net.add(Dense(num_lab, activation='softmax', kernel_initializer = k))
                   counter += 1
                   layer_number_list.append(lr)
                   optimizer_list.append(o)
