@@ -121,13 +121,13 @@ Nodes = [500]
 #Nodes = [50, 100, 250, 500, 550, 1000, 1500, 2050]
 #activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 activation = ["tanh"]
-optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
+#optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
 #optimizer = ["Adam"]
 #epoch = [100]
 epoch = [5]
 
-#loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
-loss_function = ["categorical_crossentropy"]
+loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
+#loss_function = ["categorical_crossentropy"]
 #consider using custom learning rate
 #may or may not get used. See impact on above results
 #regularizer = ["l1", "l2", "l1_l2"]
