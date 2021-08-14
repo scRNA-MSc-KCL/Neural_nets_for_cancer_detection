@@ -66,7 +66,7 @@ y_test = to_categorical(y_test, num_lab)
 
 
 #Neural network testing function
-def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab, b, layer_number):
+def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab, b, layer_number, kernal_init):
   optimizer_list = []
   loss_function_list = []
   epoch_list = []
