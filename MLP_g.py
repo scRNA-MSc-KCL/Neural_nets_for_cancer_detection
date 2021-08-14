@@ -84,7 +84,7 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
           for a1 in activation:
             for a2 in activation:
               for lr in layer_number:
-                for k in kernal_initializer:
+                for k in kernal_init:
                   net = Sequential()
                   if lr == 1:
                     net.add(Dense(n1, activation = a1, kernal_initializer = k, input_shape = (data.n_vars,)))
