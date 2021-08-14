@@ -147,7 +147,7 @@ loss_function = ["categorical_crossentropy"]
 #consider using custom learning rate
 #may or may not get used. See impact on above results
 #regularizer = ["l1", "l2", "l1_l2"]
-#kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "ones", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
+kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "ones", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
 
 results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epoch, Nodes, activation, counter, num_lab, b, layer_number, kernal_init)
 results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))
