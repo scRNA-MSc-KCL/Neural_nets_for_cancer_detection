@@ -91,6 +91,5 @@ plt.legend()
 fig.savefig('test_results/{}/{}/fig_{}'.format(file_loc, start, counter))
 #define variables
 
-results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
