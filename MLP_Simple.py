@@ -73,7 +73,7 @@ net.add(Dense(n1, activation = a1, kernel_initializer = k, kernel_regularizer=r)
 net.add(Dense(num_lab, activation='softmax'))
 net.compile(loss=l, optimizer=o)
 history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=b)
-outputs = net.predict(X_test))
+outputs = net.predict(X_test)
 labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
 correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
