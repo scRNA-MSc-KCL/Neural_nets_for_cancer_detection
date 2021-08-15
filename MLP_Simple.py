@@ -80,7 +80,6 @@ outputs = net.predict(X_test)
 labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
 correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
-accuracy_list.append(correctly_classified)
 print("model number", counter)
 print("accuracy", correctly_classified)
 fig = plt.figure()
