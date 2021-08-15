@@ -96,13 +96,14 @@ labels = label_adaption(labels)
 
 #read data
 print("The original shape of the data1 is {}".format(data))
+sc.pp.filter_genes(data, min_cells=1)
 #normalize data
 sc.pp.normalize_total(data, target_sum=10000)
 #logarithmize data
 sc.pp.log1p(data)
 
 #select highly variable genes
-sc.pp.highly_variable_genes(data, n_top_genes=1000)
+sc.pp.highly_variable_genes(data, n_top_genes=2000)
 data = data[:, data.var.highly_variable]
 
 print("The final shape of the data is {}".format(data.shape))
