@@ -66,7 +66,7 @@ y_test = to_categorical(y_test, num_lab)
 y_val = to_categorical(y_val, num_lab)
 
 
-
+net = Sequential()
 net.add(Dense(n1, activation = a1, kernel_initializer = k, kernel_regularizer=r, input_shape = (data.n_vars,)))
 net.add(Dense(n1, activation = a1,kernel_initializer = k, kernel_regularizer=r, input_shape = (data.n_vars,)))
 net.add(Dense(n1, activation = a1, kernel_initializer = k, kernel_regularizer=r))
