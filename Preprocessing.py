@@ -37,6 +37,7 @@ args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("Original_data/Labels.csv")
   data = sc.read_csv("Original_data/Combined_10x_CelSeq2_5cl_data.csv")
+  results = 'results_1.h5ad'
 if args.path == 2:
   data = sc.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_UMIs.csv") #26485 x 65662
   data = anndata.AnnData.transpose(data)
@@ -44,11 +45,13 @@ if args.path == 2:
   ##data = sc.read_csv("human_cell_atlas/krasnow_hlca_facs_counts.csv")  #58683 x 9409
   labels = pd.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
   labels = labels["free_annotation"]
+  results = 'results_2.h5ad'
 if args.path == 3:
   labels =pd.read_csv("Original_data/GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
   data = sc.read_csv("Original_data/GSE131907_Lung_Cancer_raw_UMI_matrix.csv") #29634 x 208506
   data = anndata.AnnData.transpose(data)
   labels = labels["Cell_type"]
+  results = 'results_3.h5ad'
 if args.path == 4:
   data_pos = pd.read_csv("Original_data/GSM3783354_4T1_CherryPositive_RawCounts.csv")
   data_neg = pd.read_csv("Original_data/GSM3783356_4T1_CherryNegative_RawCounts.csv")
@@ -67,6 +70,7 @@ if args.path == 4:
   label_pos = ["Cherry Positive"]*l_pos
   label_neg = ["Cherry Negative"]*l_neg
   labels = label_pos + label_neg
+  results = 'results_4.h5ad'
 
 
 labels = label_adaption(labels)
