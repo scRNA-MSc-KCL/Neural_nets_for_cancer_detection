@@ -55,6 +55,11 @@ else:
 
 num_lab = len(labels)
 counter = 0
+n = 500
+a = "tanh"
+o = "Adam"
+epoch = 30
+l = "categorical_crossentropy"
 
 #create training and test sets
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
@@ -67,9 +72,7 @@ y_val = to_categorical(y_val, num_lab)
 
 
 net = Sequential()
-net.add(Dense(n1, activation = a1, kernel_initializer = k, kernel_regularizer=r, input_shape = (data.n_vars,)))
-net.add(Dense(n1, activation = a1,kernel_initializer = k, kernel_regularizer=r, input_shape = (data.n_vars,)))
-net.add(Dense(n1, activation = a1, kernel_initializer = k, kernel_regularizer=r))
+net.add(Dense(n, activation = a, input_shape = (data.n_vars,)))
 net.add(Dense(num_lab, activation='softmax'))
 net.compile(loss=l, optimizer=o)
 history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=b)
@@ -89,11 +92,7 @@ plt.legend()
 fig.savefig('test_results/{}/{}/fig_{}'.format(file_loc, start, counter))
 print(accuracy_list)
 #define variables
-Nodes = [500]
-activation = ["tanh"]
-optimizer = ["Adam"]
-epoch = [30]
-loss_function = ["categorical_crossentropy"]
+
 results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
