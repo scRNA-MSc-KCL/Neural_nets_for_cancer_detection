@@ -1,0 +1,2 @@
+,optimizer,loss_function,epochs,node1_length,activation_layer1,node2_length,activation_layer2,perceptage_misclassified
+0,Adam,categorical_crossentropy,3,500,tanh,500,tanh,92.79538904899135
