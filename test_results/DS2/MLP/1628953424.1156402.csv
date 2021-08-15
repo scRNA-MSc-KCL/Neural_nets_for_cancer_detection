@@ -1,0 +1,4 @@
+,optimizer,loss_function,epochs,node1_length,activation_layer1,node2_length,activation_layer2,perceptage_misclassified,layer_number,kernal_initializer,regulizer list
+0,Adam,categorical_crossentropy,5,500,tanh,500,tanh,22.59194395796848,2,glorot_normal,l1
+1,Adam,categorical_crossentropy,5,500,tanh,500,tanh,84.92347521510698,2,glorot_normal,l2
+2,Adam,categorical_crossentropy,5,500,tanh,500,tanh,22.59194395796848,2,glorot_normal,l1_l2
