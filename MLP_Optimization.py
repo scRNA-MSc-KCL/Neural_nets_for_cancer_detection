@@ -137,14 +137,13 @@ epoch = [7]
 #layer_number = [1]
 layer_number = [1,2]
 
-#loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
-loss_function = ["categorical_crossentropy"]
+loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
+#loss_function = ["categorical_crossentropy"]
 regularizer = ["l2"]
-kernal_init 
-regularizer = ["l2", "l1_l2"]
+#regularizer = ["l2", "l1_l2"]
 #kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
+kernal_init = ["glorot_uniform"]
 
-
-results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, X_val, y_val, epoch, Nodes, activation, counter, num_lab, b, layer_number, kernal_init)
+results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, X_val, y_val, epoch, Nodes, activation, counter, num_lab, b, layer_number, kernal_init, regularizer)
 results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))
 
