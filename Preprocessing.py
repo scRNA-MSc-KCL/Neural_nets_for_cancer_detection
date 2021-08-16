@@ -72,30 +72,35 @@ if args.path == 4:
   labels = label_pos + label_neg
   results = 'results_4.h5ad'
 
-
 labels = label_adaption(labels)
-
-#read data
 print("The original shape of the data1 is {}".format(data))
-sc.pp.filter_genes(data, min_cells=1)
-#normalize data
-sc.pp.normalize_total(data, target_sum=10000)
-#logarithmize data
-sc.pp.log1p(data)
 
-#select highly variable genes
-sc.pp.highly_variable_genes(data, n_top_genes=2000)
-data = data[:, data.var.highly_variable]
+#Pipeline 1
+if args.path == 1 or args.path == 4: 
+  #read data
+  sc.pp.filter_genes(data, min_cells=1)
+  #normalize data
+  sc.pp.normalize_total(data, target_sum=10000)
+  #logarithmize data
+  sc.pp.log1p(data)
+  #select highly variable genes
+  sc.pp.highly_variable_genes(data, n_top_genes=2000)
+  data = data[:, data.var.highly_variable]
+  print("The final shape of the data is {}".format(data.shape))
 
-print("The final shape of the data is {}".format(data.shape))
-#sc.tl.pca(data, svd_solver='arpack')
-#print("The shape after performing pca is {}".format(data.shape))
-
-#sc.pp.neighbors(data, n_neighbors=10, n_pcs=40)
-#print("The shape after doing neightbours things is {}".format(data.shape))
-#sc.tl.leiden(data)
-#print("The shape after doing leiden thing is {}".format(data.shape))
-
+#Pipeline 2
+if args.path == 2 or args.path == 3: 
+  #read data
+  sc.pp.filter_genes(data, min_cells=5)
+  #normalize data
+  sc.pp.normalize_total(data, target_sum=10000)
+  #logarithmize data
+  sc.pp.log1p(data)
+  #select highly variable genes
+  sc.pp.highly_variable_genes(data , min_mean=.125, max_mean=3, min_disp=0.25)
+  data = data[:, data.var.highly_variable]
+  print("The final shape of the data is {}".format(data.shape))  
+  
 data.write(results)
 print("data shape", data)
 np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
