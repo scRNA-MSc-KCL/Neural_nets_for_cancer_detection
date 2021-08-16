@@ -12,6 +12,8 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.neighbors import KNeighborsClassifier
 
 start = time.time()
+parser = argparse.ArgumentParser(description='Select dataset')
+parser.add_argument('path', type = int)
 args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
