@@ -12,10 +12,21 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.neighbors import KNeighborsClassifier
 
 start = time.time()
-labels =pd.read_csv("labels_4.csv", names = ["x"])
-data = sc.read("results_4.h5ad")
+args = parser.parse_args()
+if args.path == 1:
+  labels =pd.read_csv("labels_1.csv", names = ["X"])
+  data = sc.read("results_1.h5ad")
+if args.path == 2:
+  labels =pd.read_csv("labels_2.csv", names = ["X"])
+  data = sc.read("results_2.h5ad")
+if args.path == 3:
+  labels =pd.read_csv("labels_3.csv", names = ["X"])
+  data = sc.read("results_3.h5ad")
+if args.path == 4:
+  labels =pd.read_csv("labels_4.csv", names = ["X"])
+  data = sc.read("results_4.h5ad")
 
-neighbours = [100, 500, 1000, 2000, 3000]
+neighbours = [1, 3, 5, 7, 9]
 
 for n in neighbours:
   X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state = 42)
@@ -31,27 +42,27 @@ for n in neighbours:
     SVM_data = X_train[neighbours]
     indices = neighbours.tolist()
     indices = indices[0]
-    SVM_labels = y_train['x'][indices]
+    SVM_labels = y_train['X'][indices]
     knn_list.append(SVM_labels.value_counts().idxmax())
-    SVM_labels = SVM_labels.to_list()
-    Classifier = sklearn.svm.SVC(kernel = "linear")
+    #SVM_labels = SVM_labels.to_list()
+    #Classifier = sklearn.svm.SVC(kernel = "linear")
     #print(SVM_data[0])
-    Classifier.fit(SVM_data[0], SVM_labels)
-    y_pred = Classifier.predict([i])
-    SVM_list.append(y_pred[0])
+    #Classifier.fit(SVM_data[0], SVM_labels)
+    #y_pred = Classifier.predict([i])
+    #SVM_list.append(y_pred[0])
 
 
   knn_accuracy = 0
-  knnsvm_accuracy = 0
+  #knnsvm_accuracy = 0
   for i in range(len(SVM_list)-1):
-    if y_test['x'][i] == knn_list[i]:
+    if y_test['X'][i] == knn_list[i]:
       knn_accuracy += 1
-    if y_test['x'][i] == SVM_list[i]:
-      knnsvm_accuracy += 1
+    #if y_test['x'][i] == SVM_list[i]:
+    #  knnsvm_accuracy += 1
   knn_accuracy = (knn_accuracy/len(y_test))*100
   print("neighbours ", n, "knn_accuracy ", knn_accuracy)
-  knnsvm_accuracy = (knnsvm_accuracy/len(y_test))*100
-  print("neighbours ", n, "knnsvm_accuracy", knnsvm_accuracy)
+  #knnsvm_accuracy = (knnsvm_accuracy/len(y_test))*100
+  #print("neighbours ", n, "knnsvm_accuracy", knnsvm_accuracy)
     
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
