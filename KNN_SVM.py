@@ -47,6 +47,7 @@ for n in neighbours:
     SVM_labels = y_train['X'][indices]
     print(SVM_labels)
     knn_list.append(SVM_labels.value_counts().idxmax())
+    print("max", SVM_labels.value_counts().idxmax())
     #SVM_labels = SVM_labels.to_list()
     #Classifier = sklearn.svm.SVC(kernel = "linear")
     #print(SVM_data[0])
@@ -57,7 +58,7 @@ for n in neighbours:
 
   knn_accuracy = 0
   #knnsvm_accuracy = 0
-  for i in range(len(SVM_list)-1):
+  for i in range(len(y_test)-1):
     if y_test['X'][i] == knn_list[i]:
       knn_accuracy += 1
     #if y_test['x'][i] == SVM_list[i]:
