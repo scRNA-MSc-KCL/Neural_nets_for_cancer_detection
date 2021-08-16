@@ -54,13 +54,14 @@ for n in neighbours:
     #Classifier.fit(SVM_data[0], SVM_labels)
     #y_pred = Classifier.predict([i])
     #SVM_list.append(y_pred[0])
-  print(knn_list)
-  print(y_test)
 
   knn_accuracy = 0
   #knnsvm_accuracy = 0
   for i in range(len(y_test)-1):
+    print( y_test['X'][i])
+    print(knn_list[i])
     if y_test['X'][i] == knn_list[i]:
+      print("yes")
       knn_accuracy += 1
     #if y_test['x'][i] == SVM_list[i]:
     #  knnsvm_accuracy += 1
