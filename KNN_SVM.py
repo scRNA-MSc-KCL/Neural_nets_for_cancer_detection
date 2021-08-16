@@ -28,7 +28,7 @@ if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
 
-neighbours = [1, 3, 5, 7, 9]
+neighbours = [3]
 
 for n in neighbours:
   X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state = 42)
@@ -45,6 +45,7 @@ for n in neighbours:
     indices = neighbours.tolist()
     indices = indices[0]
     SVM_labels = y_train['X'][indices]
+    print(SVM_labels)
     knn_list.append(SVM_labels.value_counts().idxmax())
     #SVM_labels = SVM_labels.to_list()
     #Classifier = sklearn.svm.SVC(kernel = "linear")
