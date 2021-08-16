@@ -45,16 +45,17 @@ for n in neighbours:
     indices = neighbours.tolist()
     indices = indices[0]
     SVM_labels = y_train['X'][indices]
-    print(SVM_labels)
+    #print(SVM_labels)
     knn_list.append(SVM_labels.value_counts().idxmax())
-    print("max", SVM_labels.value_counts().idxmax())
+    #print("max", SVM_labels.value_counts().idxmax())
     #SVM_labels = SVM_labels.to_list()
     #Classifier = sklearn.svm.SVC(kernel = "linear")
     #print(SVM_data[0])
     #Classifier.fit(SVM_data[0], SVM_labels)
     #y_pred = Classifier.predict([i])
     #SVM_list.append(y_pred[0])
-
+print(knn_list)
+print(y_test)
 
   knn_accuracy = 0
   #knnsvm_accuracy = 0
