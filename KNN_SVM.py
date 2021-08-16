@@ -54,8 +54,8 @@ for n in neighbours:
     #Classifier.fit(SVM_data[0], SVM_labels)
     #y_pred = Classifier.predict([i])
     #SVM_list.append(y_pred[0])
-print(knn_list)
-print(y_test)
+  print(knn_list)
+  print(y_test)
 
   knn_accuracy = 0
   #knnsvm_accuracy = 0
