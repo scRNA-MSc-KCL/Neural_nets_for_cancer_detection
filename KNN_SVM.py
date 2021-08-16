@@ -28,7 +28,7 @@ if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
 
-neighbours = [3]
+neighbours = [1,3,5,7,9]
 
 for n in neighbours:
   X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state = 42)
@@ -58,10 +58,7 @@ for n in neighbours:
   knn_accuracy = 0
   #knnsvm_accuracy = 0
   for i in range(len(y_test)-1):
-    print( y_test['X'][i])
-    print(knn_list[i])
     if y_test['X'][i] == knn_list[i]:
-      print("yes")
       knn_accuracy += 1
     #if y_test['x'][i] == SVM_list[i]:
     #  knnsvm_accuracy += 1
