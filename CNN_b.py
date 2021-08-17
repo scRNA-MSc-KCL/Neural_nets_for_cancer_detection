@@ -83,7 +83,7 @@ y_test = to_categorical(y_test, num_lab)
 y_val= to_categorical(y_train, num_lab)
 y_val = to_categorical(y_test, num_lab)
 
-for p in pixel:
+for p in pixels:
   for f in feature_extract:
     it = ImageTransformer(feature_extractor=f, 
                           pixels=p, random_state=1701, 
