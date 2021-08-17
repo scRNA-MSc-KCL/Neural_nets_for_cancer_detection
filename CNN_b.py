@@ -80,8 +80,7 @@ X_test, X_val, y_test, y_val= train_test_split(X_test, y_test, test_size=0.5, ra
 #make labels for neural network catagorical
 y_train = to_categorical(y_train, num_lab)
 y_test = to_categorical(y_test, num_lab)
-y_val= to_categorical(y_train, num_lab)
-y_val = to_categorical(y_test, num_lab)
+y_val= to_categorical(y_val, num_lab)
 
 for p in pixels:
   for f in feature_extract:
@@ -108,7 +107,6 @@ for p in pixels:
 
     fig.savefig('{}/{}/fig_2_pixel{}feature{}'.format(file_loc, start,p, f))
 
-    X_train_img = it.transform(X_train)
     X_train_img = it.fit_transform(X_train)
     X_test_img = it.transform(X_test)
     X_val_img = it.transform(X_val)
