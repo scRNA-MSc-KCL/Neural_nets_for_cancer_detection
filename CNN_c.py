@@ -91,7 +91,7 @@ for p in pixels:
     it = ImageTransformer(feature_extractor=f, 
                           pixels=p, random_state=1701, 
                           n_jobs=-1)
-   fig = plt.figure(figsize=(5, 5))
+    fig = plt.figure(figsize=(5, 5))
     _ = it.fit(X_train, plot=True)
 
     #fig.savefig('{}/{}/fig_1'.format(file_loc, start, p, f))
