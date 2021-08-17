@@ -118,7 +118,7 @@ net = Sequential()
 net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',
 input_shape=(50,50,3)))
 net.add(BatchNormalization())
-net.add(Conv2D(64, (3, 3), activation='relu'))
+#net.add(Conv2D(64, (3, 3), activation='relu'))
 net.add(MaxPool2D(pool_size=(2, 2)))
 net.add(Flatten())
 net.add(Dense(256, activation='relu'))
