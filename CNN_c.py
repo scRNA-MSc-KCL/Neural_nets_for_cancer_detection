@@ -148,7 +148,7 @@ for p in pixels:
         net.compile(loss='categorical_crossentropy', optimizer='adam')
         history = net.fit(X_train_img, y_train,
         validation_data=(X_val_img, y_val),
-         epochs=50,
+         epochs=1,
          batch_size=256)
 
     #get CNN plot
