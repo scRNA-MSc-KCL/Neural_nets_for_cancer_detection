@@ -117,7 +117,7 @@ number_of_models = 2
 accuracy_list = []
 run_time_list = []
 #Build CNN
-for i in number_of_models:
+for i in range(len(number_of_models)):
   net = Sequential()
   net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',
   input_shape=(50,50,3)))
