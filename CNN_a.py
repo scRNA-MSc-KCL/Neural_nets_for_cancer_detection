@@ -113,49 +113,60 @@ X_test_img = it.transform(X_test_norm)
 X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
 
+number_of_models = 100
+accuracy_list = []
+run_time_list = []
 #Build CNN
-net = Sequential()
-net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',
-input_shape=(50,50,3)))
-net.add(BatchNormalization())
-#net.add(Conv2D(64, (3, 3), activation='relu'))
-net.add(MaxPool2D(pool_size=(2, 2)))
-net.add(Flatten())
-net.add(Dense(256, activation='relu'))
-net.add(Dropout(rate=0.5))
-net.add(Dense(num_lab, activation='softmax'))
+for i in number_of_models:
+  net = Sequential()
+  net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',
+  input_shape=(50,50,3)))
+  net.add(BatchNormalization())
+  #net.add(Conv2D(64, (3, 3), activation='relu'))
+  #net.add(BatchNormalization())
+  net.add(MaxPool2D(pool_size=(2, 2)))
+  net.add(Flatten())
+  net.add(Dense(256, activation='relu'))
+  net.add(Dropout(rate=0.5))
+  net.add(Dense(num_lab, activation='softmax'))
+  #net.summary()
+  #from contextlib import redirect_stdout
 
-net.summary()
-from contextlib import redirect_stdout
-
-with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
-    with redirect_stdout(f):
-        net.summary()
+  #with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
+  #    with redirect_stdout(f):
+   #       net.summary()
 
 #train CNN
-net.compile(loss='categorical_crossentropy', optimizer='adam')
-history = net.fit(X_train_img, y_train,
-validation_data=(X_test_img, y_test),
- epochs=50,
- batch_size=256)
+  net.compile(loss='categorical_crossentropy', optimizer='adam')
+  history = net.fit(X_train_img, y_train,
+  validation_data=(X_test_img, y_test),
+   epochs=50,
+   batch_size=256)
 
 #get CNN plot
-fig = plt.figure()
-plt.plot(history.history['loss'], label='training loss')
-plt.plot(history.history['val_loss'], label='validation loss')
-plt.xlabel('epochs')
-plt.ylabel('loss')
-plt.legend()
-fig.savefig('{}/{}/fig_3'.format(file_loc, start))
+#fig = plt.figure()
+#plt.plot(history.history['loss'], label='training loss')
+#plt.plot(history.history['val_loss'], label='validation loss')
+#plt.xlabel('epochs')
+#plt.ylabel('loss')
+#plt.legend()
+#fig.savefig('{}/{}/fig_3'.format(file_loc, start))
 
-outputs = net.predict(X_test_img)
-labels_predicted= np.argmax(outputs, axis=1)
-y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
-misclassified =  (np.sum(labels_predicted != y_test_decoded)/(len(y_test_decoded)))*100
-f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
-f.write("percentage missclassified on test set is {}\n".format(misclassified))
-print("misclassified; ", misclassified)
-end = time.time()
-f.write("The time taken to complete this program was {}".format(end - start))
-print("The time taken to complete this program was {}".format(end - start))
-f.close()
+  outputs = net.predict(X_test_img)
+  labels_predicted= np.argmax(outputs, axis=1)
+  y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
+  accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
+  accuracy_list.append(accuracy)
+  #f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
+  #f.write("percentage missclassified on test set is {}\n".format(misclassified))
+  #print("misclassified; ", misclassified)
+  end = time.time()
+  run_time = end - start
+  run_time_list.append(run_time)
+  #f.write("The time taken to complete this program was {}".format(end - start))
+  #print("The time taken to complete this program was {}".format(end - start))
+  #f.close()
+
+df = pd.DataFrame(list(zip(accuracy_list, run_time_list)),columns =['accuracy', 'run_time'])
+df.to_csv("test_results/{}/{}.csv".format(file_loc, start))
+  
