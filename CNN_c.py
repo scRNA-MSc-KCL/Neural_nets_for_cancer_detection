@@ -121,16 +121,16 @@ for p in pixels:
 
 #Build CNN
     for l in cnn_layers:
-      for f in cnn_filter:
+      for fl in cnn_filter:
         net = Sequential()
-        net.add(Conv2D(filters=f, kernel_size=(5,5), activation='relu',
+        net.add(Conv2D(filters=fl, kernel_size=(5,5), activation='relu',
         input_shape=(p,p,3)))
         net.add(BatchNormalization())
         if l == 2:
-          net.add(Conv2D(f, (3, 3), activation='relu'))
+          net.add(Conv2D(fl, (3, 3), activation='relu'))
           net.add(BatchNormalization())
         if l == 3:
-          net.add(Conv2D(f, (3, 3), activation='relu'))
+          net.add(Conv2D(fl, (3, 3), activation='relu'))
           net.add(BatchNormalization())
         net.add(MaxPool2D(pool_size=(2, 2)))
         net.add(Flatten())
@@ -173,8 +173,8 @@ for p in pixels:
         accuracy_list.append(accuracy)
         pixel_list.append(p)
         feature_list.append(f)
-        cnn_layers_list.append(c)
-        cnn_filters_list.append(f)
+        cnn_layers_list.append(l)
+        cnn_filters_list.append(fl)
         #f.write("The time taken to complete this program was {}".format(end - start))
         #print("The time taken to complete this program was {}".format(end - start))
         #f.close()
