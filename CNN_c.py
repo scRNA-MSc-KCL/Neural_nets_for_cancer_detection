@@ -88,11 +88,11 @@ y_val= to_categorical(y_val, num_lab)
 
 for p in pixels:
   for f in feature_extract:
- #   it = ImageTransformer(feature_extractor=f, 
-  #                        pixels=p, random_state=1701, 
-   #                       n_jobs=-1)
-  # fig = plt.figure(figsize=(5, 5))
-   # _ = it.fit(X_train, plot=True)
+    it = ImageTransformer(feature_extractor=f, 
+                          pixels=p, random_state=1701, 
+                          n_jobs=-1)
+   fig = plt.figure(figsize=(5, 5))
+    _ = it.fit(X_train, plot=True)
 
     #fig.savefig('{}/{}/fig_1'.format(file_loc, start, p, f))
 
