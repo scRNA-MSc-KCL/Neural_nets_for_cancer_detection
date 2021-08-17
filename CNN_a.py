@@ -168,5 +168,5 @@ for i in range(number_of_models):
   #f.close()
 
 df = pd.DataFrame(list(zip(accuracy_list, run_time_list)),columns =['accuracy', 'run_time'])
-df.to_csv("test_results/{}/{}.csv".format(file_loc, start))
+df.to_csv("{}/{}.csv".format(file_loc, start))
   
