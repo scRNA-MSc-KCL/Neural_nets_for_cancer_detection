@@ -27,6 +27,7 @@ import anndata
 import time
 import os
 
+
 #Load data
 start = time.time()
 
@@ -71,6 +72,7 @@ X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.
 #make labels for neural network catagorical
 y_train = to_categorical(y_train, num_lab)
 y_test = to_categorical(y_test, num_lab)
+e = 100
 
 #scale data
 #ln = LogScaler()
@@ -136,7 +138,7 @@ with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
 net.compile(loss='categorical_crossentropy', optimizer='adam')
 history = net.fit(X_train_img, y_train,
 validation_data=(X_test_img, y_test),
- epochs=100,
+ epochs=e,
  batch_size=256)
 
 #get CNN plot
@@ -154,7 +156,7 @@ y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing e
 misclassified =  (np.sum(labels_predicted != y_test_decoded)/(len(y_test_decoded)))*100
 f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
 f.write("percentage missclassified on test set is {}\n".format(misclassified))
-f.write("number of epochs is {}".format(epochs))
+f.write("number of epochs is {}".format(e))
 print("misclassified; ", misclassified)
 end = time.time()
 f.write("The time taken to complete this program was {}".format(end - start))
