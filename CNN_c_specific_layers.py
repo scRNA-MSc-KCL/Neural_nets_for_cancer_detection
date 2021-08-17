@@ -61,7 +61,7 @@ if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
   file_loc = "test_results/DS4/CNN"
-num_lab = len(labels)
+num_lab = len(labels["X"].unique())
 counter = 0
 
 path = os.getcwd()
