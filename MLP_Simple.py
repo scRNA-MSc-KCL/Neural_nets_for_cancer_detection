@@ -53,7 +53,7 @@ except OSError:
 else:
   print("Successfully created the directory %s" % path)
 
-num_lab = len(labels)
+num_lab = len(labels["X"].unique())
 counter = 0
 n = 500
 a = "tanh"
