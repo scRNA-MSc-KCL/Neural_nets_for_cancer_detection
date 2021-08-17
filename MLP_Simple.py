@@ -55,8 +55,8 @@ else:
 
 num_lab = len(labels["X"].unique())
 counter = 0
-n = 500
-a = "tanh"
+n = 1200
+a = "relu"
 o = "Adam"
 e = 10
 l = "categorical_crossentropy"
