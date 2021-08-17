@@ -113,7 +113,7 @@ X_test_img = it.transform(X_test_norm)
 X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
 
-number_of_models = 100
+number_of_models = 2
 accuracy_list = []
 run_time_list = []
 #Build CNN
