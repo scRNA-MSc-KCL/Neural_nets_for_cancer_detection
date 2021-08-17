@@ -140,7 +140,7 @@ for p in pixels:
         net.summary()
         from contextlib import redirect_stdout
 
-        with open('{}/{}/model_summary_pixel_{}feature_{}.txt'.format(file_loc, start, p, f), 'w') as fr:
+        with open('{}/{}/model_summary_filter_{}layer_{}.txt'.format(file_loc, start, fl, l), 'w') as fr:
             with redirect_stdout(fr):
                 net.summary()
 
@@ -148,7 +148,7 @@ for p in pixels:
         net.compile(loss='categorical_crossentropy', optimizer='adam')
         history = net.fit(X_train_img, y_train,
         validation_data=(X_val_img, y_val),
-         epochs=1,
+         epochs=50,
          batch_size=256)
 
     #get CNN plot
