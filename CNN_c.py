@@ -86,8 +86,8 @@ y_train = to_categorical(y_train, num_lab)
 y_test = to_categorical(y_test, num_lab)
 y_val= to_categorical(y_val, num_lab)
 
-#for p in pixels:
- # for f in feature_extract:
+for p in pixels:
+  for f in feature_extract:
  #   it = ImageTransformer(feature_extractor=f, 
   #                        pixels=p, random_state=1701, 
    #                       n_jobs=-1)
