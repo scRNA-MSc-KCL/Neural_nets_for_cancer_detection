@@ -124,12 +124,12 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, X_v
 
 #define variables
 #Nodes = np.arange(50, 2050, 500)
-Nodes = [1200]*100
+Nodes = [1100]*100
 #Nodes = np.arange(10, 3010, 10)
 #activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 activation = ["relu"]
 #optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
-optimizer = ["Adam"]
+optimizer = ["RMSprop"]
 #epoch = [100]
 epoch = [7]
 layer_number = [1]
