@@ -132,7 +132,7 @@ activation = ["relu"]
 optimizer = ["Adam"]
 #epoch = [100]
 epoch = [7]
-layer_number = [2]
+layer_number = [1]
 
 #loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
 loss_function = ["categorical_crossentropy"]
