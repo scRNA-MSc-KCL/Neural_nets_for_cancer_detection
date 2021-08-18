@@ -165,6 +165,7 @@ for p in pixels:
     run_time = end - start
     run_time_list.append(run_time)
     accuracy_list.append(accuracy)
+    print("accuracy", accuracy)
     pixel_list.append(p)
     feature_list.append(f)
         #f.write("The time taken to complete this program was {}".format(end - start))
