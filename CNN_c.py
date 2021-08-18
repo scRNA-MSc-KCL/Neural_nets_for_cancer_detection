@@ -37,7 +37,7 @@ cnn_layers_list = []
 pixels = [50]
 feature_extract = ['pca']
 cnn_filter = [32, 64, 128]
-cnn_layers = [1, 2, 3]
+cnn_layers = [1]
 
 #Load data
 start = time.time()
