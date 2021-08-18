@@ -53,7 +53,7 @@ except OSError:
 else:
   print("Successfully created the directory %s" % path)
 
-num_lab = len(labels)
+num_lab = len(labels['X'].unique())
 counter = 0
 
 #create training and test sets
@@ -124,10 +124,10 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, X_v
 
 #define variables
 #Nodes = np.arange(50, 2050, 500)
-Nodes = [1500]*20
+Nodes = [1200]*100
 #Nodes = np.arange(10, 3010, 10)
 #activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
-activation = ["tanh"]
+activation = ["relu"]
 #optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
 optimizer = ["Adam"]
 #epoch = [100]
@@ -138,8 +138,9 @@ layer_number = [2]
 loss_function = ["categorical_crossentropy"]
 #consider using custom learning rate
 #may or may not get used. See impact on above results
-#regularizer = ["l1", "l2", "l1_l2"]
+regularizer = ["l1_l2"]
 #kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "ones", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
+kernal_init = ["glorot_normal"]
 
 results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, X_val, y_val, epoch, Nodes, activation, counter, num_lab, b, layer_number)
 results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))
