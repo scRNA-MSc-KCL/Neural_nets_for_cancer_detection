@@ -121,9 +121,9 @@ for p in pixels:
 
 #Build CNN
     net = Sequential()
-    net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',input_shape=(p,p,3)))
+    net.add(Conv2D(filters=64, kernel_size=(5,5), activation='relu',input_shape=(p,p,3)))
     net.add(BatchNormalization())
-    net.add(Conv2D(64, (3, 3), activation='relu'))
+    net.add(Conv2D(128, (3, 3), activation='relu'))
     net.add(BatchNormalization())
         #net.add(Conv2D(128, (3, 3), activation='relu'))
         #net.add(BatchNormalization())
