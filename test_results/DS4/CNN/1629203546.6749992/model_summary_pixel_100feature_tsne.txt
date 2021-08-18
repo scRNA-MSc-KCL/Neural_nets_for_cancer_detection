@@ -1,24 +1,22 @@
-Model: "sequential"
+Model: "sequential_7"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-conv2d (Conv2D)              (None, 46, 46, 32)        2432      
+conv2d_7 (Conv2D)            (None, 96, 96, 32)        2432      
 _________________________________________________________________
-batch_normalization (BatchNo (None, 46, 46, 32)        128       
+batch_normalization_7 (Batch (None, 96, 96, 32)        128       
 _________________________________________________________________
-max_pooling2d (MaxPooling2D) (None, 23, 23, 32)        0         
+max_pooling2d_7 (MaxPooling2 (None, 48, 48, 32)        0         
 _________________________________________________________________
-flatten (Flatten)            (None, 16928)             0         
+flatten_7 (Flatten)          (None, 73728)             0         
 _________________________________________________________________
-dense (Dense)                (None, 256)               4333824   
+dense_14 (Dense)             (None, 256)               18874624  
 _________________________________________________________________
-dropout (Dropout)            (None, 256)               0         
+dropout_7 (Dropout)          (None, 256)               0         
 _________________________________________________________________
-dense_1 (Dense)              (None, 65662)             16875134  
+dense_15 (Dense)             (None, 3469)              891533    
 =================================================================
-Total params: 21,211,518
-Trainable params: 21,211,454
+Total params: 19,768,717
+Trainable params: 19,768,653
 Non-trainable params: 64
 _________________________________________________________________
-percentage missclassified on test set is 7.2269140246434995
-number of epochs is 100The time taken to complete this program was 35626.26388788223

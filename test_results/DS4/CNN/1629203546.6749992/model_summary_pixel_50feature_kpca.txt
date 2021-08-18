@@ -1,24 +1,22 @@
-Model: "sequential"
+Model: "sequential_5"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-conv2d (Conv2D)              (None, 46, 46, 32)        2432      
+conv2d_5 (Conv2D)            (None, 46, 46, 32)        2432      
 _________________________________________________________________
-batch_normalization (BatchNo (None, 46, 46, 32)        128       
+batch_normalization_5 (Batch (None, 46, 46, 32)        128       
 _________________________________________________________________
-max_pooling2d (MaxPooling2D) (None, 23, 23, 32)        0         
+max_pooling2d_5 (MaxPooling2 (None, 23, 23, 32)        0         
 _________________________________________________________________
-flatten (Flatten)            (None, 16928)             0         
+flatten_5 (Flatten)          (None, 16928)             0         
 _________________________________________________________________
-dense (Dense)                (None, 256)               4333824   
+dense_10 (Dense)             (None, 256)               4333824   
 _________________________________________________________________
-dropout (Dropout)            (None, 256)               0         
+dropout_5 (Dropout)          (None, 256)               0         
 _________________________________________________________________
-dense_1 (Dense)              (None, 65662)             16875134  
+dense_11 (Dense)             (None, 3469)              891533    
 =================================================================
-Total params: 21,211,518
-Trainable params: 21,211,454
+Total params: 5,227,917
+Trainable params: 5,227,853
 Non-trainable params: 64
 _________________________________________________________________
-percentage missclassified on test set is 7.2269140246434995
-number of epochs is 100The time taken to complete this program was 35626.26388788223

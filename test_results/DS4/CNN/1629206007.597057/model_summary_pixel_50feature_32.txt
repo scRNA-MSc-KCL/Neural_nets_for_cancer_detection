@@ -14,11 +14,9 @@ dense (Dense)                (None, 256)               4333824
 _________________________________________________________________
 dropout (Dropout)            (None, 256)               0         
 _________________________________________________________________
-dense_1 (Dense)              (None, 65662)             16875134  
+dense_1 (Dense)              (None, 3469)              891533    
 =================================================================
-Total params: 21,211,518
-Trainable params: 21,211,454
+Total params: 5,227,917
+Trainable params: 5,227,853
 Non-trainable params: 64
 _________________________________________________________________
-percentage missclassified on test set is 7.2269140246434995
-number of epochs is 100The time taken to complete this program was 35626.26388788223
