@@ -132,7 +132,7 @@ activation = ["tanh"]
 optimizer = ["Adam"]
 #epoch = [100]
 epoch = [7]
-layer_number = [1]
+layer_number = [2]
 
 #loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
 loss_function = ["categorical_crossentropy"]
