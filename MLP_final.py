@@ -18,8 +18,9 @@ import anndata
 import time
 import os
 
-number_of_models = 100
+number_of_models = 10
 accuracy_list = []
+counter = 0
 
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
@@ -68,6 +69,7 @@ y_test = to_categorical(y_test, num_lab)
 y_val = to_categorical(y_val, num_lab)
 
 for i in range(number_of_models):
+  counter += 1
   net = Sequential()
   net.add(Dense(1200, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2", input_shape = (data.n_vars,)))
   net.add(Dense(1300, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2"))
