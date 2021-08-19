@@ -67,7 +67,7 @@ y_train = to_categorical(y_train, num_lab)
 y_test = to_categorical(y_test, num_lab)
 y_val = to_categorical(y_val, num_lab)
 
-for i in number_of_models:
+for i in range(number_of_models):
   net = Sequential()
   net.add(Dense(1200, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2", input_shape = (data.n_vars,)))
   net.add(Dense(1300, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2"))
