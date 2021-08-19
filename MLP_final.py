@@ -18,7 +18,7 @@ import anndata
 import time
 import os
 
-number_of_models = 100
+number_of_models = 10
 accuracy_list = []
 counter = 0
 
