@@ -23,6 +23,7 @@ from kmeans_initializer import InitCentersKMeans
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 start = time.time()
+e = 10
 
 args = parser.parse_args()
 if args.path == 1:
@@ -71,7 +72,7 @@ net = Sequential()
 net.add(RBFLayer(num_lab,initializer=InitCentersKMeans(X_train),betas=.0001,input_shape=(data.n_vars,)))
 net.add(Dense(num_lab, activation='softmax'))
 net.compile(loss="categorical_crossentropy", optimizer="adam")
-history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=10,batch_size=50)
+history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=50)
 outputs = net.predict(X_test)
 labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1) 
