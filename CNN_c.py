@@ -167,6 +167,7 @@ for p in pixels:
         #f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
         #f.write("percentage missclassified on test set is {}\n".format(misclassified))
         #print("misclassified; ", misclassified)
+        print("accuracy: ", accuracy)
         end = time.time()
         run_time = end - start
         run_time_list.append(run_time)
