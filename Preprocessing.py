@@ -48,10 +48,10 @@ if args.path == 2:
   results = 'results_2.h5ad'
 if args.path == 3:
   labels =pd.read_csv("Original_data/GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
-  data = sc.read_csv("Original_data/GSE131907_Lung_Cancer_raw_UMI_matrix.csv") #29634 x 208506
-  data = anndata.AnnData.transpose(data)
-  labels = labels["Cell_type"]
-  results = 'results_3.h5ad'
+  #data = sc.read_csv("Original_data/GSE131907_Lung_Cancer_raw_UMI_matrix.csv") #29634 x 208506
+  #data = anndata.AnnData.transpose(data)
+  labels = labels["Cell_subtype"]
+  #results = 'results_3.h5ad'
 if args.path == 4:
   data_pos = pd.read_csv("Original_data/GSM3783354_4T1_CherryPositive_RawCounts.csv")
   data_neg = pd.read_csv("Original_data/GSM3783356_4T1_CherryNegative_RawCounts.csv")
@@ -76,7 +76,7 @@ labels = label_adaption(labels)
 print("The original shape of the data1 is {}".format(data))
 
 #Pipeline 1
-if args.path == 1 or args.path == 4: 
+"""if args.path == 1 or args.path == 4: 
   #read data
   sc.pp.filter_genes(data, min_cells=1)
   #normalize data
@@ -102,5 +102,5 @@ if args.path == 2 or args.path == 3:
   print("The final shape of the data is {}".format(data.shape))  
   
 data.write(results)
-print("data shape", data)
+print("data shape", data)"""
 np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
