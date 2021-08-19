@@ -17,8 +17,8 @@ import argparse
 import anndata
 import time
 import os
-from RBF.rbflayer import RBFLayer, InitCentersRandom
-from RBF.kmeans_initializer import InitCentersKMeans
+from rbflayer import RBFLayer, InitCentersRandom
+from kmeans_initializer import InitCentersKMeans
 
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
