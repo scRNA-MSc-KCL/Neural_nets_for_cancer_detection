@@ -23,7 +23,7 @@ from kmeans_initializer import InitCentersKMeans
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 start = time.time()
-e = 500
+e = 1000
 
 args = parser.parse_args()
 if args.path == 1:
