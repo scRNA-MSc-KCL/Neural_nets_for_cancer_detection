@@ -88,7 +88,7 @@ fig.savefig('test_results/{}/{}/fig'.format(file_loc, start))
 
 net.summary()
 from contextlib import redirect_stdout
-with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
+with open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
     with redirect_stdout(f):
         net.summary()
 f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
