@@ -18,6 +18,9 @@ import anndata
 import time
 import os
 
+number_of_models = 100
+accuracy_list = []
+
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 start = time.time()
@@ -64,27 +67,30 @@ y_train = to_categorical(y_train, num_lab)
 y_test = to_categorical(y_test, num_lab)
 y_val = to_categorical(y_val, num_lab)
 
+for i in number_of_models:
+  net = Sequential()
+  net.add(Dense(1200, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2" input_shape = (data.n_vars,)))
+  net.add(Dense(1300, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2"))
+  net.add(Dense(num_lab, activation='softmax'))
+  net.compile(loss="categorical_crossentropy", optimizer="Adam")
+  history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=7,batch_size=b)
+  outputs = net.predict(X_test)
+  labels_predicted= np.argmax(outputs, axis=1)
+  y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
+  correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
+  print("model number", counter)
+  print("accuracy", correctly_classified)
+  fig = plt.figure()
+  plt.plot(history.history['loss'], label='training loss')
+  plt.plot(history.history['val_loss'], label='validation loss')
+  plt.xlabel('epochs')
+  plt.ylabel('loss')
+  plt.legend()
+  fig.savefig('test_results/{}/{}/fig_{}'.format(file_loc, start, counter))
+  accuracy_list.append(correctly_classified)
 
-net = Sequential()
-net.add(Dense(1200, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2" input_shape = (data.n_vars,)))
-net.add(Dense(1300, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2"))
-net.add(Dense(num_lab, activation='softmax'))
-net.compile(loss="categorical_crossentropy", optimizer="Adam")
-history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=b)
-outputs = net.predict(X_test)
-labels_predicted= np.argmax(outputs, axis=1)
-y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
-correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
-print("model number", counter)
-print("accuracy", correctly_classified)
-fig = plt.figure()
-plt.plot(history.history['loss'], label='training loss')
-plt.plot(history.history['val_loss'], label='validation loss')
-plt.xlabel('epochs')
-plt.ylabel('loss')
-plt.legend()
-fig.savefig('test_results/{}/{}/fig_{}'.format(file_loc, start, counter))
 #define variables
-
+print(accuracy_list)
+df = pd.DataFrame(list(zip(accuracy_list)),columns =['accuracy_list'])
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
