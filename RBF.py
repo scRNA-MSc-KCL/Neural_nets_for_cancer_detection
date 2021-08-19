@@ -83,7 +83,7 @@ plt.plot(history.history['val_loss'], label='validation loss')
 plt.xlabel('epochs')
 plt.ylabel('loss')
 plt.legend()
-fig.savefig('test_results/{}/{}'.format(file_loc, start))
+fig.savefig('test_results/{}/{}.fig'.format(file_loc, start))
 
 
 net.summary()
