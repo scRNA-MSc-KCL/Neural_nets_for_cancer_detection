@@ -34,7 +34,7 @@ feature_list = []
 cnn_filters_list = []
 cnn_layers_list = []
 
-pixels = [50]
+pixels = [50, 50, 50]
 feature_extract = ['pca']
 #cnn_filter = [32, 64, 128]
 cnn_layers = [2]
@@ -121,12 +121,12 @@ for p in pixels:
 
 #Build CNN
     net = Sequential()
-    net.add(Conv2D(filters=128, kernel_size=(7,7), activation='relu',input_shape=(p,p,3)))
+    net.add(Conv2D(filters=32, kernel_size=(7,7), activation='relu',input_shape=(p,p,3)))
     net.add(BatchNormalization())
-    net.add(Conv2D(256, (5, 5), activation='relu'))
+    net.add(Conv2D(64, (5, 5), activation='relu'))
     net.add(BatchNormalization())
-    #net.add(Conv2D(128, (3, 3), activation='relu'))
-    #net.add(BatchNormalization())
+    net.add(Conv2D(128, (3, 3), activation='relu'))
+    net.add(BatchNormalization())
     net.add(MaxPool2D(pool_size=(2, 2)))
     net.add(Flatten())
     net.add(Dense(256, activation='relu'))
