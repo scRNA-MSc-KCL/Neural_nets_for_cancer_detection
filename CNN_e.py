@@ -117,7 +117,7 @@ X_val_img = X_val_img.reshape(X_val_img.shape[0], 50, 50, 3)
 
 #pooling = ["MaxPool2D", "AveragePool2D", "GlobalMaxPool2D"]       
 #size = [2,3,4]
-pooling = ["MaxPool2D"]
+pooling = [MaxPool2D]
 size = [2]
 
 for p1 in pooling:
