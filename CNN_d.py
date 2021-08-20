@@ -126,11 +126,11 @@ for b1 in bn1:
     for b3 in bn3:
       net = Sequential()
       net.add(Conv2D(filters=32, kernel_size=(7,7), activation='relu',input_shape=(p,p,3)))
-      if b1 = "yes":
+      if b1 == "yes":
         net.add(BatchNormalization())
       net.add(MaxPool2D(pool_size=(2, 2)))
       net.add(Conv2D(64, (5, 5), activation='relu'))
-      if bn2 = "yes":
+      if bn2 == "yes":
         net.add(BatchNormalization())
       net.add(MaxPool2D(pool_size=(2, 2)))
       net.add(Conv2D(128, (3, 3), activation='relu'))
