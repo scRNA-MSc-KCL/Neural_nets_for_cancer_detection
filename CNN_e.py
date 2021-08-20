@@ -115,10 +115,10 @@ X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
 X_val_img = X_val_img.reshape(X_val_img.shape[0], 50, 50, 3)
 
-#pooling = ["MaxPool2D", "AveragePool2D", "GlobalMaxPool2D"]       
-#size = [2,3,4]
-pooling = [MaxPool2D]
-size = [2]
+pooling = [MaxPool2D, AveragePool2D, GlobalMaxPool2D]       
+size = [2,3,4]
+#pooling = [MaxPool2D]
+#size = [2]
 
 for p1 in pooling:
   for s1 in size:
@@ -146,7 +146,7 @@ for p1 in pooling:
               with redirect_stdout(fr):
                 net.summary()
             net.compile(loss='categorical_crossentropy', optimizer='adam')
-            history = net.fit(X_train_img, y_train,validation_data=(X_val_img, y_val),epochs=1,batch_size=256)
+            history = net.fit(X_train_img, y_train,validation_data=(X_val_img, y_val),epochs=50,batch_size=256)
             outputs = net.predict(X_test_img)
             labels_predicted= np.argmax(outputs, axis=1)
             y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
