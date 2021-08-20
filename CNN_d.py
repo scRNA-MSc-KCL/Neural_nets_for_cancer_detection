@@ -149,7 +149,7 @@ for b1 in bn1:
                 
     #train CNN
       net.compile(loss='categorical_crossentropy', optimizer='adam')
-      history = net.fit(X_train_img, y_train,validation_data=(X_val_img, y_val),epochs=1,batch_size=256)
+      history = net.fit(X_train_img, y_train,validation_data=(X_val_img, y_val),epochs=50,batch_size=256)
 
     #get CNN plot
     #fig = plt.figure()
