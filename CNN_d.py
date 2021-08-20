@@ -125,15 +125,15 @@ for b1 in bn1:
   for b2 in bn2:
     for b3 in bn3:
       net = Sequential()
-      net.add(Conv2D(filters=fl, kernel_size=(5,5), activation='relu',input_shape=(p,p,3)))
+      net.add(Conv2D(filters=32, kernel_size=(7,7), activation='relu',input_shape=(p,p,3)))
       if b1 = "yes":
         net.add(BatchNormalization())
       net.add(MaxPool2D(pool_size=(2, 2)))
-      net.add(Conv2D(fl, (3, 3), activation='relu'))
+      net.add(Conv2D(64, (5, 5), activation='relu'))
       if bn2 = "yes":
         net.add(BatchNormalization())
       net.add(MaxPool2D(pool_size=(2, 2)))
-      net.add(Conv2D(fl, (3, 3), activation='relu'))
+      net.add(Conv2D(128, (3, 3), activation='relu'))
       if bn3 == "yes":
         net.add(BatchNormalization())
       net.add(MaxPool2D(pool_size=(2, 2)))
@@ -143,7 +143,7 @@ for b1 in bn1:
       net.add(Dense(num_lab, activation='softmax'))
       net.summary()
       from contextlib import redirect_stdout
-      with open('{}/{}/model_summary_bl1_{}bl2_{}.txt'.format(file_loc, start, b1, b2), 'w') as fr:
+      with open('{}/{}/model_summary_bl1_{}bl2_{}bl3_{}.txt'.format(file_loc, start, b1, b2, b3), 'w') as fr:
         with redirect_stdout(fr):
           net.summary()
                 
