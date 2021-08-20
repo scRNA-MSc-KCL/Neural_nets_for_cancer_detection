@@ -84,7 +84,7 @@ y_train = to_categorical(y_train, num_lab)
 y_test = to_categorical(y_test, num_lab)
 y_val= to_categorical(y_val, num_lab)
 
-it = ImageTransformer(feature_extractor=f, pixels=p, random_state=1701, n_jobs=-1)
+it = ImageTransformer(feature_extractor='pca', pixels=50, random_state=1701, n_jobs=-1)
 fig = plt.figure(figsize=(5, 5))
 _ = it.fit(X_train, plot=True)
 
@@ -110,7 +110,7 @@ X_test_img = it.transform(X_test)
 X_val_img = it.transform(X_val)
 
 X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
-X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, p, 3)
+X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
 X_val_img = X_val_img.reshape(X_val_img.shape[0], 50, 50, 3)
 
 pooling = ["MaxPool2D", "AveragePool2D", "GlobalMaxPool2D"]       
@@ -125,7 +125,7 @@ for b1 in bn1:
   for b2 in bn2:
     for b3 in bn3:
       net = Sequential()
-      net.add(Conv2D(filters=32, kernel_size=(7,7), activation='relu',input_shape=(p,p,3)))
+      net.add(Conv2D(filters=32, kernel_size=(7,7), activation='relu',input_shape=(50,50,3)))
       if b1 == "yes":
         net.add(BatchNormalization())
       net.add(MaxPool2D(pool_size=(2, 2)))
