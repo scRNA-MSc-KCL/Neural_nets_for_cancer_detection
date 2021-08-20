@@ -131,13 +131,11 @@ for p1 in pooling:
     for p2 in pooling:
       for s2 in size:
         net.add(p2(pool_size=(s2, s2)))
-        net.add(Conv2D(64, (5, 5), activation='relu'))
+        net.add(Conv2D(128, (3, 3), activation='relu'))
         net.add(BatchNormalization())
         for p3 in pooling:
           for s3 in size:
             net.add(p3(pool_size=(s3, s3)))
-            net.add(Conv2D(128, (3, 3), activation='relu'))
-            net.add(BatchNormalization())
             net.add(Flatten())
             net.add(Dense(256, activation='relu'))
             net.add(Dropout(rate=0.5))
