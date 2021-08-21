@@ -115,7 +115,7 @@ X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
 X_val_img = X_val_img.reshape(X_val_img.shape[0], 50, 50, 3)
 
-pooling = [MaxPool2D, AveragePool2D, GlobalMaxPool2D]       
+pooling = [MaxPool2D, AveragePooling2D, GlobalMaxPooling2D]       
 size = [2,3,4]
 #pooling = [MaxPool2D]
 #size = [2]
