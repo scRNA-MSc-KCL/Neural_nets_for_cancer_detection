@@ -130,12 +130,12 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, X_v
 Nodes = np.arange(100, 2000, 100)
 activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 #activation = ["relu"]
-#optimizer = ["RMSprop", "Adam", "Adamax", "Nadam"]
-optimizer = ["Adam"]
+optimizer = ["RMSprop", "Adam", "Adamax", "Nadam"]
+#optimizer = ["Adam"]
 #epoch = [100]
 epoch = [7]
-#layer_number = [1]
-layer_number = [2]
+layer_number = [1]
+#layer_number = [2]
 
 #loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
 loss_function = ["categorical_crossentropy"]
