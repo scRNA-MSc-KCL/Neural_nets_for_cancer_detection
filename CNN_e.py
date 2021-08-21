@@ -131,7 +131,7 @@ for p1 in pooling:
     net.add(Dense(num_lab, activation='softmax'))
     net.summary()
     from contextlib import redirect_stdout
-    with open('{}/{}/model_summary_pl1_{}sl1_{}_pl2_{}sl2_{}_pl3_{}sl3_{}.txt'.format(file_loc, start, p1,s1, p2, s2, p3, s3), 'w') as fr:
+    with open('{}/{}/model_summary_pl1_{}sl1_{}.txt'.format(file_loc, start, p1,s1), 'w') as fr:
       with redirect_stdout(fr):
         net.summary()
     net.compile(loss='categorical_crossentropy', optimizer='adam')
