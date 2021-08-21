@@ -125,10 +125,10 @@ for a in activation:
     net.add(Dropout(rate=0.5))
     net.add(Dense(num_lab, activation='softmax'))
     net.summary()
-      from contextlib import redirect_stdout
-      with open('{}/{}/model_summary_act_{}nodes_{}.txt'.format(file_loc, start, a, n), 'w') as fr:
-        with redirect_stdout(fr):
-          net.summary()
+    from contextlib import redirect_stdout
+    with open('{}/{}/model_summary_act_{}nodes_{}.txt'.format(file_loc, start, a, n), 'w') as fr:
+      with redirect_stdout(fr):
+        net.summary()
     net.compile(loss='categorical_crossentropy', optimizer='adam')
     history = net.fit(X_train_img, y_train, validation_data=(X_val_img, y_val),epochs=1,batch_size=256)
     outputs = net.predict(X_test_img)
