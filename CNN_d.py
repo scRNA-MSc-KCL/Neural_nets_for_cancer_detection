@@ -33,9 +33,6 @@ import os
 accuracy_list = []
 run_time_list = []
 bn1_list = []
-bn2_list = []
-bn3_list = []
-
 
 #Load data
 start = time.time()
@@ -117,39 +114,25 @@ pooling = ["MaxPool2D", "AveragePool2D", "GlobalMaxPool2D"]
 size = [2,3,4]
 
 bn1 = ["y", "n"]
-bn2 = ["y", "n"]
-bn3 = ["y", "n"]
-
-
 for b1 in bn1:
-  for b2 in bn2:
-    for b3 in bn3:
-      net = Sequential()
-      net.add(Conv2D(filters=32, kernel_size=(7,7), activation='relu',input_shape=(50,50,3)))
-      if b1 == "yes":
-        net.add(BatchNormalization())
-      net.add(MaxPool2D(pool_size=(2, 2)))
-      net.add(Conv2D(64, (5, 5), activation='relu'))
-      if bn2 == "yes":
-        net.add(BatchNormalization())
-      net.add(MaxPool2D(pool_size=(2, 2)))
-      net.add(Conv2D(128, (3, 3), activation='relu'))
-      if bn3 == "yes":
-        net.add(BatchNormalization())
-      net.add(MaxPool2D(pool_size=(2, 2)))
-      net.add(Flatten())
-      net.add(Dense(256, activation='relu'))
-      net.add(Dropout(rate=0.5))
-      net.add(Dense(num_lab, activation='softmax'))
+  net = Sequential()
+  net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',input_shape=(50,50,3)))
+  if b1 == "yes":
+    net.add(BatchNormalization())
+  net.add(MaxPool2D(pool_size=(2, 2)))
+  net.add(Flatten())
+  net.add(Dense(256, activation='relu'))
+  net.add(Dropout(rate=0.5))
+  net.add(Dense(num_lab, activation='softmax'))
+  net.summary()
+  from contextlib import redirect_stdout
+  with open('{}/{}/model_summary_bl1_{}.txt'.format(file_loc, start, b1), 'w') as fr:
+    with redirect_stdout(fr):
       net.summary()
-      from contextlib import redirect_stdout
-      with open('{}/{}/model_summary_bl1_{}bl2_{}bl3_{}.txt'.format(file_loc, start, b1, b2, b3), 'w') as fr:
-        with redirect_stdout(fr):
-          net.summary()
                 
     #train CNN
-      net.compile(loss='categorical_crossentropy', optimizer='adam')
-      history = net.fit(X_train_img, y_train,validation_data=(X_val_img, y_val),epochs=50,batch_size=256)
+    net.compile(loss='categorical_crossentropy', optimizer='adam')
+    history = net.fit(X_train_img, y_train,validation_data=(X_val_img, y_val),epochs=50,batch_size=256)
 
     #get CNN plot
     #fig = plt.figure()
@@ -160,24 +143,22 @@ for b1 in bn1:
     #plt.legend()
     #fig.savefig('{}/{}/fig_3'.format(file_loc, start))
 
-      outputs = net.predict(X_test_img)
-      labels_predicted= np.argmax(outputs, axis=1)
-      y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
-      accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
+    outputs = net.predict(X_test_img)
+    labels_predicted= np.argmax(outputs, axis=1)
+    y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
+    accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
         #f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
         #f.write("percentage missclassified on test set is {}\n".format(misclassified))
-        #print("misclassified; ", misclassified)
-      end = time.time()
-      run_time = end - start
-      run_time_list.append(run_time)
-      accuracy_list.append(accuracy)
-      bn1_list.append(b1)
-      bn2_list.append(b2)
-      bn3_list.append(b3)
+    print("accuracy; ", accuracy)
+    end = time.time()
+    run_time = end - start
+    run_time_list.append(run_time)
+    accuracy_list.append(accuracy)
+    bn1_list.append(b1)
 
 #f.write("The time taken to complete this program was {}".format(end - start))
 #print("The time taken to complete this program was {}".format(end - start))
 #f.close()
 
-df = pd.DataFrame(list(zip(accuracy_list, run_time_list, bn1_list, bn2_list, bn3_list)),columns =['accuracy', 'run_time', 'bn1', 'bn2', 'bn3'])
+df = pd.DataFrame(list(zip(accuracy_list, run_time_list, bn1_list)),columns =['accuracy', 'run_time', 'bn1'])
 df.to_csv("{}/{}.csv".format(file_loc, start))
