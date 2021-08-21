@@ -34,10 +34,7 @@ accuracy_list = []
 run_time_list = []
 pool_list1 = []
 size_list1 = []
-pool_list2 = []
-size_list2 = []
-pool_list3 = []
-size_list3 = []
+
 
 #Load data
 start = time.time()
@@ -123,49 +120,37 @@ size = [2]
 for p1 in pooling:
   for s1 in size:
     net = Sequential()
-    net.add(Conv2D(filters=32, kernel_size=(7,7), activation='relu',input_shape=(50,50,3)))
+    net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',input_shape=(50,50,3)))
     net.add(BatchNormalization())
     net.add(p1(pool_size=(s1, s1)))
     net.add(Conv2D(64, (5, 5), activation='relu'))
     net.add(BatchNormalization())
-    for p2 in pooling:
-      for s2 in size:
-        net.add(p2(pool_size=(s2, s2)))
-        net.add(Conv2D(128, (3, 3), activation='relu'))
-        net.add(BatchNormalization())
-        for p3 in pooling:
-          for s3 in size:
-            net.add(p3(pool_size=(s3, s3)))
-            net.add(Flatten())
-            net.add(Dense(256, activation='relu'))
-            net.add(Dropout(rate=0.5))
-            net.add(Dense(num_lab, activation='softmax'))
-            net.summary()
-            from contextlib import redirect_stdout
-            with open('{}/{}/model_summary_pl1_{}sl1_{}_pl2_{}sl2_{}_pl3_{}sl3_{}.txt'.format(file_loc, start, p1,s1, p2, s2, p3, s3), 'w') as fr:
-              with redirect_stdout(fr):
-                net.summary()
-            net.compile(loss='categorical_crossentropy', optimizer='adam')
-            history = net.fit(X_train_img, y_train,validation_data=(X_val_img, y_val),epochs=50,batch_size=256)
-            outputs = net.predict(X_test_img)
-            labels_predicted= np.argmax(outputs, axis=1)
-            y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
-            accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
-            print("accuracy",accuracy)
-            end = time.time()
-            run_time = end - start
-            run_time_list.append(run_time)
-            accuracy_list.append(accuracy)
-            pool_list1.append(p1)
-            size_list1.append(s1)
-            pool_list2.append(p2)
-            size_list2.append(s2)
-            pool_list3.append(p3)
-            size_list3.append(s3)
+    net.add(Flatten())
+    net.add(Dense(256, activation='relu'))
+    net.add(Dropout(rate=0.5))
+    net.add(Dense(num_lab, activation='softmax'))
+    net.summary()
+    from contextlib import redirect_stdout
+    with open('{}/{}/model_summary_pl1_{}sl1_{}_pl2_{}sl2_{}_pl3_{}sl3_{}.txt'.format(file_loc, start, p1,s1, p2, s2, p3, s3), 'w') as fr:
+      with redirect_stdout(fr):
+        net.summary()
+    net.compile(loss='categorical_crossentropy', optimizer='adam')
+    history = net.fit(X_train_img, y_train,validation_data=(X_val_img, y_val),epochs=50,batch_size=256)
+    outputs = net.predict(X_test_img)
+    labels_predicted= np.argmax(outputs, axis=1)
+    y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
+    accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
+    print("accuracy",accuracy)
+    end = time.time()
+    run_time = end - start
+    run_time_list.append(run_time)
+    accuracy_list.append(accuracy)
+    pool_list1.append(p1)
+    size_list1.append(s1)
 
 #f.write("The time taken to complete this program was {}".format(end - start))
 #print("The time taken to complete this program was {}".format(end - start))
 #f.close()
 
-df = pd.DataFrame(list(zip(accuracy_list, run_time_list, pool_list1, size_list1, pool_list2, size_list2, pool_list3, size_list3)),columns =['accuracy', 'run_time', 'pool1', 'size1','pool2', 'size2','pool3', 'size3'])
+df = pd.DataFrame(list(zip(accuracy_list, run_time_list, pool_list1, size_list1)),columns =['accuracy', 'run_time', 'pool1', 'size1'])
 df.to_csv("{}/{}.csv".format(file_loc, start))
