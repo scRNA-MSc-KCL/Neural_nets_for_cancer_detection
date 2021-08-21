@@ -115,8 +115,8 @@ X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
 X_val_img = X_val_img.reshape(X_val_img.shape[0], 50, 50, 3)
 
-pooling = [MaxPool2D, AveragePooling2D, GlobalMaxPooling2D]       
-size = [2]
+pooling = [MaxPool3D, AveragePooling3D, GlobalMaxPooling3D]       
+size = [2, 3, 4]
 #pooling = [MaxPool2D]
 #size = [2]
 
@@ -125,17 +125,17 @@ for p1 in pooling:
     net = Sequential()
     net.add(Conv2D(filters=32, kernel_size=(7,7), activation='relu',input_shape=(50,50,3)))
     net.add(BatchNormalization())
-    net.add(p1(pool_size=(s1, s1)))
+    net.add(p1(pool_size=(s1, s1,s1)))
     net.add(Conv2D(64, (5, 5), activation='relu'))
     net.add(BatchNormalization())
     for p2 in pooling:
       for s2 in size:
-        net.add(p2(pool_size=(s2, s2)))
+        net.add(p2(pool_size=(s2, s2, s2)))
         net.add(Conv2D(128, (3, 3), activation='relu'))
         net.add(BatchNormalization())
         for p3 in pooling:
           for s3 in size:
-            net.add(p3(pool_size=(s3, s3)))
+            net.add(p3(pool_size=(s3, s3, s3)))
             net.add(Flatten())
             net.add(Dense(256, activation='relu'))
             net.add(Dropout(rate=0.5))
