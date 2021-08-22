@@ -110,9 +110,9 @@ X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
 X_val_img = X_val_img.reshape(X_val_img.shape[0], 50, 50, 3)
 
-Dropout = [0,.1,.2, .3,.4, .5,.6]
+dropout = [0,.1,.2, .3,.4, .5,.6]
 
-for d in Dropout:
+for d in dropout:
   net = Sequential()
   net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',input_shape=(50,50,3)))
   net.add(BatchNormalization())
