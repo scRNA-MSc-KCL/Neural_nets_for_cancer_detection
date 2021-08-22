@@ -77,7 +77,9 @@ num_lab = len(labels["X"].unique())
 #X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
 #X_test, X_val, y_test, y_val= train_test_split(X_test, y_test, test_size=0.5, random_state=42)
 
-for i in range(10):
+#####SKLEARN MODEL#############################
+
+"""for i in range(10):
   X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2)
   X_test, X_val, y_test, y_val= train_test_split(X_test, y_test, test_size=0.5)
   y_train = to_categorical(y_train, num_lab)
@@ -105,7 +107,7 @@ for i in range(10):
   plt.ylabel('loss')
   plt.legend()
   fig.savefig('test_results/{}/{}/fig_{}'.format(file_loc, start, counter))
-  accuracy_list.append(correctly_classified)
+  accuracy_list.append(correctly_classified)"""
 
 #define variables
 print(accuracy_list)
