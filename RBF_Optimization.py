@@ -23,7 +23,7 @@ from kmeans_initializer import InitCentersKMeans
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 start = time.time()
-e = 400
+e = 600
 
 args = parser.parse_args()
 if args.path == 1:
@@ -71,7 +71,7 @@ betas = [.0001, .001, .01, .1, 2]
 inititializer = [InitCentersKMeans(X_train), InitCentersRandom(X_train)]
 optimizer = ["RMSprop", "Adam", "Adamax", "Nadam"]
 activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
-number_of_models = 1
+number_of_models = 100
 
 accuracy_list = []
 betas_list = []
@@ -84,7 +84,7 @@ for i in range(number_of_models):
   net.add(RBFLayer(num_lab,initializer=InitCentersKMeans(X_train),betas=.0001,input_shape=(data.n_vars,)))
   net.add(Dense(num_lab, activation='softmax'))
   net.compile(loss="categorical_crossentropy", optimizer="adam")
-  history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=50)
+  history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=b)
   outputs = net.predict(X_test)
   labels_predicted= np.argmax(outputs, axis=1)
   y_test_decoded = np.argmax(y_test, axis=1) 
