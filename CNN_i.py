@@ -132,7 +132,7 @@ for o in optimizer:
     net.compile(loss=l, optimizer=o)
     history = net.fit(X_train_img, y_train,
     validation_data=(X_val_img, y_val),
-    epochs=1,batch_size=256)
+    epochs=50,batch_size=256)
     outputs = net.predict(X_test_img)
     labels_predicted= np.argmax(outputs, axis=1)
     y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
