@@ -1,0 +1,2 @@
+,accuracy,run_time,pool1,size1,pool2,size2,pool3,size3
+0,59.94236311239193,27.839821577072144,<class 'keras.layers.pooling.MaxPooling2D'>,2,<class 'keras.layers.pooling.MaxPooling2D'>,2,<class 'keras.layers.pooling.MaxPooling2D'>,2
