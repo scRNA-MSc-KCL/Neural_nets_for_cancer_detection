@@ -89,9 +89,9 @@ for i in range(10):
   net.add(Dense(1300, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2"))
   net.add(Dense(num_lab, activation='softmax'))
   net.compile(loss="categorical_crossentropy", optimizer="Adam")
-  history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=20,batch_size=b)
+  history = net.fit(X_train, y_train, validation_data=(X_val, y_val),epochs=20,batch_size=b)
   outputs = net.predict(X_test)
-  labels_predicted= np.argmax(outputs, axis=1).reshape(-1,1)
+  labels_predicted= np.argmax(outputs, axis=1)
   print(labels_predicted.shape)
   y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
   print(y_test_decoded.shape)
