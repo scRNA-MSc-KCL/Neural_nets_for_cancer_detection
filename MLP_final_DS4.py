@@ -84,7 +84,7 @@ for train_index, test_index in kf.split(X_train):
   net.add(Dense(1300, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2"))
   net.add(Dense(num_lab, activation='softmax'))
   net.compile(loss="categorical_crossentropy", optimizer="Adam")
-  history = net.fit(X_sub_train, y_sub_train,validation_data=(X_val, y_val),epochs=7,batch_size=b)
+  history = net.fit(X_sub_train, y_sub_train,validation_data=(X_val, y_val),epochs=20,batch_size=b)
   outputs = net.predict(X_test)
   labels_predicted= np.argmax(outputs, axis=1).reshape(-1,1)
   print(labels_predicted.shape)
