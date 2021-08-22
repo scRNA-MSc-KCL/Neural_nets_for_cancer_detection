@@ -135,6 +135,7 @@ for a in activation:
   labels_predicted= np.argmax(outputs, axis=1)
   y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
   accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
+  print(accuracy)
   end = time.time()
   run_time = end - start
   run_time_list.append(run_time)
