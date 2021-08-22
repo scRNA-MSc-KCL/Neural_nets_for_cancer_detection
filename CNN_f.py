@@ -111,8 +111,8 @@ X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
 X_val_img = X_val_img.reshape(X_val_img.shape[0], 50, 50, 3)
 
-Nodes = np.arange(200, 600, 200)
-activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
+Nodes = np.arange(10, 610, 30)
+#activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 
 for a in activation:
   for n in Nodes:
