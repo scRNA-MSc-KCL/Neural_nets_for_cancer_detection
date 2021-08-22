@@ -17,6 +17,7 @@ import argparse
 import anndata
 import time
 import os
+from sklearn.model_selection import KFold
 
 number_of_models = 1
 accuracy_list = []
@@ -59,23 +60,28 @@ else:
 
 num_lab = len(labels["X"].unique())
 
-#create training and test sets
-X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
-X_test, X_val, y_test, y_val= train_test_split(X_test, y_test, test_size=0.5, random_state=42)
+#Separate training and test set
+X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2)
 
-#make labels for neural network catagorical
-y_train = to_categorical(y_train, num_lab)
-y_test = to_categorical(y_test, num_lab)
-y_val = to_categorical(y_val, num_lab)
+#Split training data
+kf = KFold(n_splits=10)
+for train_index, test_index in kf.split(X_train):
+  X_sub_train, X_val = X_train[train_index], X_train[test_index]
+  y_sub_train, y_val = y_train[train_index], y_train[test_index]
+  y_sub_train = to_categorical(y_sub_train, num_lab)
+  y_val = to_categorical(y_val, num_lab)
 
-for i in range(number_of_models):
+#X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
+#X_test, X_val, y_test, y_val= train_test_split(X_test, y_test, test_size=0.5, random_state=42)
+
+
   counter += 1
   net = Sequential()
   net.add(Dense(1200, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2", input_shape = (data.n_vars,)))
   net.add(Dense(1300, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2"))
   net.add(Dense(num_lab, activation='softmax'))
   net.compile(loss="categorical_crossentropy", optimizer="Adam")
-  history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=1000,batch_size=b)
+  history = net.fit(X_sub_train, y_sub_train,validation_data=(X_val, y_val),epochs=7,batch_size=b)
   outputs = net.predict(X_test)
   labels_predicted= np.argmax(outputs, axis=1)
   y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
