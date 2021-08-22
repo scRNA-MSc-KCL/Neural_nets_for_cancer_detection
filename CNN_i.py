@@ -142,8 +142,8 @@ for o in optimizer:
     run_time = end - start
     run_time_list.append(run_time)
     accuracy_list.append(accuracy)
-    optimizer_list.append(d)
-    loss_list.append(o)
+    optimizer_list.append(o)
+    loss_list.append(l)
 
 
 #f.write("The time taken to complete this program was {}".format(end - start))
