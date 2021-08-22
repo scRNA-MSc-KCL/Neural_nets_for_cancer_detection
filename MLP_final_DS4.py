@@ -63,6 +63,9 @@ num_lab = len(labels["X"].unique())
 #Separate training and test set
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2)
 
+y_train = y_train.reset_index()
+y_test = y_test.reset_index()
+
 #Split training data
 kf = KFold(n_splits=10)
 for train_index, test_index in kf.split(X_train):
