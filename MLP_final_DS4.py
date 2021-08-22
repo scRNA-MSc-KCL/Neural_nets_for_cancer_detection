@@ -67,7 +67,7 @@ X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.
 kf = KFold(n_splits=10)
 for train_index, test_index in kf.split(X_train):
   X_sub_train, X_val = X_train[train_index], X_train[test_index]
-  y_sub_train, y_val = y_train[train_index], y_train[test_index]
+  y_sub_train, y_val = y_train['X'][train_index], y_train['X'][test_index]
   y_sub_train = to_categorical(y_sub_train, num_lab)
   y_val = to_categorical(y_val, num_lab)
 
