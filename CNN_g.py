@@ -33,7 +33,6 @@ import os
 accuracy_list = []
 run_time_list = []
 activation_list = []
-nodes_list = []
 
 #Load data
 start = time.time()
@@ -111,63 +110,41 @@ X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
 X_val_img = X_val_img.reshape(X_val_img.shape[0], 50, 50, 3)
 
-Nodes = np.arange(10, 600, 20)
+#Nodes = np.arange(10, 600, 20)
 activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 
 for a in activation:
-  for n in Nodes:
-    net = Sequential()
-    net.add(Conv2D(filters=fl, kernel_size=(5,5), activation='relu',input_shape=(p,p,3)))
-    net.add(BatchNormalization())
-    net.add(p(pool_size=(s, s)))
-    net.add(Conv2D(fl, (3, 3), activation='relu'))
-    net.add(BatchNormalization())
-    net.add(p(pool_size=(s, s)))
-    net.add(Conv2D(fl, (3, 3), activation='relu'))
-    net.add(BatchNormalization())
-    net.add(Flatten())
-    net.add(Dense(256, activation=a))
-    net.add(Dropout(rate=0.5))
-    net.add(Dense(num_lab, activation='softmax'))
-    net.summary()
-      from contextlib import redirect_stdout
-      with open('{}/{}/model_summary_act_{}nodes_{}.txt'.format(file_loc, start, a, n), 'w') as fr:
-        with redirect_stdout(fr):
-          net.summary()
-                
-    #train CNN
-      net.compile(loss='categorical_crossentropy', optimizer='adam')
-        history = net.fit(X_train_img, y_train,
-        validation_data=(X_val_img, y_val),
-         epochs=50,
-         batch_size=256)
+  net = Sequential()
+  net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',input_shape=(50,50,3)))
+  net.add(BatchNormalization())
+  net.add(MaxPool2D(pool_size=(2, 2)))
+  net.add(Flatten())
+  net.add(Dense(256, activation=a))
+  net.add(Dropout(rate=0.5))
+  net.add(Dense(num_lab, activation='softmax'))
+  net.summary()
+  from contextlib import redirect_stdout
+  with open('{}/{}/model_summary_act_{}.txt'.format(file_loc, start, a), 'w') as fr:
+    with redirect_stdout(fr):
+      net.summary()
+  net.compile(loss='categorical_crossentropy', optimizer='adam')
+  history = net.fit(X_train_img, y_train,
+  validation_data=(X_val_img, y_val),
+  epochs=1,batch_size=256)
+  outputs = net.predict(X_test_img)
+  labels_predicted= np.argmax(outputs, axis=1)
+  y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
+  accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
+  end = time.time()
+  run_time = end - start
+  run_time_list.append(run_time)
+  accuracy_list.append(accuracy)
+  activation_list.append(a)
 
-    #get CNN plot
-    #fig = plt.figure()
-    #plt.plot(history.history['loss'], label='training loss')
-    #plt.plot(history.history['val_loss'], label='validation loss')
-    #plt.xlabel('epochs')
-    #plt.ylabel('loss')
-    #plt.legend()
-    #fig.savefig('{}/{}/fig_3'.format(file_loc, start))
-
-      outputs = net.predict(X_test_img)
-      labels_predicted= np.argmax(outputs, axis=1)
-      y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
-      accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
-        #f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
-        #f.write("percentage missclassified on test set is {}\n".format(misclassified))
-        #print("misclassified; ", misclassified)
-      end = time.time()
-      run_time = end - start
-      run_time_list.append(run_time)
-      accuracy_list.append(accuracy)
-      activation_list.append(a)
-      nodes_list.append(n)
 
 #f.write("The time taken to complete this program was {}".format(end - start))
 #print("The time taken to complete this program was {}".format(end - start))
 #f.close()
 
-df = pd.DataFrame(list(zip(accuracy_list, run_time_list, activation_list, nodes_list)),columns =['accuracy', 'run_time', 'activation', 'nodes'])
+df = pd.DataFrame(list(zip(accuracy_list, run_time_list, activation_list)),columns =['accuracy', 'run_time', 'activation'])
 df.to_csv("{}/{}.csv".format(file_loc, start))
