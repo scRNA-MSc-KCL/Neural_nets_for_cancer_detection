@@ -86,7 +86,7 @@ for train_index, test_index in kf.split(X_train):
   net.compile(loss="categorical_crossentropy", optimizer="Adam")
   history = net.fit(X_sub_train, y_sub_train,validation_data=(X_val, y_val),epochs=7,batch_size=b)
   outputs = net.predict(X_test)
-  labels_predicted= np.argmax(outputs, axis=1)
+  labels_predicted= np.argmax(outputs, axis=1).reshape(-1,1)
   print(labels_predicted.shape)
   y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
   print(y_test_decoded.shape)
