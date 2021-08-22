@@ -71,7 +71,7 @@ betas = [.0001, .001, .01, .1, 2]
 inititializer = [InitCentersKMeans(X_train), InitCentersRandom(X_train)]
 optimizer = ["RMSprop", "Adam", "Adamax", "Nadam"]
 activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
-number_of_models = 100
+number_of_models = 1
 
 accuracy_list = []
 betas_list = []
