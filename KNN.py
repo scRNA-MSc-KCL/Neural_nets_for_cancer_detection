@@ -4,7 +4,6 @@ import numpy as np
 import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-from sklearn.svm import SVC
 import time
 import argparse
 import anndata
@@ -37,16 +36,15 @@ for n in neighbours:
   y_train = y_train.reset_index()
   y_test = y_test.reset_index()
   knn_list = []
-  SVM_list = []
-
+  
   for i in X_test:
     neighbours = neigh.kneighbors([i], return_distance = False)
-    SVM_data = X_train[neighbours]
+    full_neighbours = X_train[neighbours]
     indices = neighbours.tolist()
     indices = indices[0]
-    SVM_labels = y_train['X'][indices]
+    y_pred = y_train['X'][indices]
     #print(SVM_labels)
-    knn_list.append(SVM_labels.value_counts().idxmax())
+    knn_list.append(y_pred.value_counts().idxmax())
     #print("max", SVM_labels.value_counts().idxmax())
     #SVM_labels = SVM_labels.to_list()
     #Classifier = sklearn.svm.SVC(kernel = "linear")
