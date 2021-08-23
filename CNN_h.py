@@ -123,7 +123,7 @@ for d in dropout:
   net.add(Dense(num_lab, activation='softmax'))
   net.summary()
   from contextlib import redirect_stdout
-  with open('{}/{}/model_summary_act_{}.txt'.format(file_loc, start, a), 'w') as fr:
+  with open('{}/{}/model_summary_d_{}.txt'.format(file_loc, start, d), 'w') as fr:
     with redirect_stdout(fr):
       net.summary()
   net.compile(loss='categorical_crossentropy', optimizer='adam')
