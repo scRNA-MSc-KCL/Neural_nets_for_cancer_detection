@@ -63,9 +63,10 @@ num_lab = len(labels["X"].unique())
 #####KNERARSEST NEIGHBOUR########################
 #Separate training and test set
 X_split, X_test, y_split, y_test = train_test_split(data.X, labels, test_size=0.2)
+y_split = y_split.reset_index(drop = True)
+y_test = y_test.reset_index(drop = True)
 y_test = to_categorical(y_test, num_lab)
-#y_split = y_split.reset_index(drop = True)
-#y_test = y_test.reset_index(drop = True)
+
 
 #Split training data
 kf = KFold(n_splits=5)
