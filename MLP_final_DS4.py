@@ -82,9 +82,9 @@ for train_index, test_index in kf.split(X_split):
   history = net.fit(X_train, y_train, validation_data=(X_val, y_val),epochs=7,batch_size=b)
   outputs = net.predict(X_test)
   labels_predicted= np.argmax(outputs, axis=1)
-  print(labels_predicted.shape).reshape(-1,1)
+  print(labels_predicted)
   y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
-  print(y_test_decoded.shape)
+  print(y_test_decoded)
   correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
   print("model number", counter)
   print("accuracy", correctly_classified)
