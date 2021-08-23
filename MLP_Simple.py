@@ -58,7 +58,7 @@ counter = 0
 n = 500
 a = "tanh"
 o = "Adam"
-e = 100
+e = 2
 l = "categorical_crossentropy"
 
 #create training and test sets
