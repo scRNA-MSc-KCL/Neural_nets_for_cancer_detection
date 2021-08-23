@@ -90,7 +90,7 @@ plt.ylabel('loss')
 plt.legend()
 net.summary()
 from contextlib import redirect_stdout
-with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as fr:
+with open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'w') as fr:
   with redirect_stdout(fr):
     net.summary()
 fig.savefig('test_results/{}/{}/fig_{}'.format(file_loc, start, counter))
