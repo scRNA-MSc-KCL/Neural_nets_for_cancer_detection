@@ -64,8 +64,8 @@ num_lab = len(labels["X"].unique())
 #Separate training and test set
 X_split, X_test, y_split, y_test = train_test_split(data.X, labels, test_size=0.2)
 y_test = to_categorical(y_test, num_lab)
-y_split = y_split.reset_index(drop = True)
-y_test = y_test.reset_index(drop = True)
+#y_split = y_split.reset_index(drop = True)
+#y_test = y_test.reset_index(drop = True)
 
 #Split training data
 kf = KFold(n_splits=5)
