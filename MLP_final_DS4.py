@@ -68,7 +68,7 @@ y_split = y_split.reset_index(drop = True)
 y_test = y_test.reset_index(drop = True)
 
 #Split training data
-kf = KFold(n_splits=10)
+kf = KFold(n_splits=5)
 for train_index, test_index in kf.split(X_split):
   X_train, X_val = X_split[train_index], X_split[test_index]
   y_train, y_val = y_split['X'][train_index], y_split['X'][test_index]
@@ -82,7 +82,7 @@ for train_index, test_index in kf.split(X_split):
   history = net.fit(X_train, y_train, validation_data=(X_val, y_val),epochs=7,batch_size=b)
   outputs = net.predict(X_test)
   labels_predicted= np.argmax(outputs, axis=1)
-  print(labels_predicted.shape)
+  print(labels_predicted.shape).reshape(-1,1)
   y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
   print(y_test_decoded.shape)
   correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
