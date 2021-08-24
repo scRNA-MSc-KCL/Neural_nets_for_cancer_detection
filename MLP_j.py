@@ -8,6 +8,7 @@ import tensorflow as tf
 from sklearn.preprocessing import LabelEncoder
 from keras.models import Sequential
 from keras.layers import Dense
+from keras.layers import Dropout
 from tensorflow.keras.utils import to_categorical
 import requests
 import zipfile
