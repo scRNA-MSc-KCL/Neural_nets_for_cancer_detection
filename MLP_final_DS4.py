@@ -46,7 +46,7 @@ if args.path == 3:
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
-  file_loc = "DS4/MLP"
+  file_loc = "DS4/MLP/Final"
   b = 50
   
 path = os.getcwd()
@@ -60,7 +60,6 @@ else:
 
 num_lab = len(labels["X"].unique())
 
-#####KNERARSEST NEIGHBOUR########################
 #Separate training and test set
 X_split, X_test, y_split, y_test = train_test_split(data.X, labels, test_size=0.2)
 y_split = y_split.reset_index(drop = True)
