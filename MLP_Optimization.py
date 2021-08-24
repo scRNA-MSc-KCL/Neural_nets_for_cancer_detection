@@ -126,7 +126,7 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, X_v
 
 #define variables
 #Nodes = np.arange(50, 2050, 500)
-#Nodes = [1200]
+Nodes = [1200]
 #Nodes = np.arange(100, 2000, 100)
 #activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 activation = ["relu"]
