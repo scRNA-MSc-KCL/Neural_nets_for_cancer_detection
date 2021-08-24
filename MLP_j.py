@@ -87,8 +87,8 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, epo
                 net = Sequential()
                 if lr == 1:
                   net.add(Dense(n1, activation = a1, input_shape = (data.n_vars,)))
+                  net.add(Dropout(rate = d))
                 net.add(Dense(num_lab, activation='softmax'))
-                net.add(Dropout(rate = d))
                 counter += 1
                 layer_number_list.append(lr)
                 optimizer_list.append(o)
