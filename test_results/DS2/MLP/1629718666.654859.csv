@@ -1,0 +1,9 @@
+,optimizer,loss_function,epochs,node1_length,activation_layer1,perceptage accuracy,layer_number
+0,SGD,categorical_crossentropy,7,500,tanh,80.23149558330796,1
+1,RMSprop,categorical_crossentropy,7,500,tanh,93.63387145903137,1
+2,Adam,categorical_crossentropy,7,500,tanh,95.17209869022236,1
+3,Adadelta,categorical_crossentropy,7,500,tanh,47.7155041120926,1
+4,Adagrad,categorical_crossentropy,7,500,tanh,57.691136155954915,1
+5,Adamax,categorical_crossentropy,7,500,tanh,94.21261041730125,1
+6,Nadam,categorical_crossentropy,7,500,tanh,94.66950959488273,1
+7,Ftrl,categorical_crossentropy,7,500,tanh,34.38927809929942,1

@@ -1,0 +1,7 @@
+,optimizer,loss_function,epochs,node1_length,activation_layer1,perceptage accuracy,layer_number,regulizer_init
+0,Adam,categorical_crossentropy,7,500,relu,85.07462686567165,1,l1
+1,Adam,categorical_crossentropy,7,500,relu,90.00913798355164,1,l2
+2,Adam,categorical_crossentropy,7,500,relu,84.09990862016448,1,l1_l2
+3,Adam,categorical_crossentropy,7,500,relu,80.79500456899179,2,l1
+4,Adam,categorical_crossentropy,7,500,relu,88.24246116356991,2,l2
+5,Adam,categorical_crossentropy,7,500,relu,78.06883947608895,2,l1_l2
