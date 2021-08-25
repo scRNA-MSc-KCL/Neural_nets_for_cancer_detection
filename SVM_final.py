@@ -69,8 +69,9 @@ for train_index, test_index in kf.split(data.X):
   Classifier.fit(X_train, y_train)
   y_pred = Classifier.predict(X_test)
   with open('test_results/{}/{}/summary{}.txt'.format(file_loc, start, counter), 'w') as fr:
-    fr.write("precision score:".format(precision_score(y_test, y_pred, average=None)))
-    fr.write("recall score:".format(recall_score(y_test, y_pred, average=None)))
+    fr.write("precision score: {}".format(precision_score(y_test, y_pred, average=None)))
+    fr.write("recall score: {} ".format(recall_score(y_test, y_pred, average=None)))
+    fr.write("accuracy: {}".format(Classifier.score(X_test, y_test)))
   print(precision_score(y_test, y_pred, average=None))
   print(recall_score(y_test, y_pred, average=None))
   savetxt("test_results/{}/{}/{}_ypred.csv".format(file_loc, start, counter), y_pred, delimiter=',')
