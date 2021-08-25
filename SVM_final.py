@@ -55,8 +55,8 @@ num_lab = len(labels["X"].unique())
 #Split training data
 kf = KFold(n_splits=5)
 for train_index, test_index in kf.split(data.X):
-  X_train, X_test = X_split[train_index], X_split[test_index]
-  y_train, y_test = y_split['X'][train_index], y_split['X'][test_index]
+  X_train, X_test = X_train[train_index], X_train[test_index]
+  y_train, y_test = y_train['X'][train_index], y_train['X'][test_index]
   Classifier = sklearn.svm.SVC(kernel = "rbf")
   Classifier.fit(X_train, y_train)
   print("classifier {} trained".format(i))
