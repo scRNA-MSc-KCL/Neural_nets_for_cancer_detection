@@ -72,8 +72,8 @@ for train_index, test_index in kf.split(data.X):
     fr.write("recall score:".format(recall_score(y_test, y_pred, average=None)))
   print(precision_score(y_test, y_pred, average=None))
   print(recall_score(y_test, y_pred, average=None))
-  y_pred.to_csv("test_results/{}/{}/{}.csv".format(file_loc, start, counter))
-  y_true.to_csv("test_results/{}/{}/{}.csv".format(file_loc, start, counter))
+  savetxt("test_results/{}/{}/{}_ypred.csv".format(file_loc, start, counter), y_pred, delimiter=',')
+  savetxt("test_results/{}/{}/{}_ytrue.csv".format(file_loc, start, counter), y_test, delimiter=',')
   counter +=1
   
   
