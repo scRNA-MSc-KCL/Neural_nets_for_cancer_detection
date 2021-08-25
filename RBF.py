@@ -69,10 +69,10 @@ y_val = to_categorical(y_val, num_lab)
 
 
 net = Sequential()
-net.add(RBFLayer(num_lab,initializer=InitCentersKMeans(X_train),betas=.0001,input_shape=(data.n_vars,)))
+net.add(RBFLayer(num_lab,initializer=InitCentersKMeans(X_train),betas=.01,input_shape=(data.n_vars,)))
 net.add(Dense(num_lab, activation='softmax'))
 net.compile(loss="categorical_crossentropy", optimizer="adam")
-history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=50)
+history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=b)
 outputs = net.predict(X_test)
 labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1) 
