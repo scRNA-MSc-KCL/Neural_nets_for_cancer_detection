@@ -59,7 +59,7 @@ for train_index, test_index in kf.split(data.X):
   y_train, y_test = labels['X'][train_index], labels['X'][test_index]
   Classifier = sklearn.svm.SVC(kernel = "rbf")
   Classifier.fit(X_train, y_train)
-  print("the classification result with the current settings and a {} kernal is {}".format(i, Classifier.score(X_test, y_test)))
+  print("the classification result with the current settings  is {}".format(Classifier.score(X_test, y_test)))
   
   
 end = time.time()
