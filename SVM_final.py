@@ -62,8 +62,8 @@ kf = KFold(n_splits=5)
 for train_index, test_index in kf.split(data.X):
   X_train, X_test = data.X[train_index], data.X[test_index]
   y_train, y_test = labels['X'][train_index], labels['X'][test_index]
-  y_test = y_test.to_numpy()
-  y_train = y_train.to_numpy()
+  #y_test = y_test.to_numpy()
+  #y_train = y_train.to_numpy()
   Classifier = sklearn.svm.SVC(kernel = "rbf")
   Classifier.fit(X_train, y_train)
   print("the classification result with the current settings  is {}".format(Classifier.score(X_test, y_test)))
