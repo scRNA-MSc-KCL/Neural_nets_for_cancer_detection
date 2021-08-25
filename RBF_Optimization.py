@@ -23,7 +23,6 @@ from kmeans_initializer import InitCentersKMeans
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 start = time.time()
-e = 600
 
 args = parser.parse_args()
 if args.path == 1:
@@ -31,11 +30,13 @@ if args.path == 1:
   data = sc.read("results_1.h5ad")
   file_loc = "DS1/RBF"
   b = 50
+  e = 200
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "DS2/RBF"
   b = 500
+  e = 100
 if args.path == 3:
   labels =pd.read_csv("labels_3.csv", names = ["X"])
   data = sc.read("results_3.h5ad")
@@ -46,6 +47,7 @@ if args.path == 4:
   data = sc.read("results_4.h5ad")
   file_loc = "DS4/RBF"
   b = 50
+  e = 600
   
 path = os.getcwd()
 path = os.path.join(path, "test_results/{}/{}".format(file_loc,start))
