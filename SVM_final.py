@@ -18,7 +18,10 @@ import anndata
 import time
 import os
 from sklearn.model_selection import KFold
-import pickle
+from pycm import *
+import seaborn
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
 
 accuracy_list = []
 counter = 0
@@ -60,6 +63,17 @@ for train_index, test_index in kf.split(data.X):
   Classifier = sklearn.svm.SVC(kernel = "rbf")
   Classifier.fit(X_train, y_train)
   print("the classification result with the current settings  is {}".format(Classifier.score(X_test, y_test)))
+  Classifier.fit(X_train, y_train)
+  y_pred = Classifier.predict(X_test)
+  cm = ConfusionMatrix(actual_vector=y_test, predict_vector=y_pred)
+  fig = cm.plot(cmap=plt.cm.Reds,number_label=True,plot_lib="seaborn")
+  fig.savefig('test_results/{}/{}/{}'.format(file_loc, start, counter))
+  with open('test_results/{}/{}/summary{}.txt'.format(file_loc, start, counter), 'w') as fr:
+    fr.write(precision_score(y_test, y_pred, average=None)
+    ft.write(recall_score(y_test, y_pred, average=None)
+  print(precision_score(y_test, y_pred, average=None))
+  print(recall_score(y_test, y_pred, average=None))
+  counter +=1
   
   
 end = time.time()
