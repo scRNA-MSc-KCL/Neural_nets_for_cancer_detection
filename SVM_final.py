@@ -70,7 +70,7 @@ for train_index, test_index in kf.split(data.X):
   fig.savefig('test_results/{}/{}/{}'.format(file_loc, start, counter))
   with open('test_results/{}/{}/summary{}.txt'.format(file_loc, start, counter), 'w') as fr:
     fr.write(precision_score(y_test, y_pred, average=None)
-    ft.write(recall_score(y_test, y_pred, average=None)
+    fr.write(recall_score(y_test, y_pred, average=None)
   print(precision_score(y_test, y_pred, average=None))
   print(recall_score(y_test, y_pred, average=None))
   counter +=1
