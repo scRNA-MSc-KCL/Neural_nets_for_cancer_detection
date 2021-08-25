@@ -1,0 +1,2 @@
+,optimizer,loss_function,epochs,node1_length,activation_layer1,perceptage accuracy,layer_number,kernal,regulizer_init
+0,Adam,categorical_crossentropy,7,1200,relu,95.10086455331412,2,glorot_normal,l1_l2
