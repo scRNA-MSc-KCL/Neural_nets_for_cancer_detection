@@ -37,10 +37,12 @@ if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
   file_loc = "test_results/DS1/CNN"
+  b = 50
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "test_results/DS2/CNN"
+  b = 2000
 if args.path == 3:
   labels =pd.read_csv("labels_3.csv", names = ["X"])
   data = sc.read("results_3.h5ad")
@@ -49,6 +51,7 @@ if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
   file_loc = "test_results/DS4/CNN"
+  b = 50
 num_lab = len(labels["X"].unique())
 counter = 0
 
@@ -66,19 +69,14 @@ print("The original shape of the data is {}".format(data.shape))
 sc.tl.pca(data, svd_solver='arpack')
 
 #split data
-X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.33, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
+X_test, X_val, y_test, y_val= train_test_split(X_test, y_test, test_size=0.5, random_state=42)
 
 #make labels for neural network catagorical
 y_train = to_categorical(y_train, num_lab)
 y_test = to_categorical(y_test, num_lab)
+y_val= to_categorical(y_val, num_lab)
 
-#scale data
-#ln = LogScaler()
-#X_train_norm = ln.fit_transform(X_train)
-#X_test_norm = ln.transform(X_test)
-
-X_train_norm = X_train
-X_test_norm = X_test
 
 #split data using pca
 #thoughts, tsne versus pca for image extraction
@@ -106,14 +104,14 @@ _ = plt.title("Genes per pixel")
 
 fig.savefig('{}/{}/fig_2'.format(file_loc, start))
 
-X_train_img = it.transform(X_train_norm)
-X_train_img = it.fit_transform(X_train_norm)
-X_test_img = it.transform(X_test_norm)
+X_train_img = it.fit_transform(X_train)
+X_test_img = it.transform(X_test)
+X_val_img = it.transform(X_val)
 
 X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
 
-number_of_models = 100
+number_of_models = 10
 accuracy_list = []
 run_time_list = []
 #Build CNN
@@ -122,8 +120,6 @@ for i in range(number_of_models):
   net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',
   input_shape=(50,50,3)))
   net.add(BatchNormalization())
-  #net.add(Conv2D(64, (3, 3), activation='relu'))
-  #net.add(BatchNormalization())
   net.add(MaxPool2D(pool_size=(2, 2)))
   net.add(Flatten())
   net.add(Dense(256, activation='relu'))
@@ -139,9 +135,9 @@ for i in range(number_of_models):
 #train CNN
   net.compile(loss='categorical_crossentropy', optimizer='adam')
   history = net.fit(X_train_img, y_train,
-  validation_data=(X_test_img, y_test),
-   epochs=50,
-   batch_size=256)
+  validation_data=(X_val_img, y_val),
+   epochs=25,
+   batch_size=b)
 
 #get CNN plot
 #fig = plt.figure()
@@ -159,7 +155,7 @@ for i in range(number_of_models):
   accuracy_list.append(accuracy)
   #f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
   #f.write("percentage missclassified on test set is {}\n".format(misclassified))
-  #print("misclassified; ", misclassified)
+  print("misclassified; ", misclassified)
   end = time.time()
   run_time = end - start
   run_time_list.append(run_time)
