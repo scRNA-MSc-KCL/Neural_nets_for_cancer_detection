@@ -22,6 +22,7 @@ from pycm import *
 import seaborn
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
+from numpy import savetxt
 
 accuracy_list = []
 counter = 0
