@@ -38,10 +38,12 @@ if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
   file_loc = "test_results/DS1/CNN"
+  b =50
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "test_results/DS2/CNN"
+  b = 500
 if args.path == 3:
   labels =pd.read_csv("labels_3.csv", names = ["X"])
   data = sc.read("results_3.h5ad")
@@ -50,6 +52,7 @@ if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
   file_loc = "test_results/DS4/CNN"
+  b = 50
 num_lab = len(labels["X"].unique())
 counter = 0
 
@@ -139,7 +142,7 @@ net.compile(loss='categorical_crossentropy', optimizer='adam')
 history = net.fit(X_train_img, y_train,
 validation_data=(X_test_img, y_test),
  epochs=e,
- batch_size=256)
+ batch_size=b)
 
 #get CNN plot
 fig = plt.figure()
