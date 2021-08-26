@@ -33,17 +33,17 @@ for n in neighbours:
   X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state = 42)
   neigh = KNeighborsClassifier(n_neighbors=n)
   neigh.fit(X_train, y_train)
-  y_train = y_train.reset_index()
-  y_test = y_test.reset_index()
-  knn_list = []
+  print(neigh.score(X_test, y_test))
+  #y_train = y_train.reset_index()
+  #y_test = y_test.reset_index()
+  #knn_list = []
   
-  for i in X_test:
+  """for i in X_test:
     neighbours = neigh.kneighbors([i], return_distance = False)
     full_neighbours = X_train[neighbours]
     indices = neighbours.tolist()
     indices = indices[0]
     y_pred = y_train['X'][indices]
-    #print(SVM_labels)
     knn_list.append(y_pred.value_counts().idxmax())
     #print("max", SVM_labels.value_counts().idxmax())
     #SVM_labels = SVM_labels.to_list()
@@ -63,7 +63,7 @@ for n in neighbours:
   knn_accuracy = (knn_accuracy/len(y_test))*100
   print("neighbours ", n, "knn_accuracy ", knn_accuracy)
   #knnsvm_accuracy = (knnsvm_accuracy/len(y_test))*100
-  #print("neighbours ", n, "knnsvm_accuracy", knnsvm_accuracy)
+  #print("neighbours ", n, "knnsvm_accuracy", knnsvm_accuracy)"""
     
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
