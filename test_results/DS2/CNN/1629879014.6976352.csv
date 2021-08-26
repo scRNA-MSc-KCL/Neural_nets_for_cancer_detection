@@ -1,0 +1,7 @@
+,accuracy,run_time,pool1,size1
+0,92.32409381663112,15828.768399715424,<class 'tensorflow.python.keras.layers.pooling.MaxPooling2D'>,2
+1,92.64392324093816,26385.32165145874,<class 'tensorflow.python.keras.layers.pooling.MaxPooling2D'>,3
+2,92.56777337800793,35176.18569946289,<class 'tensorflow.python.keras.layers.pooling.MaxPooling2D'>,4
+3,92.87237282972892,51600.85463023186,<class 'tensorflow.python.keras.layers.pooling.AveragePooling2D'>,2
+4,92.33932378921718,62360.724617004395,<class 'tensorflow.python.keras.layers.pooling.AveragePooling2D'>,3
+5,92.56777337800793,70308.99387288094,<class 'tensorflow.python.keras.layers.pooling.AveragePooling2D'>,4

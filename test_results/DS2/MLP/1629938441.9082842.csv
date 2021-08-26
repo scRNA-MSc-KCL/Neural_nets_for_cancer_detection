@@ -1,0 +1,13 @@
+,optimizer,loss_function,epochs,node1_length,activation_layer1,perceptage accuracy,layer_number,kernal
+0,Adam,categorical_crossentropy,7,500,tanh,94.95887907401766,1,random_normal
+1,Adam,categorical_crossentropy,7,500,tanh,94.94364910143162,1,random_uniform
+2,Adam,categorical_crossentropy,7,500,tanh,94.66950959488273,1,truncated_normal
+3,Adam,categorical_crossentropy,7,500,tanh,95.11117879987816,1,zeros
+4,Adam,categorical_crossentropy,7,500,tanh,23.01248857752056,1,ones
+5,Adam,categorical_crossentropy,7,500,tanh,94.94364910143162,1,glorot_normal
+6,Adam,categorical_crossentropy,7,500,tanh,95.12640877246422,1,glorot_uniform
+7,Adam,categorical_crossentropy,7,500,tanh,95.05025890953395,1,he_normal
+8,Adam,categorical_crossentropy,7,500,tanh,95.08071885470606,1,he_uniform
+9,Adam,categorical_crossentropy,7,500,tanh,94.79134937557112,1,identity
+10,Adam,categorical_crossentropy,7,500,tanh,94.80657934815717,1,orthogonal
+11,Adam,categorical_crossentropy,7,500,tanh,94.83703929332927,1,variance_scaling
