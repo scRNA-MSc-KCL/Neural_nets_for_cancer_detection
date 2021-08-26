@@ -63,10 +63,12 @@ kf = KFold(n_splits=5)
 for train_index, test_index in kf.split(data.X):
   X_train, X_test = data.X[train_index], data.X[test_index]
   y_train, y_test = labels[train_index], labels[test_index]
-  Classifier = sklearn.svm.SVC(kernel = "linear")
+  Classifier = sklearn.svm.SVC(kernel = "rbf")
   Classifier.fit(X_train, y_train)
+  print(y_test)
   print("the classification result with the current settings  is {}".format(Classifier.score(X_test, y_test)))
   y_pred = Classifier.predict(X_test)
+  print(y_pred)
   with open('test_results/{}/{}/summary{}.txt'.format(file_loc, start, counter), 'w') as fr:
     fr.write("precision score: {}".format(precision_score(y_test, y_pred, average=None)))
     fr.write("recall score: {} ".format(recall_score(y_test, y_pred, average=None)))
