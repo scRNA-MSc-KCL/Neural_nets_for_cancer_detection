@@ -77,9 +77,9 @@ for train_index, test_index in kf.split(data.X):
   for i in range(len(y_pred)):
     if y_pred[i] == y_test[i]:
       test_acc += 1
-  print("accuracy different way", test_acc/(len(y_pred))
+  print("accuracy different way", test_acc/len(y_pred))
     
-  print(y_pred)
+  print(y_pred.shape)
   with open('test_results/{}/{}/summary{}.txt'.format(file_loc, start, counter), 'w') as fr:
     fr.write("precision score: {}".format(precision_score(y_test, y_pred, average=None)))
     fr.write("recall score: {} ".format(recall_score(y_test, y_pred, average=None)))
