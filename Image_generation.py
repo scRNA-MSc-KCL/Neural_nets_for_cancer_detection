@@ -69,14 +69,14 @@ def initial_plots(data):
 def neighbourhood_graph(data):
   #perform pca
   sc.tl.pca(data, svd_solver='arpack')
-  sc.pl.pca(data, save ='')
+  sc.pl.pca(data, save ='', cmap = "viridis")
   #look at pcs with respect to variance
-  sc.pl.pca_variance_ratio(data, log=True,  save ='')
+  sc.pl.pca_variance_ratio(data, log=True,  save ='', cmap = "viridis")
   #compute nearest neighbours
   sc.pp.neighbors(data, n_neighbors=10, n_pcs=40)
   #embed by umap
   sc.tl.umap(data)
-  sc.pl.umap(data,  save ='')
+  sc.pl.umap(data,  save ='', cmap = "viridis")
   sc.tl.leiden(data)
   sc.pl.umap(data, color=['leiden'],  save ='')
 
@@ -91,8 +91,8 @@ if args.path == 1 or args.path == 4:
   sc.pp.log1p(data)
   #select highly variable genes
   sc.pp.highly_variable_genes(data, n_top_genes=2000)
-  data = data[:, data.var.highly_variable]
   sc.pl.highly_variable_genes(data, save = '')
+  data = data[:, data.var.highly_variable]
   print("The final shape of the data is {}".format(data.shape))
   neighbourhood_graph(data)
 
@@ -106,8 +106,8 @@ if args.path == 2:
   sc.pp.log1p(data)
   #select highly variable genes
   sc.pp.highly_variable_genes(data , min_mean=.125, max_mean=3, min_disp=0.25)
-  data = data[:, data.var.highly_variable]
   sc.pl.highly_variable_genes(data, save = '')
+  data = data[:, data.var.highly_variable]
   print("The final shape of the data is {}".format(data.shape)) 
   neighbourhood_graph(data)
 
