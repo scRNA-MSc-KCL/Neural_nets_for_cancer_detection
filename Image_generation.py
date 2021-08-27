@@ -68,6 +68,7 @@ def initial_plots(data):
   
 def neighbourhood_graph(data):
   #perform pca
+  sc.tl.pca(adata, svd_solver='arpack')
   sc.pl.pca(data, save ='')
   #look at pcs with respect to variance
   sc.pl.pca_variance_ratio(data, log=True,  save ='')
