@@ -71,7 +71,7 @@ def neighbourhood_graph(data):
   sc.tl.pca(data, svd_solver='arpack')
   sc.pl.pca(data, save ='', cmap = "viridis")
   #look at pcs with respect to variance
-  sc.pl.pca_variance_ratio(data, log=True,  save ='', cmap = "viridis")
+  sc.pl.pca_variance_ratio(data, log=True,  save ='')
   #compute nearest neighbours
   sc.pp.neighbors(data, n_neighbors=10, n_pcs=40)
   #embed by umap
