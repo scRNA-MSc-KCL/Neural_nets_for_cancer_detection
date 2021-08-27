@@ -111,7 +111,7 @@ X_val_img = it.transform(X_val)
 X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
 
-number_of_models = 10
+number_of_models = 30
 accuracy_list = []
 run_time_list = []
 #Build CNN
@@ -155,7 +155,7 @@ for i in range(number_of_models):
   accuracy_list.append(accuracy)
   #f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
   #f.write("percentage missclassified on test set is {}\n".format(misclassified))
-  print("misclassified; ", misclassified)
+  print("accuracy; ", accuracy)
   end = time.time()
   run_time = end - start
   run_time_list.append(run_time)
