@@ -81,15 +81,6 @@ def neighbourhood_graph(data):
   sc.pl.umap(data,  save ='')
   sc.tl.leiden(data)
   sc.pl.umap(data, color=['leiden'],  save ='')
-  
-path = os.getcwd()
-path = os.path.join(path, "test_results/{}".format(file_loc))
-try:
-  os.makedirs(path)
-except OSError:
-  print("Creation of the directory %s failed" % path)
-else:
-  print("Successfully created the directory %s" % path)
 
 #Pipeline 1
 if args.path == 1 or args.path == 4: 
