@@ -27,13 +27,19 @@ if args.path == 3:
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
-                                                    
+  
+  
+num_lab = len(labels["X"].unique())
+label_encoder = LabelEncoder()
+labels = label_encoder.fit_transform(labels)
+print(labels.shape)                                                    
 #create training and test sets
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
-print("The data has been split")
+print(y_train.shape)
+print(y_test.shape)
 
-SVM_list = ["linear", "poly", "rbf", "sigmoid"]
-#SVM_list = ["linear"]
+#SVM_list = ["linear", "poly", "rbf", "sigmoid"]
+SVM_list = ["rbf"]
 # build classifier
                                                     
 for i in SVM_list:
