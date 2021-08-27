@@ -68,7 +68,7 @@ def initial_plots(data):
   
 def neighbourhood_graph(data):
   #perform pca
-  sc.pl.pca(data, save ='test_results/{}/pca.png'.format(file_loc))
+  sc.pl.pca(data, save ='')
   #look at pcs with respect to variance
   sc.pl.pca_variance_ratio(data, log=True,  save ='')
   #compute nearest neighbours
@@ -94,7 +94,7 @@ if args.path == 1 or args.path == 4:
   #select highly variable genes
   sc.pp.highly_variable_genes(data, n_top_genes=2000)
   data = data[:, data.var.highly_variable]
-  sc.pl.highly_variable_genes(data, save = 'test_results/{}/highly_variable_summary_stats.png'.format(file_loc))
+  sc.pl.highly_variable_genes(data, save = '')
   print("The final shape of the data is {}".format(data.shape))
   neighbourhood_graph(data)
 
