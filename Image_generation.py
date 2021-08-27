@@ -38,13 +38,11 @@ parser.add_argument('path', type = int)
 args = parser.parse_args()
 if args.path == 1:
   data = sc.read_csv("Original_data/Combined_10x_CelSeq2_5cl_data.csv")
-  file_loc = "DS1"
 if args.path == 2:
   data = sc.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_UMIs.csv") #26485 x 65662
   data = anndata.AnnData.transpose(data)
   #labels = pd.read_csv("human_cell_atlas/krasnow_hlca_facs_metadata.csv") #9409 x 141
   ##data = sc.read_csv("human_cell_atlas/krasnow_hlca_facs_counts.csv")  #58683 x 9409
-  file_loc = "DS2"
 if args.path == 4:
   data_pos = pd.read_csv("Original_data/GSM3783354_4T1_CherryPositive_RawCounts.csv")
   data_neg = pd.read_csv("Original_data/GSM3783356_4T1_CherryNegative_RawCounts.csv")
@@ -58,22 +56,21 @@ if args.path == 4:
   data.var_names_make_unique() 
   data.obs_names_make_unique()
   data = anndata.AnnData.transpose(data)
-  file_loc = "DS4"
 
   
-def initial_plots(data, file_loc):
-  sc.pl.highest_expr_genes(data, n_top=20, save = '/{}'.format(file_loc))
+def initial_plots(data):
+  sc.pl.highest_expr_genes(data, n_top=20, save = '')
   data.var['mt'] = data.var_names.str.startswith('MT-')
   sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
-  sc.pl.violin(data, ['n_genes_by_counts', 'total_counts', 'pct_counts_mt'],jitter=0.4, multi_panel=True, save = 'mitochonrial_and_violin_plots.png')
-  sc.pl.scatter(data, x='total_counts', y='pct_counts_mt', save = 'test_results/{}/mitochonrial_and_violin_plots.png'.format(file_loc))
-  sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts', save ='test_results/{}/pct_counts_mt_scatter.png'.format(file_loc))
+  sc.pl.violin(data, ['n_genes_by_counts', 'total_counts', 'pct_counts_mt'],jitter=0.4, multi_panel=True, save = '')
+  sc.pl.scatter(data, x='total_counts', y='pct_counts_mt', save = '')
+  sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts', save ='')
   
 def neighbourhood_graph(data):
   #perform pca
   sc.pl.pca(data, save ='test_results/{}/pca.png'.format(file_loc))
   #look at pcs with respect to variance
-  sc.pl.pca_variance_ratio(data, log=True,  save ='test_results/{}/variance_ratio.png'.format(file_loc))
+  sc.pl.pca_variance_ratio(data, log=True,  save ='')
   #compute nearest neighbours
   sc.pp.neighbors(data, n_neighbors=10, n_pcs=40)
   #embed by umap
@@ -81,9 +78,9 @@ def neighbourhood_graph(data):
   pl.paga(data, plot=False)  
   tl.umap(data, init_pos='paga')
   sc.tl.umap(data)
-  sc.pl.umap(data,  save ='test_results/{}/umap.png'.format(file_loc))
+  sc.pl.umap(data,  save ='')
   sc.tl.leiden(data)
-  sc.pl.umap(data, color=['leiden'],  save ='test_results/{}/leiden.png'.format(file_loc))
+  sc.pl.umap(data, color=['leiden'],  save ='')
   
 path = os.getcwd()
 path = os.path.join(path, "test_results/{}".format(file_loc))
