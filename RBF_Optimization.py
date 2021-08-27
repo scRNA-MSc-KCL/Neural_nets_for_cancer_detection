@@ -36,7 +36,7 @@ if args.path == 2:
   data = sc.read("results_2.h5ad")
   file_loc = "DS2/RBF"
   b = 500
-  e = 100
+  e = 1
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
@@ -68,7 +68,7 @@ betas = [.0001, .001, .01, .1, 2]
 inititializer = [InitCentersKMeans(X_train), InitCentersRandom(X_train)]
 optimizer = ["RMSprop", "Adam", "Adamax", "Nadam"]
 activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
-number_of_models = 100
+number_of_models = 10
 
 accuracy_list = []
 betas_list = []
