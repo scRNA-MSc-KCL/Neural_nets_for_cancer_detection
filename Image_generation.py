@@ -65,6 +65,8 @@ if args.path == 2:
   data = anndata.AnnData.transpose(data)
   #labels = pd.read_csv("human_cell_atlas/krasnow_hlca_facs_metadata.csv") #9409 x 141
   ##data = sc.read_csv("human_cell_atlas/krasnow_hlca_facs_counts.csv")  #58683 x 9409
+  labels = pd.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
+  labels = labels["free_annotation"]
 if args.path == 4:
   data_pos = pd.read_csv("Original_data/GSM3783354_4T1_CherryPositive_RawCounts.csv")
   data_neg = pd.read_csv("Original_data/GSM3783356_4T1_CherryNegative_RawCounts.csv")
@@ -78,6 +80,11 @@ if args.path == 4:
   data.var_names_make_unique() 
   data.obs_names_make_unique()
   data = anndata.AnnData.transpose(data)
+  l_pos = len(data_pos.columns)
+  l_neg = len(data_neg.columns)
+  label_pos = ["Cherry Positive"]*l_pos
+  label_neg = ["Cherry Negative"]*l_neg
+  labels = label_pos + label_neg
 
   
 labels = label_adaption(labels)
