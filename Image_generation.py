@@ -27,7 +27,7 @@ def label_adaption(labels):
   num_lab = len(pd.unique(labels))
   print("number of labels", num_lab)
   labels = labels.to_numpy()
-  return labels  
+  return labels, num_lab 
   
 def initial_plots(data):
   sc.pl.highest_expr_genes(data, n_top=20, save = '')
@@ -37,14 +37,14 @@ def initial_plots(data):
   sc.pl.scatter(data, x='total_counts', y='pct_counts_mt', save = '')
   sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts', save ='')
   
-def neighbourhood_graph(data, labels):
+def neighbourhood_graph(data, labels, num_lab):
   #perform pca
   sc.tl.pca(data, svd_solver='arpack')
   sc.pl.pca(data, save ='', color = "cell_type")
   #look at pcs with respect to variance
   sc.pl.pca_variance_ratio(data, log=True,  save ='')
   #compute nearest neighbours
-  sc.pp.neighbors(data, n_neighbors= len(pd.unique(labels)), n_pcs=40)
+  sc.pp.neighbors(data, n_neighbors= num_lab, n_pcs=40)
   #embed by umap
   sc.tl.umap(data)
   sc.tl.leiden(data)
@@ -87,7 +87,7 @@ if args.path == 4:
   labels = label_pos + label_neg
 
   
-labels = label_adaption(labels)
+labels, num_lab = label_adaption(labels)
 data.obs['cell_type'] = labels
 
 #Pipeline 1
@@ -104,7 +104,7 @@ if args.path == 1 or args.path == 4:
   sc.pl.highly_variable_genes(data, save = '')
   data = data[:, data.var.highly_variable]
   print("The final shape of the data is {}".format(data.shape))
-  neighbourhood_graph(data, labels)
+  neighbourhood_graph(data, labels, num_lab)
 
 #Pipeline 2
 if args.path == 2: 
@@ -119,6 +119,6 @@ if args.path == 2:
   sc.pl.highly_variable_genes(data, save = '')
   data = data[:, data.var.highly_variable]
   print("The final shape of the data is {}".format(data.shape)) 
-  neighbourhood_graph(data, labels)
+  neighbourhood_graph(data, labels, num_lab)
 
 
