@@ -57,6 +57,7 @@ else:
 num_lab = len(labels["X"].unique())
 label_encoder = LabelEncoder()
 labels = label_encoder.fit_transform(labels)
+labels = labels.to_numpy()
 
 #Split training data
 kf = KFold(n_splits=5)
