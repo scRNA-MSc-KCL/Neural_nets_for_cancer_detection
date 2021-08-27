@@ -38,6 +38,7 @@ parser.add_argument('path', type = int)
 args = parser.parse_args()
 if args.path == 1:
   data = sc.read_csv("Original_data/Combined_10x_CelSeq2_5cl_data.csv")
+  labels =pd.read_csv("Original_data/Labels.csv")
 if args.path == 2:
   data = sc.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_UMIs.csv") #26485 x 65662
   data = anndata.AnnData.transpose(data)
@@ -66,10 +67,10 @@ def initial_plots(data):
   sc.pl.scatter(data, x='total_counts', y='pct_counts_mt', save = '')
   sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts', save ='')
   
-def neighbourhood_graph(data):
+def neighbourhood_graph(data, labels):
   #perform pca
   sc.tl.pca(data, svd_solver='arpack')
-  sc.pl.pca(data, save ='', cmap = "viridis")
+  sc.pl.pca(data, save ='', color = "cell_type")
   #look at pcs with respect to variance
   sc.pl.pca_variance_ratio(data, log=True,  save ='')
   #compute nearest neighbours
@@ -80,8 +81,12 @@ def neighbourhood_graph(data):
   sc.tl.leiden(data)
   sc.pl.umap(data, color=['leiden'],  save ='')
 
+  
+labels = label_adaption(labels)
+  
 #Pipeline 1
 if args.path == 1 or args.path == 4: 
+  data.obs['cell_type'] = labels
   initial_plots(data)
   #filtering
   sc.pp.filter_genes(data, min_cells=1)
