@@ -38,13 +38,13 @@ parser.add_argument('path', type = int)
 args = parser.parse_args()
 if args.path == 1:
   data = sc.read_csv("Original_data/Combined_10x_CelSeq2_5cl_data.csv")
-  file_loc = "DS1/Fig"
+  file_loc = "DS1"
 if args.path == 2:
   data = sc.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_UMIs.csv") #26485 x 65662
   data = anndata.AnnData.transpose(data)
   #labels = pd.read_csv("human_cell_atlas/krasnow_hlca_facs_metadata.csv") #9409 x 141
   ##data = sc.read_csv("human_cell_atlas/krasnow_hlca_facs_counts.csv")  #58683 x 9409
-  file_loc = "DS2/Fig"
+  file_loc = "DS2"
 if args.path == 4:
   data_pos = pd.read_csv("Original_data/GSM3783354_4T1_CherryPositive_RawCounts.csv")
   data_neg = pd.read_csv("Original_data/GSM3783356_4T1_CherryNegative_RawCounts.csv")
@@ -58,11 +58,11 @@ if args.path == 4:
   data.var_names_make_unique() 
   data.obs_names_make_unique()
   data = anndata.AnnData.transpose(data)
-  file_loc = "DS4/Fig"
+  file_loc = "DS4"
 
   
 def initial_plots(data, file_loc):
-  sc.pl.highest_expr_genes(data, n_top=20, save = 'test_results/{}/highly_expressed_genes.png'.format(file_loc))
+  sc.pl.highest_expr_genes(data, n_top=20, save = '/{}'.format(file_loc))
   data.var['mt'] = data.var_names.str.startswith('MT-')
   sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
   sc.pl.violin(data, ['n_genes_by_counts', 'total_counts', 'pct_counts_mt'],jitter=0.4, multi_panel=True, save = 'mitochonrial_and_violin_plots.png')
