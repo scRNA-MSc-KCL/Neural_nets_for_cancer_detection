@@ -72,7 +72,7 @@ else:
 
   
 #set scanpy to print to directory
-sc.settings.ScanpyConfig(autosave = True, figdir= 'test_results/{}'.format(file_loc)
+sc.settings.ScanpyConfig(autosave = True, figdir= 'test_results/{}'.format(file_loc))
 #Pipeline 1
 if args.path == 1 or args.path == 4: 
   #print highly expressed genes
