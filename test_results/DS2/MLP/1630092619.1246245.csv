@@ -1,0 +1,8 @@
+,optimizer,loss_function,epochs,node1_length,activation_layer1,perceptage accuracy,layer_number,kernal,regulizer_init
+0,Adam,categorical_crossentropy,7,500,tanh,94.51720986902224,1,glorot_normal,l1_l2
+1,Adam,categorical_crossentropy,7,500,relu,94.82180932074323,1,glorot_normal,l1_l2
+2,Adam,categorical_crossentropy,7,500,sigmoid,94.76088943039902,1,glorot_normal,l1_l2
+3,Adam,categorical_crossentropy,7,500,softplus,94.59335973195249,1,glorot_normal,l1_l2
+4,Adam,categorical_crossentropy,7,500,softsign,94.82180932074323,1,glorot_normal,l1_l2
+5,Adam,categorical_crossentropy,7,500,selu,94.21261041730125,1,glorot_normal,l1_l2
+6,Adam,categorical_crossentropy,7,500,elu,94.136460554371,1,glorot_normal,l1_l2
