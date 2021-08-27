@@ -84,7 +84,7 @@ def neighbourhood_graph(data):
 
 #Pipeline 1
 if args.path == 1 or args.path == 4: 
-  initial_plots(data, file_loc)
+  initial_plots(data)
   #filtering
   sc.pp.filter_genes(data, min_cells=1)
   #normalize data
@@ -100,7 +100,7 @@ if args.path == 1 or args.path == 4:
 
 #Pipeline 2
 if args.path == 2: 
-  initial_plots(data, file_loc)
+  initial_plots(data)
   sc.pp.filter_genes(data, min_cells=5)
   #normalize data
   sc.pp.normalize_total(data, target_sum=10000)
@@ -109,7 +109,7 @@ if args.path == 2:
   #select highly variable genes
   sc.pp.highly_variable_genes(data , min_mean=.125, max_mean=3, min_disp=0.25)
   data = data[:, data.var.highly_variable]
-  sc.pl.highly_variable_genes(data, save = 'test_results/{}/highly_variable_summary_stats.png'.format(file_loc))
+  sc.pl.highly_variable_genes(data, save = '')
   print("The final shape of the data is {}".format(data.shape)) 
   neighbourhood_graph(data)
 
