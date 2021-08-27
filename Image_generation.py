@@ -11,6 +11,7 @@ import argparse
 import anndata
 import os
 
+
 def unzip_file(filename):
   os.system('gunzip ' + filename)
   
@@ -69,11 +70,13 @@ except OSError:
 else:
   print("Successfully created the directory %s" % path)
 
+  
+#set scanpy to print to directory
+sc.settings.ScanpyConfig(autosave = True, figdir= 'test_results/{}'.format(file_loc)
 #Pipeline 1
 if args.path == 1 or args.path == 4: 
   #print highly expressed genes
-  fig = sc.pl.highest_expr_genes(data, n_top=20, )
-  fig.savefig('test_results/{}/highly_expressed}'.format(file_loc))
+  highly_expressed = sc.pl.highest_expr_genes(data, n_top=20, )
   #filtering
   sc.pp.filter_genes(data, min_cells=1)
   #normalize data
