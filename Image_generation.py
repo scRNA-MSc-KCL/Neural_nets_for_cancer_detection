@@ -75,9 +75,6 @@ def neighbourhood_graph(data):
   #compute nearest neighbours
   sc.pp.neighbors(data, n_neighbors=10, n_pcs=40)
   #embed by umap
-  tl.paga(data)
-  pl.paga(data, plot=False)  
-  tl.umap(data, init_pos='paga')
   sc.tl.umap(data)
   sc.pl.umap(data,  save ='')
   sc.tl.leiden(data)
