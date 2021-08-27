@@ -88,10 +88,10 @@ if args.path == 4:
 
   
 labels = label_adaption(labels)
-  
+data.obs['cell_type'] = labels
+
 #Pipeline 1
 if args.path == 1 or args.path == 4: 
-  data.obs['cell_type'] = labels
   initial_plots(data)
   #filtering
   sc.pp.filter_genes(data, min_cells=1)
