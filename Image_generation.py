@@ -44,7 +44,7 @@ def neighbourhood_graph(data, labels):
   #look at pcs with respect to variance
   sc.pl.pca_variance_ratio(data, log=True,  save ='')
   #compute nearest neighbours
-  sc.pp.neighbors(data, n_neighbors=10, n_pcs=40)
+  sc.pp.neighbors(data, n_neighbors= len(pd.unique(labels)), n_pcs=40)
   #embed by umap
   sc.tl.umap(data)
   sc.tl.leiden(data)
