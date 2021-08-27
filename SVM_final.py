@@ -82,11 +82,11 @@ for train_index, test_index in kf.split(data.X):
   print("y_pred", y_pred.shape)
   print(y_pred[:10])
   with open('test_results/{}/{}/summary{}.txt'.format(file_loc, start, counter), 'w') as fr:
-    fr.write("precision score: {}".format(precision_score(y_test, y_pred, average=None)))
-    fr.write("recall score: {} ".format(recall_score(y_test, y_pred, average=None)))
+    #fr.write("precision score: {}".format(precision_score(y_test, y_pred, average=None)))
+   # fr.write("recall score: {} ".format(recall_score(y_test, y_pred, average=None)))
     fr.write("accuracy: {}".format(Classifier.score(X_test, y_test)))
-  print(precision_score(y_test, y_pred, average=None))
-  print(recall_score(y_test, y_pred, average=None))
+  #print(precision_score(y_test, y_pred, average=None))
+  #print(recall_score(y_test, y_pred, average=None))
   savetxt("test_results/{}/{}/{}_ypred.csv".format(file_loc, start, counter), y_pred, delimiter=',')
   savetxt("test_results/{}/{}/{}_ytrue.csv".format(file_loc, start, counter), y_test, delimiter=',')
   counter +=1
