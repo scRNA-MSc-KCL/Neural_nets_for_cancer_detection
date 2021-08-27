@@ -99,7 +99,7 @@ if args.path == 1 or args.path == 4:
   sc.pl.highly_variable_genes(data, save = '')
   data = data[:, data.var.highly_variable]
   print("The final shape of the data is {}".format(data.shape))
-  neighbourhood_graph(data)
+  neighbourhood_graph(data, labels)
 
 #Pipeline 2
 if args.path == 2: 
