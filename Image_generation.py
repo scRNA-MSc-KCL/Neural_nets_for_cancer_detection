@@ -59,7 +59,31 @@ if args.path == 4:
   data.obs_names_make_unique()
   data = anndata.AnnData.transpose(data)
   file_loc = "DS4/Fig"
+
   
+def initial_plots(data, file_loc):
+  sc.pl.highest_expr_genes(data, n_top=20, save = 'test_results/{}/highly_expressed_genes.png'.format(file_loc))
+  data.var['mt'] = data.var_names.str.startswith('MT-')
+  sc.pp.calculate_qc_metrics(data, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
+  sc.pl.violin(data, ['n_genes_by_counts', 'total_counts', 'pct_counts_mt'],jitter=0.4, multi_panel=True, save = 'mitochonrial_and_violin_plots.png')
+  sc.pl.scatter(data, x='total_counts', y='pct_counts_mt', save = 'test_results/{}/mitochonrial_and_violin_plots.png'.format(file_loc))
+  sc.pl.scatter(data, x='total_counts', y='n_genes_by_counts', save ='test_results/{}/pct_counts_mt_scatter.png'.format(file_loc))
+  
+def neighbourhood_graph(data):
+  #perform pca
+  sc.pl.pca(data, save ='test_results/{}/pca.png'.format(file_loc))
+  #look at pcs with respect to variance
+  sc.pl.pca_variance_ratio(data, log=True,  save ='test_results/{}/variance_ratio.png'.format(file_loc))
+  #compute nearest neighbours
+  sc.pp.neighbors(data, n_neighbors=10, n_pcs=40)
+  #embed by umap
+  tl.paga(data)
+  pl.paga(data, plot=False)  
+  tl.umap(data, init_pos='paga')
+  sc.tl.umap(data)
+  sc.pl.umap(data,  save ='test_results/{}/umap.png'.format(file_loc))
+  sc.tl.leiden(data)
+  sc.pl.umap(data, color=['leiden'],  save ='test_results/{}/leiden.png'.format(file_loc))
   
 path = os.getcwd()
 path = os.path.join(path, "test_results/{}".format(file_loc))
@@ -70,13 +94,9 @@ except OSError:
 else:
   print("Successfully created the directory %s" % path)
 
-  
-#set scanpy to print to directory
-sc.settings.ScanpyConfig(autosave = True, figdir= 'test_results/{}'.format(file_loc))
 #Pipeline 1
 if args.path == 1 or args.path == 4: 
-  #print highly expressed genes
-  highly_expressed = sc.pl.highest_expr_genes(data, n_top=20, )
+  initial_plots(data, file_loc)
   #filtering
   sc.pp.filter_genes(data, min_cells=1)
   #normalize data
@@ -86,13 +106,13 @@ if args.path == 1 or args.path == 4:
   #select highly variable genes
   sc.pp.highly_variable_genes(data, n_top_genes=2000)
   data = data[:, data.var.highly_variable]
+  sc.pl.highly_variable_genes(data, save = 'test_results/{}/highly_variable_summary_stats.png'.format(file_loc))
   print("The final shape of the data is {}".format(data.shape))
+  neighbourhood_graph(data)
 
 #Pipeline 2
-if args.path == 2 or args.path == 3: 
-  #print highly expressed genes
-  sc.pl.highest_expr_genes(data, n_top=20, )
-  #read data
+if args.path == 2: 
+  initial_plots(data, file_loc)
   sc.pp.filter_genes(data, min_cells=5)
   #normalize data
   sc.pp.normalize_total(data, target_sum=10000)
@@ -101,5 +121,8 @@ if args.path == 2 or args.path == 3:
   #select highly variable genes
   sc.pp.highly_variable_genes(data , min_mean=.125, max_mean=3, min_disp=0.25)
   data = data[:, data.var.highly_variable]
-  print("The final shape of the data is {}".format(data.shape))  
+  sc.pl.highly_variable_genes(data, save = 'test_results/{}/highly_variable_summary_stats.png'.format(file_loc))
+  print("The final shape of the data is {}".format(data.shape)) 
+  neighbourhood_graph(data)
+
 
