@@ -99,7 +99,4 @@ if args.path == 2 or args.path == 3:
   sc.pp.highly_variable_genes(data , min_mean=.125, max_mean=3, min_disp=0.25)
   data = data[:, data.var.highly_variable]
   print("The final shape of the data is {}".format(data.shape))  
-  
-data.write(results)
-print("data shape", data)
-np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
+
