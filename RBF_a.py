@@ -31,7 +31,7 @@ if args.path == 1:
   data = sc.read("results_1.h5ad")
   file_loc = "DS1/RBF"
   b = 50
-  e = 2
+  e = 1
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
@@ -75,11 +75,11 @@ betas_list = []
 inititializer_list = []
 optimizer_list = []
 
-for b in betas:
+for be in betas:
   for i in inititializer:
     for o in optimizer:
       net = Sequential()
-      net.add(RBFLayer(num_lab,initializer=i,betas=b,input_shape=(data.n_vars,)))
+      net.add(RBFLayer(num_lab,initializer=i,betas=be,input_shape=(data.n_vars,)))
       net.add(Dense(num_lab, activation='softmax'))
       net.compile(loss="categorical_crossentropy", optimizer=o)
       history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=b)
@@ -105,7 +105,7 @@ for b in betas:
       f.write("number of epochs is {}".format(e))
       print("percentage accuracy; ", correctly_classified)
       accuracy_list.append(correctly_classified)
-      betas_list.append(b)
+      betas_list.append(be)
       inititializer_list.append(i)
       optimizer_list.append(o)
   
