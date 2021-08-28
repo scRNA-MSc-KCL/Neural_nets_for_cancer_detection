@@ -111,7 +111,7 @@ X_val_img = it.transform(X_val)
 X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
 
-number_of_models = 30
+number_of_models = 20
 accuracy_list = []
 run_time_list = []
 #Build CNN
@@ -136,7 +136,7 @@ for i in range(number_of_models):
   net.compile(loss='categorical_crossentropy', optimizer='adam')
   history = net.fit(X_train_img, y_train,
   validation_data=(X_val_img, y_val),
-   epochs=25,
+   epochs=50,
    batch_size=b)
 
 #get CNN plot
