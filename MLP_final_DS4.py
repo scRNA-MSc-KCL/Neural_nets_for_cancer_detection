@@ -19,7 +19,6 @@ import time
 import os
 from sklearn.model_selection import KFold
 
-number_of_models = 1
 accuracy_list = []
 counter = 0
 
@@ -65,7 +64,6 @@ X_split, X_test, y_split, y_test = train_test_split(data.X, labels, test_size=0.
 y_split = y_split.reset_index(drop = True)
 y_test = y_test.reset_index(drop = True)
 y_test = to_categorical(y_test, num_lab)
-
 
 #Split training data
 kf = KFold(n_splits=5)
