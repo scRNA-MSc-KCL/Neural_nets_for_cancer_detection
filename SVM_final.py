@@ -57,36 +57,22 @@ else:
 num_lab = len(labels["X"].unique())
 label_encoder = LabelEncoder()
 labels = label_encoder.fit_transform(labels)
-print(labels.shape)
 
 #Split training data
-kf = KFold(n_splits=5)
+kf = KFold(n_splits=5, shuffle = True)
 for train_index, test_index in kf.split(data.X):
   X_train, X_test = data.X[train_index], data.X[test_index]
   y_train, y_test = labels[train_index], labels[test_index]
-  print("X_train", X_train.shape)
-  print("X_test", X_test.shape)
-  print("y_train", y_train.shape)
-  print("y_test", y_test.shape)
-  Classifier = sklearn.svm.SVC(kernel = "poly")
+  Classifier = sklearn.svm.SVC(kernel = "rbf")
   Classifier.fit(X_train, y_train)
-  print("y_test", y_test.shape)
-  print(y_test[:10])
   print("the classification result with the current settings  is {}".format(Classifier.score(X_test, y_test)))
   y_pred = Classifier.predict(X_test)
-  test_acc = 0
-  for i in range(len(y_pred)):
-    if y_pred[i] == y_test[i]:
-      test_acc += 1
-  print("accuracy different way", test_acc/len(y_pred))
-  print("y_pred", y_pred.shape)
-  print(y_pred[:10])
   with open('test_results/{}/{}/summary{}.txt'.format(file_loc, start, counter), 'w') as fr:
-    #fr.write("precision score: {}".format(precision_score(y_test, y_pred, average=None)))
-   # fr.write("recall score: {} ".format(recall_score(y_test, y_pred, average=None)))
+    fr.write("precision score: {}".format(precision_score(y_test, y_pred, average=None)))
+    fr.write("recall score: {} ".format(recall_score(y_test, y_pred, average=None)))
     fr.write("accuracy: {}".format(Classifier.score(X_test, y_test)))
-  #print(precision_score(y_test, y_pred, average=None))
-  #print(recall_score(y_test, y_pred, average=None))
+  print(precision_score(y_test, y_pred, average=None))
+  print(recall_score(y_test, y_pred, average=None))
   savetxt("test_results/{}/{}/{}_ypred.csv".format(file_loc, start, counter), y_pred, delimiter=',')
   savetxt("test_results/{}/{}/{}_ytrue.csv".format(file_loc, start, counter), y_test, delimiter=',')
   counter +=1
