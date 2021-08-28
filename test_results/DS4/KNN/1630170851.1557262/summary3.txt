@@ -1,0 +1,1 @@
+precision score: [1. 0.]recall score: [0.58501441 0.        ] accuracy: 0.5850144092219021
