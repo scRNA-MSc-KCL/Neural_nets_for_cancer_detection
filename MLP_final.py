@@ -83,23 +83,24 @@ for train_index, test_index in kf.split(X_split):
   history = net.fit(X_train, y_train, validation_data=(X_val, y_val),epochs=7,batch_size=b)
   outputs = net.predict(X_test)
   labels_predicted= np.argmax(outputs, axis=1)
-  print(labels_predicted)
   y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
-  print(y_test_decoded)
   correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
   print("model number", counter)
   print("accuracy", correctly_classified)
-  fig = plt.figure()
-  plt.plot(history.history['loss'], label='training loss')
-  plt.plot(history.history['val_loss'], label='validation loss')
-  plt.xlabel('epochs')
-  plt.ylabel('loss')
-  plt.legend()
-  fig.savefig('test_results/{}/{}/fig_{}'.format(file_loc, start, counter))
+  with open('test_results/{}/{}/summary{}.txt'.format(file_loc, start, counter), 'w') as fr:
+    fr.write("precision score: {}".format(precision_score(y_test_decoded, labels_predicted, average=None)))
+    fr.write("recall score: {} ".format(recall_score(y_test_decoded, labels_predicted, average=None)))
+    fr.write("accuracy: {}".format(correctly_classified))
+  print(precision_score(y_test_decoded, labels_predicted, average=None))
+  print(recall_score(y_test_decoded, labels_predicted, average=None))
+  savetxt("test_results/{}/{}/{}_ypred.csv".format(file_loc, start, counter), labels_predicted, delimiter=',')
+  savetxt("test_results/{}/{}/{}_ytrue.csv".format(file_loc, start, counter), y_test_decoded, delimiter=',')
+  counter +=1
   accuracy_list.append(correctly_classified)
 
 #define variables
 print(accuracy_list)
 df = pd.DataFrame(list(zip(accuracy_list)),columns =['accuracy_list'])
+df.to_csv("test_results/{}/{}.csv".format(file_loc, start))
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
