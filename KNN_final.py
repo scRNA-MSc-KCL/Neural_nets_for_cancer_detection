@@ -62,7 +62,7 @@ label_encoder = LabelEncoder()
 labels = label_encoder.fit_transform(labels)
 
 #Split training data
-kf = KFold(n_splits=5)
+kf = KFold(n_splits=5, shuffle = True)
 for train_index, test_index in kf.split(data.X):
   X_train, X_test = data.X[train_index], data.X[test_index]
   y_train, y_test = labels[train_index], labels[test_index]
