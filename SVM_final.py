@@ -68,7 +68,7 @@ for train_index, test_index in kf.split(data.X):
   print("X_test", X_test.shape)
   print("y_train", y_train.shape)
   print("y_test", y_test.shape)
-  Classifier = sklearn.svm.SVC(kernel = "rbf")
+  Classifier = sklearn.svm.SVC(kernel = "poly")
   Classifier.fit(X_train, y_train)
   print("y_test", y_test.shape)
   print(y_test[:10])
