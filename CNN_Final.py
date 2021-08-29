@@ -167,8 +167,8 @@ for train_index, test_index in kf.split(X_split):
   accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
   accuracy_list.append(accuracy)
   f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
-  f.write("percentage missclassified on test set is {}\n".format(misclassified))
-  print("misclassified; ", misclassified)
+  f.write("percentage correct on test set is {}\n".format(accuracy))
+  print("accuracy; ", accuracy)
   end = time.time()
   run_time = end - start
   run_time_list.append(run_time)
