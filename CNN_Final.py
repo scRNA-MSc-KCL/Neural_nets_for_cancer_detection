@@ -149,7 +149,7 @@ for train_index, test_index in kf.split(X_split):
   net.compile(loss='categorical_crossentropy', optimizer='adamax')
   history = net.fit(X_train_img, y_train,
   validation_data=(X_test_img, y_test),
-   epochs=1,
+   epochs=50,
    batch_size=b)
 
 #get CNN plot
