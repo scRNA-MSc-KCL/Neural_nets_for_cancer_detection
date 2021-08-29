@@ -168,14 +168,19 @@ for train_index, test_index in kf.split(X_split):
   accuracy_list.append(accuracy)
   f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
   f.write("percentage correct on test set is {}\n".format(accuracy))
+  f.write("precision score: {}".format(precision_score(y_test_decoded, labels_predicted, average=None)))
+  f.write("recall score: {} ".format(recall_score(y_test_decoded, labels_predicted, average=None)))
+  f.write("accuracy: {}".format(correctly_classified))
   print("accuracy; ", accuracy)
-  end = time.time()
-  run_time = end - start
-  run_time_list.append(run_time)
-  f.write("The time taken to complete this program was {}".format(end - start))
-  print("The time taken to complete this program was {}".format(end - start))
+  print(precision_score(y_test_decoded, labels_predicted, average=None))
+  print(recall_score(y_test_decoded, labels_predicted, average=None))
+  savetxt("test_results/{}/{}/{}_ypred.csv".format(file_loc, start, counter), labels_predicted, delimiter=',')
+  savetxt("test_results/{}/{}/{}_ytrue.csv".format(file_loc, start, counter), y_test_decoded, delimiter=',')
   f.close()
 
-df = pd.DataFrame(list(zip(accuracy_list, run_time_list)),columns =['accuracy', 'run_time'])
+end = time.time()
+run_time = end - start
+print("The time taken to complete this program was {}".format(end - start))
+df = pd.DataFrame(list(zip(accuracy_list)),columns =['accuracy'])
 df.to_csv("{}/{}.csv".format(file_loc, start))
   
