@@ -73,7 +73,7 @@ if args.path == 4:
   results = 'results_4.h5ad'
 
 labels = label_adaption(labels)
-#print("The original shape of the data1 is {}".format(data))
+print("The original shape of the data1 is {}".format(data))
 
 #Pipeline 1
 if args.path == 1 or args.path == 4: 
