@@ -49,10 +49,6 @@ if args.path == 2:
   data = sc.read("results_2.h5ad")
   file_loc = "test_results/DS2/CNN/Final"
   b = 500
-if args.path == 3:
-  labels =pd.read_csv("labels_3.csv", names = ["X"])
-  data = sc.read("results_3.h5ad")
-  file_loc = "test_results/DS3/CNN"
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
@@ -142,18 +138,18 @@ for train_index, test_index in kf.split(X_split):
     net.add(Dense(200, activation='softplus'))
     net.add(Dropout(rate=0.3))              
   net.add(Dense(num_lab, activation='softmax'))
-  #net.summary()
-  #from contextlib import redirect_stdout
+  net.summary()
+  from contextlib import redirect_stdout
 
-  #with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
-  #    with redirect_stdout(f):
-   #       net.summary()
+  with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
+      with redirect_stdout(f):
+          net.summary()
 
 #train CNN
   net.compile(loss='categorical_crossentropy', optimizer='adamax')
   history = net.fit(X_train_img, y_train,
   validation_data=(X_test_img, y_test),
-   epochs=50,
+   epochs=1,
    batch_size=b)
 
 #get CNN plot
