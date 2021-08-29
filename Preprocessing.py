@@ -46,12 +46,6 @@ if args.path == 2:
   labels = pd.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
   labels = labels["free_annotation"]
   results = 'results_2.h5ad'
-if args.path == 3:
-  labels =pd.read_csv("Original_data/GSE131907_Lung_Cancer_cell_annotation.txt", sep = "\t")
-  data = sc.read_csv("Original_data/GSE131907_Lung_Cancer_raw_UMI_matrix.csv") #29634 x 208506
-  data = anndata.AnnData.transpose(data)
-  labels = labels["Cell_subtype"]
-  results = 'results_3.h5ad'
 if args.path == 4:
   data_pos = pd.read_csv("Original_data/GSM3783354_4T1_CherryPositive_RawCounts.csv")
   data_neg = pd.read_csv("Original_data/GSM3783356_4T1_CherryNegative_RawCounts.csv")
