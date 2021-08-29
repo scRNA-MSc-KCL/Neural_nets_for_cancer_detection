@@ -174,8 +174,8 @@ for train_index, test_index in kf.split(X_split):
   print("accuracy; ", accuracy)
   print(precision_score(y_test_decoded, labels_predicted, average=None))
   print(recall_score(y_test_decoded, labels_predicted, average=None))
-  savetxt("test_results/{}/{}/{}_ypred.csv".format(file_loc, start, counter), labels_predicted, delimiter=',')
-  savetxt("test_results/{}/{}/{}_ytrue.csv".format(file_loc, start, counter), y_test_decoded, delimiter=',')
+  savetxt("{}/{}/{}_ypred.csv".format(file_loc, start, counter), labels_predicted, delimiter=',')
+  savetxt("{}/{}/{}_ytrue.csv".format(file_loc, start, counter), y_test_decoded, delimiter=',')
   f.close()
 
 end = time.time()
