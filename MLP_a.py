@@ -130,10 +130,10 @@ Nodes = [750]
 #activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
 activation = ["relu"]
 #optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
-optimizer = ["Adam"]*30
+optimizer = ["Adam"]*100
 #epoch = [100]
 epoch = [7]
-layer_number = [1]
+layer_number = [2]
 
 #loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
 loss_function = ["categorical_crossentropy"]
