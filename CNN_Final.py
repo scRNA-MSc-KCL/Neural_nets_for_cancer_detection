@@ -149,7 +149,7 @@ for train_index, test_index in kf.split(X_split):
   net.compile(loss='categorical_crossentropy', optimizer='adamax')
   history = net.fit(X_train_img, y_train,
   validation_data=(X_test_img, y_test),
-   epochs=50,
+   epochs=1,
    batch_size=b)
 
 #get CNN plot
@@ -170,7 +170,7 @@ for train_index, test_index in kf.split(X_split):
   f.write("percentage correct on test set is {}\n".format(accuracy))
   f.write("precision score: {}".format(precision_score(y_test_decoded, labels_predicted, average=None)))
   f.write("recall score: {} ".format(recall_score(y_test_decoded, labels_predicted, average=None)))
-  f.write("accuracy: {}".format(correctly_classified))
+  f.write("accuracy: {}".format(accuracy))
   print("accuracy; ", accuracy)
   print(precision_score(y_test_decoded, labels_predicted, average=None))
   print(recall_score(y_test_decoded, labels_predicted, average=None))
