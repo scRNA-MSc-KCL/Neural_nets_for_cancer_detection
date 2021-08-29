@@ -40,11 +40,6 @@ if args.path == 2:
   data = sc.read("results_2.h5ad")
   file_loc = "DS2/MLP/Final"
   b = 500
-if args.path == 3:
-  labels =pd.read_csv("labels_3.csv", names = ["X"])
-  data = sc.read("results_3.h5ad")
-  file_loc = "DS3/MLP/Final"
-  b = 2000
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
@@ -78,6 +73,9 @@ for train_index, test_index in kf.split(X_split):
   net = Sequential()
   if args.path == 1:
     net.add(Dense(500, activation = "tanh"))
+  if args.path == 2:
+    net.add(Dense(750, activation = "relu", input_shape = (data.n_vars,)))
+    net.add(Dense(750, activation = "relu"))
   if args.path == 4:
     net.add(Dense(1200, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2", input_shape = (data.n_vars,)))
     net.add(Dense(1300, activation = "relu", kernel_initializer = "glorot_normal", kernel_regularizer="l1_l2"))
