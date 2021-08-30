@@ -103,7 +103,7 @@ for i in inititializer:
 #df = pd.DataFrame(list(zip(accuracy_list, betas_list,inititializer_list,optimizer_list)),
 #                          columns =['accuracy', 'betas', 'intiailizer','optimizer'])
 df = pd.DataFrame(list(zip(accuracy_list,inititializer_list)),
-                          columns =['accuracy', 'intiailizer')
+                          columns =['accuracy', 'intiailizer'])
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
 df.to_csv("test_results/{}/{}.csv".format(file_loc, start))
