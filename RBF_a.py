@@ -75,43 +75,35 @@ betas_list = []
 inititializer_list = []
 optimizer_list = []
 
-for be in betas:
-  for i in inititializer:
-    for o in optimizer:
-      net = Sequential()
-      net.add(RBFLayer(num_lab,initializer=i,betas=be,input_shape=(data.n_vars,)))
-      net.add(Dense(num_lab, activation='softmax'))
-      net.compile(loss="categorical_crossentropy", optimizer=o)
-      history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=b)
-      outputs = net.predict(X_test)
-      labels_predicted= np.argmax(outputs, axis=1)
-      y_test_decoded = np.argmax(y_test, axis=1) 
-      correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
-      print("accuracy", correctly_classified)
-      #fig = plt.figure()
-      #plt.plot(history.history['loss'], label='training loss')
-      #plt.plot(history.history['val_loss'], label='validation loss')
-      #plt.xlabel('epochs')
-      #plt.ylabel('loss')
-      #plt.legend()
-      #fig.savefig('test_results/{}/{}/fig'.format(file_loc, start))
+for i in inititializer:
+  net = Sequential()
+  net.add(RBFLayer(num_lab,initializer=i,betas=.01,input_shape=(data.n_vars,)))
+  net.add(Dense(num_lab, activation='softmax'))
+  net.compile(loss="categorical_crossentropy", optimizer="Adam")
+  history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=b)
+  outputs = net.predict(X_test)
+  labels_predicted= np.argmax(outputs, axis=1)
+  y_test_decoded = np.argmax(y_test, axis=1) 
+  correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
+  print("accuracy", correctly_classified)
+  net.summary()
+  from contextlib import redirect_stdout
+  with open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
+    with redirect_stdout(f):
       net.summary()
-      from contextlib import redirect_stdout
-      with open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
-          with redirect_stdout(f):
-              net.summary()
-      f = open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'a')
-      f.write("percentage accuracy on test set is {}\n".format(correctly_classified))
-      f.write("number of epochs is {}".format(e))
-      print("percentage accuracy; ", correctly_classified)
-      accuracy_list.append(correctly_classified)
-      betas_list.append(be)
-      inititializer_list.append(i)
-      optimizer_list.append(o)
+  f = open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'a')
+  f.write("percentage accuracy on test set is {}\n".format(correctly_classified))
+  f.write("number of epochs is {}".format(e))
+  print("percentage accuracy; ", correctly_classified)
+  accuracy_list.append(correctly_classified)
+  inititializer_list.append(i)
+  optimizer_list.append(o)
   
 
-df = pd.DataFrame(list(zip(accuracy_list, betas_list,inititializer_list,optimizer_list)),
-                          columns =['accuracy', 'betas', 'intiailizer','optimizer'])
+#df = pd.DataFrame(list(zip(accuracy_list, betas_list,inititializer_list,optimizer_list)),
+#                          columns =['accuracy', 'betas', 'intiailizer','optimizer'])
+df = pd.DataFrame(list(zip(accuracy_list,inititializer_list)),
+                          columns =['accuracy', 'intiailizer')
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
 df.to_csv("test_results/{}/{}.csv".format(file_loc, start))
