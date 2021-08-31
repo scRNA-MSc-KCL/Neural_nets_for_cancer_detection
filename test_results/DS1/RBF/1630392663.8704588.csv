@@ -1,0 +1,3 @@
+,accuracy,intiailizer
+0,92.21967963386729,<kmeans_initializer.InitCentersKMeans object at 0x7f752ddbaaf0>
+1,99.77116704805492,<rbflayer.InitCentersRandom object at 0x7f7496411c70>
