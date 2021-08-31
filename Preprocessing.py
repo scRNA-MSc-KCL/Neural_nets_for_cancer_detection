@@ -22,7 +22,7 @@ def label_adaption(labels):
   label_encoder = LabelEncoder()
   labels = label_encoder.fit_transform(labels)
   labels = pd.Series(labels)
-  labels.to_csv("labels_unencoded_4.csv")
+  labels.to_csv("labels_unencoded_2.csv")
   num_lab = len(pd.unique(labels))
   print("number of labels", num_lab)
   labels = labels.to_numpy()
