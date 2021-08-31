@@ -89,7 +89,7 @@ for train_index, test_index in kf.split(X_split):
   if args.path == 2:
     p = 100
     fe = 'kpca'
-  it = ImageTransformer(feature_extractor='pca', 
+  it = ImageTransformer(feature_extractor=fe, 
                       pixels=p, random_state=1701, 
                       n_jobs=-1)
   fig = plt.figure(figsize=(5, 5))
