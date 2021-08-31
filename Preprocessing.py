@@ -46,6 +46,7 @@ if args.path == 2:
   ##data = sc.read_csv("human_cell_atlas/krasnow_hlca_facs_counts.csv")  #58683 x 9409
   labels = pd.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
   labels = labels["free_annotation"]
+  labels.to_csv("labels_2_unencoded")
   results = 'results_2.h5ad'
 if args.path == 4:
   data_pos = pd.read_csv("Original_data/GSM3783354_4T1_CherryPositive_RawCounts.csv")
@@ -65,7 +66,7 @@ if args.path == 4:
   label_pos = ["Cherry Positive"]*l_pos
   label_neg = ["Cherry Negative"]*l_neg
   labels = label_pos + label_neg
-  
+  labels.to_csv("labels_4_unencoded")
   results = 'results_4.h5ad'
 
 labels = label_adaption(labels)
