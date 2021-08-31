@@ -22,6 +22,7 @@ def label_adaption(labels):
   label_encoder = LabelEncoder()
   labels = label_encoder.fit_transform(labels)
   labels = pd.Series(labels)
+  labels.to_csv("labels_unencoded_1.csv")
   num_lab = len(pd.unique(labels))
   print("number of labels", num_lab)
   labels = labels.to_numpy()
@@ -64,6 +65,7 @@ if args.path == 4:
   label_pos = ["Cherry Positive"]*l_pos
   label_neg = ["Cherry Negative"]*l_neg
   labels = label_pos + label_neg
+  
   results = 'results_4.h5ad'
 
 labels = label_adaption(labels)
