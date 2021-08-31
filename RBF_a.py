@@ -97,7 +97,7 @@ for i in inititializer:
   print("percentage accuracy; ", correctly_classified)
   accuracy_list.append(correctly_classified)
   inititializer_list.append(i)
-  optimizer_list.append(o)
+  #optimizer_list.append(o)
   
 
 #df = pd.DataFrame(list(zip(accuracy_list, betas_list,inititializer_list,optimizer_list)),
