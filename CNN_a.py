@@ -39,7 +39,7 @@ if args.path == 1:
   data = sc.read("results_1.h5ad")
   file_loc = "test_results/DS1/CNN"
   b = 50
-  number_of_models = 1
+  number_of_models = 100
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
@@ -149,7 +149,7 @@ for i in range(number_of_models):
   net.compile(loss='categorical_crossentropy', optimizer='adam')
   history = net.fit(X_train_img, y_train,
   validation_data=(X_val_img, y_val),
-   epochs=1,
+   epochs=50,
    batch_size=b)
 
 #get CNN plot
