@@ -31,7 +31,7 @@ if args.path == 1:
   data = sc.read("results_1.h5ad")
   file_loc = "DS1/RBF"
   b = 50
-  e = 200
+  e = 1
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
@@ -103,7 +103,7 @@ for o in optimizer:
    
 #df = pd.DataFrame(list(zip(accuracy_list, betas_list,inititializer_list,optimizer_list)),
 #                          columns =['accuracy', 'betas', 'intiailizer','optimizer'])
-#df = pd.DataFrame(list(zip(accuracy_list, optimizer_list)),
+df = pd.DataFrame(list(zip(accuracy_list, optimizer_list)),
                           columns =['accuracy', 'optimizer'])
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
