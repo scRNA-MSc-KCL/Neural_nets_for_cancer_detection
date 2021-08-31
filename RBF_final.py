@@ -37,19 +37,23 @@ if args.path == 1:
   data = sc.read("results_1.h5ad")
   file_loc = "DS1/RBF/Final"
   b = 50
-  e = 200
+  #e = 200
+  e = 1
+  be = 0.001
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "DS2/RBF/Final"
   b = 500
   e = 100
+  be = 0.001
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
   file_loc = "DS4/RBF/Final"
   b = 50
   e = 600
+  be = 0.0001
   
 path = os.getcwd()
 path = os.path.join(path, "test_results/{}/{}".format(file_loc,start))
@@ -76,13 +80,13 @@ for train_index, test_index in kf.split(X_split):
   y_train = to_categorical(y_train, num_lab)
   y_val = to_categorical(y_val, num_lab)
   net = Sequential()
-  net.add(RBFLayer(num_lab,initializer=InitCentersKMeans(X_train),betas=b,input_shape=(data.n_vars,)))
+  net.add(RBFLayer(num_lab,initializer=InitCentersKMeans(X_train),betas=bE,input_shape=(data.n_vars,)))
   net.add(Dense(num_lab, activation='softmax'))
-  net.compile(loss="categorical_crossentropy", optimizer="adam")
+  net.compile(loss="categorical_crossentropy", optimizer="Adamax")
   history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=b)
   outputs = net.predict(X_test)
   labels_predicted= np.argmax(outputs, axis=1)
-  y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
+  y_test_decoded = np.argmax(y_test, axis=1) 
   correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
   print("model number", counter)
   print("accuracy", correctly_classified)
