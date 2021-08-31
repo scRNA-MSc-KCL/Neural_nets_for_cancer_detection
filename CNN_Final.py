@@ -176,6 +176,7 @@ for train_index, test_index in kf.split(X_split):
   print(recall_score(y_test_decoded, labels_predicted, average=None))
   savetxt("{}/{}/{}_ypred.csv".format(file_loc, start, counter), labels_predicted, delimiter=',')
   savetxt("{}/{}/{}_ytrue.csv".format(file_loc, start, counter), y_test_decoded, delimiter=',')
+  counter += 1
   f.close()
 
 end = time.time()
