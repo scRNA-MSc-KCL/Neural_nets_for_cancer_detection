@@ -76,7 +76,7 @@ y_val = to_categorical(y_val, num_lab)
 
 accuracy_list = []
 
-for i in number_of_models:
+for i in range(number_of_models):
   net = Sequential()
   net.add(RBFLayer(num_lab,initializer=InitCentersKMeans(X_train),betas=be,input_shape=(data.n_vars,)))
   net.add(Dense(num_lab, activation='softmax'))
