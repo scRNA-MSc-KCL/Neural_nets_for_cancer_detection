@@ -95,7 +95,7 @@ for i in number_of_models:
   accuracy_list.append(correctly_classified)
   with open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
     with redirect_stdout(f):
-    net.summary()
+      net.summary()
 
   
 df = pd.DataFrame(list(zip(accuracy_list)),
