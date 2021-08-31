@@ -39,7 +39,7 @@ if args.path == 1:
   data = sc.read("results_1.h5ad")
   file_loc = "test_results/DS1/CNN"
   b = 50
-  number_of_models = 100
+  number_of_models = 1
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
