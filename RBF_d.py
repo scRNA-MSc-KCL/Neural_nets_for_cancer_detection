@@ -91,7 +91,7 @@ for i in number_of_models:
   with open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
     with redirect_stdout(f):
       net.summary()
-   f = open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'a')
+   f = open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'a'))
    f.write("percentage accuracy on test set is {}\n".format(correctly_classified))
    f.write("number of epochs is {}".format(e))
    print("percentage accuracy; ", correctly_classified)
