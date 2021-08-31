@@ -149,7 +149,7 @@ for i in range(number_of_models):
   net.compile(loss='categorical_crossentropy', optimizer='adam')
   history = net.fit(X_train_img, y_train,
   validation_data=(X_val_img, y_val),
-   epochs=50,
+   epochs=1,
    batch_size=b)
 
 #get CNN plot
@@ -167,7 +167,7 @@ for i in range(number_of_models):
   accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
   accuracy_list.append(accuracy)
   f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
-  f.write("percentage missclassified on test set is {}\n".format(misclassified))
+  f.write("percentage correctly classified on test set is {}\n".format(accuracy))
   print("accuracy; ", accuracy)
   end = time.time()
   run_time = end - start
