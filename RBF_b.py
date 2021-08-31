@@ -103,7 +103,7 @@ for be in betas:
    
 #df = pd.DataFrame(list(zip(accuracy_list, betas_list,inititializer_list,optimizer_list)),
 #                          columns =['accuracy', 'betas', 'intiailizer','optimizer'])
-#df = pd.DataFrame(list(zip(accuracy_list, betas_list)),
+df = pd.DataFrame(list(zip(accuracy_list, betas_list)),
                           columns =['accuracy', 'betas'])
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
