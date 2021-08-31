@@ -80,7 +80,7 @@ for train_index, test_index in kf.split(X_split):
   y_train = to_categorical(y_train, num_lab)
   y_val = to_categorical(y_val, num_lab)
   net = Sequential()
-  net.add(RBFLayer(num_lab,initializer=InitCentersKMeans(X_train),betas=bE,input_shape=(data.n_vars,)))
+  net.add(RBFLayer(num_lab,initializer=InitCentersKMeans(X_train),betas=be,input_shape=(data.n_vars,)))
   net.add(Dense(num_lab, activation='softmax'))
   net.compile(loss="categorical_crossentropy", optimizer="Adamax")
   history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=b)
