@@ -30,6 +30,7 @@ import os
 #Load data
 start = time.time()
 
+
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 args = parser.parse_args()
@@ -38,11 +39,13 @@ if args.path == 1:
   data = sc.read("results_1.h5ad")
   file_loc = "test_results/DS1/CNN"
   b = 50
+  number_of_models = 100
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "test_results/DS2/CNN"
   b = 2000
+  number_of_models = 10
 if args.path == 3:
   labels =pd.read_csv("labels_3.csv", names = ["X"])
   data = sc.read("results_3.h5ad")
@@ -52,6 +55,7 @@ if args.path == 4:
   data = sc.read("results_4.h5ad")
   file_loc = "test_results/DS4/CNN"
   b = 50
+  number_of_models = 100
 num_lab = len(labels["X"].unique())
 counter = 0
 
@@ -78,11 +82,14 @@ y_test = to_categorical(y_test, num_lab)
 y_val= to_categorical(y_val, num_lab)
 
 
-#split data using pca
-#thoughts, tsne versus pca for image extraction
-#initially set up so pixels = 50
-it = ImageTransformer(feature_extractor='pca', 
-                      pixels=50, random_state=1701, 
+if args.path == 1 or args.path == 4:
+    p = 50
+    fe = 'pca'
+if args.path == 2:
+    p = 100
+    fe = 'kpca'
+it = ImageTransformer(feature_extractor = fe, 
+                      pixels=p, random_state=1701, 
                       n_jobs=-1)
 fig = plt.figure(figsize=(5, 5))
 _ = it.fit(X_train, plot=True)
@@ -108,29 +115,35 @@ X_train_img = it.fit_transform(X_train)
 X_test_img = it.transform(X_test)
 X_val_img = it.transform(X_val)
 
-X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
-X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
+X_train_img = X_train_img.reshape(X_train_img.shape[0], p, p, 3)
+X_test_img = X_test_img.reshape(X_test_img.shape[0], p, p, 3)
 
-number_of_models = 20
 accuracy_list = []
 run_time_list = []
 #Build CNN
 for i in range(number_of_models):
   net = Sequential()
   net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',
-  input_shape=(50,50,3)))
+  input_shape=(p,p,3)))
   net.add(BatchNormalization())
   net.add(MaxPool2D(pool_size=(2, 2)))
   net.add(Flatten())
-  net.add(Dense(256, activation='relu'))
-  net.add(Dropout(rate=0.5))
+  if args.path == 1:
+    net.add(Dense(256, activation='softplus'))
+    net.add(Dropout(rate=0.2))
+  if args.path == 2:
+    net.add(Dense(400, activation='softplus'))
+    net.add(Dropout(rate=0.2))
+  if args.path ==4:
+    net.add(Dense(200, activation='softplus'))
+    net.add(Dropout(rate=0.3))              
   net.add(Dense(num_lab, activation='softmax'))
   #net.summary()
-  #from contextlib import redirect_stdout
+  from contextlib import redirect_stdout
 
-  #with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
-  #    with redirect_stdout(f):
-   #       net.summary()
+  with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
+      with redirect_stdout(f):
+          net.summary()
 
 #train CNN
   net.compile(loss='categorical_crossentropy', optimizer='adam')
@@ -140,28 +153,28 @@ for i in range(number_of_models):
    batch_size=b)
 
 #get CNN plot
-#fig = plt.figure()
-#plt.plot(history.history['loss'], label='training loss')
-#plt.plot(history.history['val_loss'], label='validation loss')
-#plt.xlabel('epochs')
-#plt.ylabel('loss')
-#plt.legend()
-#fig.savefig('{}/{}/fig_3'.format(file_loc, start))
+  fig = plt.figure()
+  plt.plot(history.history['loss'], label='training loss')
+  plt.plot(history.history['val_loss'], label='validation loss')
+  plt.xlabel('epochs')
+  plt.ylabel('loss')
+  plt.legend()
+  fig.savefig('{}/{}/fig_3'.format(file_loc, start))
 
   outputs = net.predict(X_test_img)
   labels_predicted= np.argmax(outputs, axis=1)
   y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
   accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
   accuracy_list.append(accuracy)
-  #f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
-  #f.write("percentage missclassified on test set is {}\n".format(misclassified))
+  f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
+  f.write("percentage missclassified on test set is {}\n".format(misclassified))
   print("accuracy; ", accuracy)
   end = time.time()
   run_time = end - start
   run_time_list.append(run_time)
-  #f.write("The time taken to complete this program was {}".format(end - start))
-  #print("The time taken to complete this program was {}".format(end - start))
-  #f.close()
+  f.write("The time taken to complete this program was {}".format(end - start))
+  print("The time taken to complete this program was {}".format(end - start))
+  f.close()
 
 df = pd.DataFrame(list(zip(accuracy_list, run_time_list)),columns =['accuracy', 'run_time'])
 df.to_csv("{}/{}.csv".format(file_loc, start))
