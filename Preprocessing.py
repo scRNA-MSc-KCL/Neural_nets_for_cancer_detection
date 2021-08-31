@@ -66,7 +66,7 @@ if args.path == 4:
   label_pos = ["Cherry Positive"]*l_pos
   label_neg = ["Cherry Negative"]*l_neg
   labels = label_pos + label_neg
-  labels.to_csv("labels_4_unencoded")
+  pd.Series(labels).to_csv("labels_4_unencoded")
   results = 'results_4.h5ad'
 
 labels = label_adaption(labels)
