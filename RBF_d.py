@@ -20,6 +20,7 @@ import time
 import os
 from rbflayer import RBFLayer, InitCentersRandom
 from kmeans_initializer import InitCentersKMeans
+from contextlib import redirect_stdout
 
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
@@ -87,18 +88,18 @@ for i in number_of_models:
   correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
   print("accuracy", correctly_classified)
   net.summary()
-  from contextlib import redirect_stdout
+  f = open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'a')
+  f.write("percentage accuracy on test set is {}\n".format(correctly_classified))
+  f.write("number of epochs is {}".format(e))
+  print("percentage accuracy; ", correctly_classified)
+  accuracy_list.append(correctly_classified)
   with open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
     with redirect_stdout(f):
-      net.summary()
-   f = open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'a')
-   f.write("percentage accuracy on test set is {}\n".format(correctly_classified))
-   f.write("number of epochs is {}".format(e))
-   print("percentage accuracy; ", correctly_classified)
-   accuracy_list.append(correctly_classified)
+    net.summary()
+
   
 df = pd.DataFrame(list(zip(accuracy_list)),
-                          columns =['accuracy')
+                          columns =['accuracy'])
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
 df.to_csv("test_results/{}/{}.csv".format(file_loc, start))
