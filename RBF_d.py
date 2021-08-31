@@ -36,7 +36,7 @@ if args.path == 1:
   e = 1
   #number_of_models = 100
   number_of_models = 1
-  betas = 0.001
+  be = 0.001
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
@@ -44,7 +44,7 @@ if args.path == 2:
   b = 500
   e = 100
   number_of_models = 10
-  betas = 0.001
+  be = 0.001
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
@@ -52,7 +52,7 @@ if args.path == 4:
   b = 50
   e = 600
   number_of_models = 100
-  betas = 0.0001
+  be = 0.0001
   
 path = os.getcwd()
 path = os.path.join(path, "test_results/{}/{}".format(file_loc,start))
