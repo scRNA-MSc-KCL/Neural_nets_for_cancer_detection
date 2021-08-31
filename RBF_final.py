@@ -37,8 +37,7 @@ if args.path == 1:
   data = sc.read("results_1.h5ad")
   file_loc = "DS1/RBF/Final"
   b = 50
-  #e = 200
-  e = 1
+  e = 200
   be = 0.001
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
