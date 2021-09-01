@@ -82,7 +82,7 @@ labels = label_adaption(labels)
 print("The original shape of the data1 is {}".format(data))
 
 #Pipeline 1
-if args.path == 1 or args.path == 4: 
+if args.path == 1 or args.path == 4 or args.path == 5 or args.path == 6: 
   #read data
   sc.pp.filter_genes(data, min_cells=1)
   #normalize data
