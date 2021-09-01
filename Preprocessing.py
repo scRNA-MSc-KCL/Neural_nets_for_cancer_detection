@@ -69,8 +69,10 @@ if args.path == 4:
   pd.Series(labels).to_csv("labels_4_unencoded")
   results = 'results_4.h5ad'
 if args.path == 5:
-  unzip_file('Original_data/10x_5cl_data.zip')
-  unzip_file('Original_data/Labels_CelSeq2_5cl.zip')
+  zip = 'Original_data/10x_5cl_data.zip'
+  zip.extractall()
+  zip = 'Original_data/Labels_CelSeq2_5cl.zip'
+  zip.extractall()
 
 """labels = label_adaption(labels)
 print("The original shape of the data1 is {}".format(data))
