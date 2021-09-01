@@ -69,7 +69,7 @@ y_val = to_categorical(y_val, num_lab)
 
 
 accuracy_list = []
-for i in range(1):
+for i in range(100):
   net = Sequential()
   net.add(Dense(750, activation = "relu", input_shape = (data.n_vars,)))
   net.add(Dense(750, activation='relu'))
