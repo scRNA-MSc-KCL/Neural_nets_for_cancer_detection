@@ -11,10 +11,10 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.neighbors import KNeighborsClassifier
 
 labels_10x =pd.read_csv("labels_5.csv", names = ["X"])
-labels_10x = labels_10x['X'].to_numpy()
+labels_10x = labels_10x['X']
 data_10x = sc.read("results_5.h5ad")
 labels_celseq =pd.read_csv("labels_6.csv", names = ["X"])
-labels_celseq = labels_celseq['X'].to_numpy()
+labels_celseq = labels_celseq['X']
 data_celseq = sc.read("results_6.h5ad")
 
 #K Nearest Neighbours
