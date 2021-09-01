@@ -136,7 +136,7 @@ for train_index, test_index in kf.split(X_split):
     net.add(Dropout(rate=0.2))
   if args.path ==4:
     net.add(Dense(200, activation='softplus'))
-    net.add(Dropout(rate=0.3))              
+    net.add(Dropout(rate=0.2))              
   net.add(Dense(num_lab, activation='softmax'))
   net.summary()
   from contextlib import redirect_stdout
