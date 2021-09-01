@@ -69,13 +69,16 @@ if args.path == 4:
   pd.Series(labels).to_csv("labels_4_unencoded")
   results = 'results_4.h5ad'
 if args.path == 5:
-  with zipfile.ZipFile('Original_data/10x_5cl_data.zip',"r") as zip_ref:
-    zip_ref.extractall()
-  with zipfile.ZipFile('Original_data/Labels_CelSeq2_5cl.zip',"r") as zip_ref:
-    zip_ref.extractall()
+  labels =pd.read_csv("Original_data/Labels_10x_5cl.csv")
+  data = sc.read_csv("Original_data/10x_5cl_data.csv")
+  results = 'results_5.h5ad'
+if args.path == 6:
+  labels =pd.read_csv("Original_data/Labels_CelSeq2_5cl.csv")
+  data = sc.read_csv("Original_data/CelSeq2_5cl_data.csv")
+  results = 'results_6.h5ad'
 
 
-"""labels = label_adaption(labels)
+labels = label_adaption(labels)
 print("The original shape of the data1 is {}".format(data))
 
 #Pipeline 1
@@ -106,4 +109,4 @@ if args.path == 2 or args.path == 3:
   
 data.write(results)
 print("data shape", data)
-np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")"""
+np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
