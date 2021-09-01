@@ -20,5 +20,5 @@ data_celseq = sc.read("results_6.h5ad")
 #K Nearest Neighbours
 
 neigh = KNeighborsClassifier(n_neighbors=3)
-neigh.fit(data_10x.X, labels_10x)
-print("The intradataset nearest neighbour score;", neigh.score(data_celseq.X, labels_celseq))
+neigh.fit(data_celseq.X, labels_celseq)
+print("The intradataset nearest neighbour score;", neigh.score(data_10x.X, labels_10x))
