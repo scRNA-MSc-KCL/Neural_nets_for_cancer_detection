@@ -72,7 +72,7 @@ accuracy_list = []
 for i in range(1):
   net = Sequential()
   net.add(Dense(750, activation = "relu", input_shape = (data.n_vars,)))
-  net.add(Dense(750, activation='reule'))
+  net.add(Dense(750, activation='relu'))
   net.add(Dense(num_lab, activation='softmax'))
   net.compile(loss="categorical_crossentropy", optimizer="Adam")
   history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=7,batch_size=b)
