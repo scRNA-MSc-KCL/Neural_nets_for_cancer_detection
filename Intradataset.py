@@ -39,9 +39,9 @@ print("The intradataset SVM score {}".format(Classifier.score(data_celseq.X, lab
 #Multilayer Perceptron
 X_train, X_val, y_train, y_val = train_test_split(data_10x.X, labels_10x, test_size=0.2, random_state=42)
 #make labels for neural network catagorical
-y_train = to_categorical(y_train, num_lab)
-y_test = to_categorical(labels_celseq, num_lab)
-y_val = to_categorical(y_val, num_lab)
+y_train = to_categorical(y_train, 5)
+y_test = to_categorical(labels_celseq, 5)
+y_val = to_categorical(y_val, 5)
 
 #Build Network
 net = Sequential()
