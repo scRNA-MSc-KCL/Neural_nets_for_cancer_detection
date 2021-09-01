@@ -9,6 +9,7 @@ import argparse
 import anndata
 from sklearn.neighbors import NearestNeighbors
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
 
 labels_10x =pd.read_csv("labels_5.csv", names = ["X"])
 labels_10x = labels_10x['X']
@@ -28,4 +29,4 @@ print("The intradataset nearest neighbour score;", neigh.score(data_celseq.X, la
 
 Classifier = sklearn.svm.SVC(kernel = 'rbf')
 Classifier.fit(data_10x.X, labels_10x)
-print("The intradataset nearest SVM score".format(i, Classifier.score(data_celseq.X, labels_celseq)))
+print("The intradataset nearest SVM score".format(Classifier.score(data_celseq.X, labels_celseq)))
