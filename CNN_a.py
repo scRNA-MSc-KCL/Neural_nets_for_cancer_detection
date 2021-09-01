@@ -136,7 +136,7 @@ for i in range(number_of_models):
     net.add(Dropout(rate=0.2))
   if args.path ==4:
     net.add(Dense(200, activation='softplus'))
-    net.add(Dropout(rate=0.3))              
+    net.add(Dropout(rate=0.2))              
   net.add(Dense(num_lab, activation='softmax'))
   #net.summary()
   from contextlib import redirect_stdout
