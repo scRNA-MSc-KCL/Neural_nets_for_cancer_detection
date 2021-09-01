@@ -55,7 +55,7 @@ except OSError:
 else:
   print("Successfully created the directory %s" % path)
 
-num_lab = len(labels)
+num_lab = len(labels["X"].unique())
 counter = 0
 
 #create training and test sets
@@ -68,87 +68,26 @@ y_test = to_categorical(y_test, num_lab)
 y_val = to_categorical(y_val, num_lab)
 
 
-#Neural network testing function
-def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, X_val, y_val, epoch, Nodes, activation, counter, num_lab, b, layer_number, regularizer):
-  optimizer_list = []
-  loss_function_list = []
-  epoch_list = []
-  node_1_length_list = []
-  activation_layer_1_list = []
-  accuracy_list = []
-  layer_number_list = []
-  kernal_initializer_list = []
-  regulizer_init = []
-  for o in optimizer:
-    for l in loss_function:
-      for e in epoch:
-        for n1 in Nodes:
-          for a1 in activation:
-            for lr in layer_number:
-              for r in regularizer:
-                net = Sequential()
-                if lr == 1:
-                  net.add(Dense(n1, activation = a1,kernel_regularizer=r, input_shape = (data.n_vars,)))
-                if lr == 2:
-                  net.add(Dense(n1, activation = a1,kernel_regularizer=r, input_shape = (data.n_vars,)))
-                  net.add(Dense(n1, activation = a1, kernel_regularizer=r))
-                if lr == 3:
-                  net.add(Dense(n1, activation = a1, kernel_regularizer=r, input_shape = (data.n_vars,)))
-                  net.add(Dense(n1, activation = a1, kernel_regularizer=r))
-                  net.add(Dense(n1, activation = a1, kernel_regularizer=r))
-                net.add(Dense(num_lab, activation='softmax'))
-                counter += 1
-                layer_number_list.append(lr)
-                optimizer_list.append(o)
-                loss_function_list.append(l)
-                activation_layer_1_list.append(a1)
-                epoch_list.append(e)
-                node_1_length_list.append(n1)
-                regulizer_init.append(r)
-                net.compile(loss=l, optimizer=o)
-                history = net.fit(X_train, y_train,
-                                  validation_data=(X_val, y_val),
-                                  epochs=e,batch_size=b)
-                outputs = net.predict(X_test)
-                labels_predicted= np.argmax(outputs, axis=1)
-                y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
-                correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
-                accuracy_list.append(correctly_classified)
-                print("model number", counter)
-                print("accuracy", correctly_classified)
-                fig = plt.figure()
-                plt.plot(history.history['loss'], label='training loss')
-                plt.plot(history.history['val_loss'], label='validation loss')
-                plt.xlabel('epochs')
-                plt.ylabel('loss')
-                plt.legend()
-                fig.savefig('test_results/{}/{}/fig_{}'.format(file_loc, start, counter))
-  print(accuracy_list)
-  df = pd.DataFrame(list(zip(optimizer_list, loss_function_list, epoch_list, node_1_length_list, activation_layer_1_list, accuracy_list, layer_number_list, regulizer_init)),
-                          columns =['optimizer', 'loss_function', "epochs", "node1_length", "activation_layer1", "perceptage accuracy", "layer_number", "regulizer_init"])
-  return df
+accuracy_list = []
+for i in range(1):
+  net = Sequential()
+  net.add(Dense(750, activation = "relu", input_shape = (data.n_vars,)))
+  net.add(Dense(750, activation='reule'))
+  net.add(Dense(num_lab, activation='softmax'))
+  net.compile(loss="categorical_crossentropy", optimizer="Adam")
+  history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=7,batch_size=b)
+  outputs = net.predict(X_test)
+  labels_predicted= np.argmax(outputs, axis=1)
+  y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
+  correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
+  print("model number", counter)
+  print("accuracy", correctly_classified)
+  accuracy_list.append(correctly_classified)
 
-#define variables
-#Nodes = np.arange(50, 2050, 500)
-Nodes = [500]
-#Nodes = np.arange(10, 3010, 10)
-#activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
-activation = ["relu"]
-#optimizer = ["SGD", "RMSprop", "Adam", "Adadelta", "Adagrad", "Adamax", "Nadam", "Ftrl"]
-optimizer = ["Adam"]
-#epoch = [100]
-epoch = [7]
-layer_number = [1, 2]
-#layer_number = [1,2,3]
 
-#loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
-loss_function = ["categorical_crossentropy"]
-#consider using custom learning rate
-#may or may not get used. See impact on above results
-regularizer = ["l1", "l2", "l1_l2"]
-#kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "ones", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
+df = pd.DataFrame(list(zip(accuracy_list)),
+                          columns =['accuracy'])
 
-results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, X_val, y_val, epoch, Nodes, activation, counter, num_lab, b, layer_number, regularizer)
 results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))
 
 
