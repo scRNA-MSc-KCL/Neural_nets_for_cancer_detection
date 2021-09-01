@@ -15,6 +15,7 @@ labels_10x = labels_10x['X']
 data_10x = sc.read("results_5.h5ad")
 labels_celseq =pd.read_csv("labels_6.csv", names = ["X"])
 labels_celseq = labels_celseq['X']
+print(len(labels_celseq))
 data_celseq = sc.read("results_6.h5ad")
 
 #K Nearest Neighbours
