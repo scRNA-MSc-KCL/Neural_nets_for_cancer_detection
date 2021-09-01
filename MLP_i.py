@@ -28,22 +28,22 @@ args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
-  file_loc = "DS1/MLP"
+  file_loc = "DS1/MLP/Final"
   b = 50
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
-  file_loc = "DS2/MLP"
+  file_loc = "DS2/MLP/Final"
   b = 500
 if args.path == 3:
   labels =pd.read_csv("labels_3.csv", names = ["X"])
   data = sc.read("results_3.h5ad")
-  file_loc = "DS3/MLP"
+  file_loc = "DS3/MLP/Final"
   b = 2000
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
-  file_loc = "DS4/MLP"
+  file_loc = "DS4/MLP/Final"
   b = 50
   
 path = os.getcwd()
@@ -88,7 +88,7 @@ for i in range(1):
 df = pd.DataFrame(list(zip(accuracy_list)),
                           columns =['accuracy'])
 
-results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))
+df.to_csv("test_results/{}/{}.csv".format(file_loc, start))
 
 
 
