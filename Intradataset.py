@@ -29,4 +29,4 @@ print("The intradataset nearest neighbour score;", neigh.score(data_celseq.X, la
 
 Classifier = sklearn.svm.SVC(kernel = 'rbf')
 Classifier.fit(data_10x.X, labels_10x)
-print("The intradataset nearest SVM score".format(Classifier.score(data_celseq.X, labels_celseq)))
+print("The intradataset nearest SVM score {}".format(Classifier.score(data_celseq.X, labels_celseq)))
