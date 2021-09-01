@@ -1,12 +1,14 @@
-Model: "sequential_18"
+Model: "sequential_3"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-rbf_layer_18 (RBFLayer)      (None, 57)                106476    
+rbf_layer_3 (RBFLayer)       (None, 57)                106476    
 _________________________________________________________________
-dense_18 (Dense)             (None, 57)                3306      
+dense_3 (Dense)              (None, 57)                3306      
 =================================================================
 Total params: 109,782
 Trainable params: 109,782
 Non-trainable params: 0
 _________________________________________________________________
+percentage accuracy on test set is 56.853487663722206
+number of epochs is 100
