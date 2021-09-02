@@ -15,6 +15,8 @@ from sklearn.preprocessing import LabelEncoder
 from keras.models import Sequential
 from keras.layers import Dense
 from tensorflow.keras.utils import to_categorical
+from rbflayer import RBFLayer, InitCentersRandom
+from kmeans_initializer import InitCentersKMeans
 
 labels_10x =pd.read_csv("labels_5.csv", names = ["X"])
 labels_10x = labels_10x['X']
@@ -99,3 +101,16 @@ labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
 accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
 print("The intradataset CNN score {}".format(correctly_classified))
+
+
+#Radial Basis Function Network
+net = Sequential()
+net.add(RBFLayer(5,initializer=InitCentersKMeans(X_train),betas=0.0001,input_shape=(data_10x.n_vars,)))
+net.add(Dense(5, activation='softmax'))
+net.compile(loss="categorical_crossentropy", optimizer="Adamax")
+history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=200,batch_size=50)
+outputs = net.predict(X_test)
+labels_predicted= np.argmax(outputs, axis=1)
+y_test_decoded = np.argmax(y_test, axis=1) 
+correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
+print("The intradataset RBF score {}".format(correctly_classified))
