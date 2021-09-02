@@ -71,16 +71,12 @@ sc.tl.pca(data, svd_solver='arpack')
 
 #split data
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.33, random_state=42)
+print("train test split performed {}".format(time.time() - start))
 
 #make labels for neural network catagorical
 y_train = to_categorical(y_train, num_lab)
 y_test = to_categorical(y_test, num_lab)
 e = 100
-
-#scale data
-#ln = LogScaler()
-#X_train_norm = ln.fit_transform(X_train)
-#X_test_norm = ln.transform(X_test)
 
 X_train_norm = X_train
 X_test_norm = X_test
@@ -95,7 +91,7 @@ fig = plt.figure(figsize=(5, 5))
 _ = it.fit(X_train_norm, plot=True)
 
 fig.savefig('{}/{}/fig_1'.format(file_loc, start))
-
+print("fit transform performed{}".format(time.time() - start))
 #convert to pixel image version
 fdm = it.feature_density_matrix()
 fdm[fdm == 0] = np.nan
@@ -117,7 +113,7 @@ X_test_img = it.transform(X_test_norm)
 
 X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0], 50, 50, 3)
-
+print("image transformation completed {}".format(time.time() - start))
 #Build CNN
 net = Sequential()
 net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',
@@ -138,12 +134,13 @@ with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
         net.summary()
 
 #train CNN
+print("start training {}".format(time.time() - start))
 net.compile(loss='categorical_crossentropy', optimizer='adam')
 history = net.fit(X_train_img, y_train,
 validation_data=(X_test_img, y_test),
  epochs=e,
  batch_size=b)
-
+print("end training {}".format(time.time() - start))
 #get CNN plot
 fig = plt.figure()
 plt.plot(history.history['loss'], label='training loss')
@@ -152,8 +149,8 @@ plt.xlabel('epochs')
 plt.ylabel('loss')
 plt.legend()
 fig.savefig('{}/{}/fig_3'.format(file_loc, start))
-
 outputs = net.predict(X_test_img)
+print("outputs predicted {}".format(time.time() - start))
 labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
 misclassified =  (np.sum(labels_predicted != y_test_decoded)/(len(y_test_decoded)))*100
