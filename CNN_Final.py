@@ -32,11 +32,15 @@ import seaborn
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from numpy import savetxt
+
+##Note; The transformation of convolutional data to image data was transformed using DeepInsight (ref;https://www.nature.com/articles/s41598-019-47765-6)
+
+#establish variables
 accuracy_list = []
 run_time_list = []
-#Load data
 start = time.time()
 
+#Load data
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 args = parser.parse_args()
@@ -58,6 +62,7 @@ if args.path == 4:
 num_lab = len(labels["X"].unique())
 counter = 0
 
+#Create new folder for results
 path = os.getcwd()
 path = os.path.join(path, "{}/{}".format(file_loc,start))
 try:
@@ -68,14 +73,16 @@ else:
   print("Successfully created the directory %s" % path)
 
 #perform pca on data
-print("The original shape of the data is {}".format(data.shape))
+print("The origional shape of the data is {}".format(data.shape))
 sc.tl.pca(data, svd_solver='arpack')
 
+#Split the data so test set is separated
 X_split, X_test, y_split, y_test = train_test_split(data.X, labels, test_size=0.2)
 y_split = y_split.reset_index(drop = True)
 y_test = y_test.reset_index(drop = True)
 y_test = to_categorical(y_test, num_lab)
 
+#Split the training set into seperate folds of training sets and validation sets
 kf = KFold(n_splits=5, shuffle = True)
 for train_index, test_index in kf.split(X_split):
   X_train, X_val = X_split[train_index], X_split[test_index]
@@ -94,7 +101,7 @@ for train_index, test_index in kf.split(X_split):
                       pixels=p, random_state=1701, 
                       n_jobs=-1)
   fig = plt.figure(figsize=(5, 5))
-  _ = it.fit(X_train_norm, plot=True)
+  _ = it.fit(X_train, plot=True)
 
   fig.savefig('{}/{}/fig_1'.format(file_loc, start))
 
@@ -103,6 +110,7 @@ for train_index, test_index in kf.split(X_split):
   fdm[fdm == 0] = np.nan
   fig = plt.figure(figsize=(10, 7))
 
+  #create new image
   ax = sns.heatmap(fdm, cmap="viridis", linewidths=0.01, 
                    linecolor="lightgrey", square=True)
   ax.xaxis.set_major_locator(ticker.MultipleLocator(5))
@@ -111,12 +119,13 @@ for train_index, test_index in kf.split(X_split):
       spine.set_visible(True)
   _ = plt.title("Genes per pixel")
 
+  #save image
   fig.savefig('{}/{}/fig_2'.format(file_loc, start))
 
-  X_train_img = it.transform(X_train_norm)
-  X_train_img = it.fit_transform(X_train_norm)
-  X_test_img = it.transform(X_test_norm)
-
+  #map data into image format
+  X_train_img = it.transform(X_train)
+  X_train_img = it.fit_transform(X_train)
+  X_test_img = it.transform(X_test)
   X_train_img = X_train_img.reshape(X_train_img.shape[0], p, p, 3)
   X_test_img = X_test_img.reshape(X_test_img.shape[0], p, p, 3)
 
@@ -141,6 +150,7 @@ for train_index, test_index in kf.split(X_split):
   net.summary()
   from contextlib import redirect_stdout
 
+  #Open a folder to save the CNN
   with open('{}/{}/model_summary{}.txt'.format(file_loc, start, counter), 'w') as f:
       with redirect_stdout(f):
           net.summary()
@@ -161,6 +171,7 @@ for train_index, test_index in kf.split(X_split):
   plt.legend()
   fig.savefig('{}/{}/fig_3'.format(file_loc, start))
 
+  #Test CNN
   outputs = net.predict(X_test_img)
   labels_predicted= np.argmax(outputs, axis=1)
   y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
@@ -179,6 +190,7 @@ for train_index, test_index in kf.split(X_split):
   counter += 1
   f.close()
 
+#Out put results
 end = time.time()
 run_time = end - start
 print("The time taken to complete this program was {}".format(end - start))
