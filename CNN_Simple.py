@@ -76,7 +76,7 @@ print("train test split performed {}".format(time.time() - start))
 #make labels for neural network catagorical
 y_train = to_categorical(y_train, num_lab)
 y_test = to_categorical(y_test, num_lab)
-e = 100
+e = 50
 
 X_train_norm = X_train
 X_test_norm = X_test
