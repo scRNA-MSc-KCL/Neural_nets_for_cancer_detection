@@ -129,13 +129,13 @@ for i in range(number_of_models):
   net.add(MaxPool2D(pool_size=(2, 2)))
   net.add(Flatten())
   if args.path == 1:
-    net.add(Dense(256, activation='softplus'))
+    net.add(Dense(256, activation='relu'))
     net.add(Dropout(rate=0.2))
   if args.path == 2:
-    net.add(Dense(400, activation='softplus'))
+    net.add(Dense(400, activation='relu'))
     net.add(Dropout(rate=0.2))
   if args.path ==4:
-    net.add(Dense(200, activation='softplus'))
+    net.add(Dense(200, activation='relu'))
     net.add(Dropout(rate=0.2))              
   net.add(Dense(num_lab, activation='softmax'))
   #net.summary()
