@@ -54,4 +54,48 @@ labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
 correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
 print("The intradataset MLP score {}".format(correctly_classified))
+
+
+#Convolutional Neural Network
+it = ImageTransformer(feature_extractor='pca', 
+                      pixels=50, random_state=1701, 
+                      n_jobs=-1)
+fig = plt.figure(figsize=(5, 5))
+_ = it.fit(X_train, plot=True)
+fdm = it.feature_density_matrix()
+fdm[fdm == 0] = np.nan
+fig = plt.figure(figsize=(10, 7))
+
+ax = sns.heatmap(fdm, cmap="viridis", linewidths=0.01, 
+                   linecolor="lightgrey", square=True)
+ax.xaxis.set_major_locator(ticker.MultipleLocator(5))
+ax.yaxis.set_major_locator(ticker.MultipleLocator(5))
+for _, spine in ax.spines.items():
+  spine.set_visible(True)
+_ = plt.title("Genes per pixel")
                                                               
+X_train_img = it.transform(X_train)
+X_train_img = it.fit_transform(X_train)
+X_test_img = it.transform(X_test)
+X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
+X_test_img = X_test_img.reshape(X_test_img.shape[0],50, 50, 3)
+
+net = Sequential()
+net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',
+input_shape=(50,50,3)))
+net.add(BatchNormalization())
+net.add(MaxPool2D(pool_size=(2, 2)))
+net.add(Flatten())
+net.add(Dense(256, activation='softplus'))
+net.add(Dropout(rate=0.2))           
+net.add(Dense(num_lab, activation='softmax'))
+net.summary()
+net.compile(loss='categorical_crossentropy', optimizer='adamax')
+history = net.fit(X_train_img, y_train,validation_data=(X_test_img, y_test),
+epochs=50,
+batch_size=50)
+outputs = net.predict(X_test_img)
+labels_predicted= np.argmax(outputs, axis=1)
+y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
+accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
+print("The intradataset CNN score {}".format(correctly_classified))
