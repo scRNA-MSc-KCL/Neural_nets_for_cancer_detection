@@ -1,22 +1,24 @@
-Model: "sequential_89"
+Model: "sequential_99"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-conv2d_89 (Conv2D)           (None, 46, 46, 32)        2432      
+conv2d_99 (Conv2D)           (None, 46, 46, 32)        2432      
 _________________________________________________________________
-batch_normalization_89 (Batc (None, 46, 46, 32)        128       
+batch_normalization_99 (Batc (None, 46, 46, 32)        128       
 _________________________________________________________________
-max_pooling2d_89 (MaxPooling (None, 23, 23, 32)        0         
+max_pooling2d_99 (MaxPooling (None, 23, 23, 32)        0         
 _________________________________________________________________
-flatten_89 (Flatten)         (None, 16928)             0         
+flatten_99 (Flatten)         (None, 16928)             0         
 _________________________________________________________________
-dense_178 (Dense)            (None, 200)               3385800   
+dense_198 (Dense)            (None, 200)               3385800   
 _________________________________________________________________
-dropout_89 (Dropout)         (None, 200)               0         
+dropout_99 (Dropout)         (None, 200)               0         
 _________________________________________________________________
-dense_179 (Dense)            (None, 2)                 402       
+dense_199 (Dense)            (None, 2)                 402       
 =================================================================
 Total params: 3,388,762
 Trainable params: 3,388,698
 Non-trainable params: 64
 _________________________________________________________________
+percentage correctly classified on test set is 93.0835734870317
+The time taken to complete this program was 39875.443576812744
