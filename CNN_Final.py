@@ -32,7 +32,8 @@ import seaborn
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from numpy import savetxt
-
+accuracy_list = []
+run_time_list = []
 #Load data
 start = time.time()
 
@@ -119,8 +120,7 @@ for train_index, test_index in kf.split(X_split):
   X_train_img = X_train_img.reshape(X_train_img.shape[0], p, p, 3)
   X_test_img = X_test_img.reshape(X_test_img.shape[0], p, p, 3)
 
-  accuracy_list = []
-  run_time_list = []
+  
 #Build CNN
   net = Sequential()
   net.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu',
@@ -141,7 +141,7 @@ for train_index, test_index in kf.split(X_split):
   net.summary()
   from contextlib import redirect_stdout
 
-  with open('{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
+  with open('{}/{}/model_summary{}.txt'.format(file_loc, start, counter), 'w') as f:
       with redirect_stdout(f):
           net.summary()
 
@@ -166,7 +166,7 @@ for train_index, test_index in kf.split(X_split):
   y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
   accuracy =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
   accuracy_list.append(accuracy)
-  f = open('{}/{}/model_summary.txt'.format(file_loc, start), 'a')
+  f = open('{}/{}/model_summary{}.txt'.format(file_loc, start,counter), 'a')
   f.write("percentage correct on test set is {}\n".format(accuracy))
   f.write("precision score: {}".format(precision_score(y_test_decoded, labels_predicted, average=None)))
   f.write("recall score: {} ".format(recall_score(y_test_decoded, labels_predicted, average=None)))
