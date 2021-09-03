@@ -18,32 +18,35 @@ import anndata
 import time
 import os
 
+#Load data
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 start = time.time()
 
 args = parser.parse_args()
+
+#Dataset 1
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
   file_loc = "DS1/MLP"
   b = 50
+  
+#Dataset 2
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "DS2/MLP"
   b = 500
-if args.path == 3:
-  labels =pd.read_csv("labels_3.csv", names = ["X"])
-  data = sc.read("results_3.h5ad")
-  file_loc = "DS3/MLP"
-  b = 2000
+  
+#Dataset 3
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
   file_loc = "DS4/MLP"
   b = 50
   
+#Create directory
 path = os.getcwd()
 path = os.path.join(path, "test_results/{}/{}".format(file_loc,start))
 try:
@@ -53,6 +56,7 @@ except OSError:
 else:
   print("Successfully created the directory %s" % path)
 
+#define variables
 num_lab = len(labels["X"].unique())
 counter = 0
 
@@ -125,25 +129,16 @@ def MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, X_v
   return df
 
 #define variables
-#Nodes = np.arange(50, 2050, 500)
-#Nodes = [500]
 Nodes = np.arange(100, 1000, 200)
 activation = ["tanh", "relu", "sigmoid", "softplus", "softsign", "selu", "elu"]
-#activation = ["tanh"]
 optimizer = ["RMSprop", "Adam", "Adamax", "Nadam"]
-#optimizer = ["Adam"]
-#epoch = [100]
 epoch = [7]
-#layer_number = [1]
-layer_number = [1]
+layer_number = [1,2]
+loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
+regularizer = ["l2", "l1_l2"]
+kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
 
-#loss_function = ["categorical_crossentropy", "poisson","kl_divergence"]
-loss_function = ["categorical_crossentropy"]
-regularizer = ["l1_l2"]
-#regularizer = ["l2", "l1_l2"]
-#kernal_init = ["random_normal", "random_uniform", "truncated_normal", "zeros", "glorot_normal", "glorot_uniform", "he_normal", "he_uniform", "identity", "orthogonal", "variance_scaling"]
-kernal_init = ["glorot_normal"]
-
+#print results
 results_dataframe = MLP_Assembly(optimizer, loss_function, X_train, y_train, X_test, y_test, X_val, y_val, epoch, Nodes, activation, counter, num_lab, b, layer_number, kernal_init, regularizer)
 results_dataframe.to_csv("test_results/{}/{}.csv".format(file_loc, start))
 
