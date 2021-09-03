@@ -25,6 +25,7 @@ from keras.layers import Flatten
 from keras.layers import Dropout
 from keras.layers import BatchNormalization
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 labels_10x =pd.read_csv("labels_5.csv", names = ["X"])
 labels_10x = labels_10x['X']
