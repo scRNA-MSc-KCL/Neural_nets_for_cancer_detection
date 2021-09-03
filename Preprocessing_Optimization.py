@@ -14,6 +14,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 import sklearn
 
+#Note; this program assumes that files have been unzipped and are stored in a local repository ~/Original_Data/
+#Helper functions that can be used to unzip files
 def unzip_file(filename):
   os.system('gunzip ' + filename)
   
@@ -22,6 +24,7 @@ def unzip_gz_file(txt_file_name, csv_file_name):
   out_csv = csv.writer(open(csv_file_name, 'w'))
   out_csv.writerows(in_txt)
 
+#Helper function for parsing label data
 def label_adaption(labels):
   label_encoder = LabelEncoder()
   labels = label_encoder.fit_transform(labels)
@@ -139,21 +142,24 @@ def SVM_Optimizer_Method_2(data, labels, filter_genes, normalize, filter_by_high
 
 start = time.time()
 
+#Load data
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 args = parser.parse_args()
+
+#Dataset 1
 if args.path == 1:
   labels =pd.read_csv("Original_data/Labels.csv")
   data = sc.read_csv("Original_data/Combined_10x_CelSeq2_5cl_data.csv")
   file_loc = "test_results/DS1/SVM"
+#Dataset 2
 if args.path == 2:
-  data = sc.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_UMIs.csv") #26485 x 65662
+  data = sc.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_UMIs.csv") 
   data = anndata.AnnData.transpose(data)
-  #labels = pd.read_csv("human_cell_atlas/krasnow_hlca_facs_metadata.csv") #9409 x 141
-  ##data = sc.read_csv("human_cell_atlas/krasnow_hlca_facs_counts.csv")  #58683 x 9409
-  labels = pd.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
+  labels = pd.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_metadata.csv") 
   labels = labels["free_annotation"]
   file_loc = "test_results/DS2/SVM"
+#Dataset 3
 if args.path == 4:
   data_pos = pd.read_csv("Original_data/GSM3783354_4T1_CherryPositive_RawCounts.csv")
   data_neg = pd.read_csv("Original_data/GSM3783356_4T1_CherryNegative_RawCounts.csv")
@@ -172,7 +178,7 @@ if args.path == 4:
   label_pos = ["Cherry Positive"]*l_pos
   label_neg = ["Cherry Negative"]*l_neg
   labels = label_pos + label_neg
-  file_loc = "test_results/DS4/SVM"
+  file_loc = "test_results/DS3/SVM"
 
 
 #make directory for results
@@ -187,21 +193,16 @@ else:
 
 labels = label_adaption(labels)
 
+#Define Paramater search space
 filter_genes = [1, 5]
-#filter_genes = [1]
 normalize = ["yes", "no"]
-#normalize = ["no"]
 filter_by_highly_variable_gene = [500, 1000, 2000]
-#filter_by_highly_variable_gene = [500]
 min_mean = [.125, .150]
 max_mean = [3, 6]
 mean_disp = [.5, 1]
-#min_mean = [0.125]
-#max_mean = [3]
-#mean_disp = [0.5]
 unit_var= ["yes", "no"]
 
-            
+#print results           
 results_dataframe_method_1 = SVM_Optimizer_Method_1(data, labels, filter_genes,  min_mean, max_mean, mean_disp, normalize, unit_var)  
 results_dataframe_method_1.to_csv("{}/{}/Method_1.csv".format(file_loc, start))  
 
