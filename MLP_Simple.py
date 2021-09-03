@@ -18,32 +18,32 @@ import anndata
 import time
 import os
 
+#Load data
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 start = time.time()
 
 args = parser.parse_args()
+#Dataset 1
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
   file_loc = "DS1/MLP/Simple"
   b = 50
+#Dataset 2
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "DS2/MLP/Simple"
   b = 500
-if args.path == 3:
-  labels =pd.read_csv("labels_3.csv", names = ["X"])
-  data = sc.read("results_3.h5ad")
-  file_loc = "DS3/MLP/Simple"
-  b = 2000
+#Dataset 3
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
   file_loc = "DS4/MLP/Simple"
   b = 50
-  
+
+#Create output directory
 path = os.getcwd()
 path = os.path.join(path, "test_results/{}/{}".format(file_loc,start))
 try:
@@ -53,6 +53,7 @@ except OSError:
 else:
   print("Successfully created the directory %s" % path)
 
+#define variables
 num_lab = len(labels["X"].unique())
 counter = 0
 n = 500
@@ -70,18 +71,24 @@ y_train = to_categorical(y_train, num_lab)
 y_test = to_categorical(y_test, num_lab)
 y_val = to_categorical(y_val, num_lab)
 
-
+#Degine model
 net = Sequential()
 net.add(Dense(n, activation = a, input_shape = (data.n_vars,)))
 net.add(Dense(num_lab, activation='softmax'))
 net.compile(loss=l, optimizer=o)
+
+#Train model
 history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=b)
+
+#Test model
 outputs = net.predict(X_test)
 labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1)  # maybe change so you're not doing every time
 correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
 print("model number", counter)
 print("accuracy", correctly_classified)
+
+#Create plot figure
 fig = plt.figure()
 plt.plot(history.history['loss'], label='training loss')
 plt.plot(history.history['val_loss'], label='validation loss')
@@ -89,12 +96,13 @@ plt.xlabel('epochs')
 plt.ylabel('loss')
 plt.legend()
 net.summary()
+
+#Output results
 from contextlib import redirect_stdout
 with open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'w') as fr:
   with redirect_stdout(fr):
     net.summary()
 fig.savefig('test_results/{}/{}/fig_{}'.format(file_loc, start, counter))
-#define variables
 
 end = time.time()
 print("The time taken to complete this program was {}".format(end - start))
