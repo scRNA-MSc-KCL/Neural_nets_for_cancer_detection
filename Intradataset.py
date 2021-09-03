@@ -87,7 +87,7 @@ _ = plt.title("Genes per pixel")
                                                               
 X_train_img = it.transform(X_train)
 X_train_img = it.fit_transform(X_train)
-X_test_img = it.transform(X_test)
+X_test_img = it.transform(data_celseq.X)
 X_train_img = X_train_img.reshape(X_train_img.shape[0], 50, 50, 3)
 X_test_img = X_test_img.reshape(X_test_img.shape[0],50, 50, 3)
 
@@ -118,7 +118,7 @@ net.add(RBFLayer(5,initializer=InitCentersKMeans(X_train),betas=0.0001,input_sha
 net.add(Dense(5, activation='softmax'))
 net.compile(loss="categorical_crossentropy", optimizer="Adamax")
 history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=200,batch_size=50)
-outputs = net.predict(X_test)
+outputs = net.predict(data_celseq.X)
 labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1) 
 correctly_classified =  (np.sum(labels_predicted == y_test_decoded)/(len(y_test_decoded)))*100
