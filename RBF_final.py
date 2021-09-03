@@ -27,11 +27,14 @@ from kmeans_initializer import InitCentersKMeans
 accuracy_list = []
 counter = 0
 
+#Load data
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 start = time.time()
 
 args = parser.parse_args()
+
+#Dataset 1
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
@@ -39,6 +42,7 @@ if args.path == 1:
   b = 50
   e = 200
   be = 0.001
+#Dataset 2
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
@@ -46,6 +50,7 @@ if args.path == 2:
   b = 500
   e = 100
   be = 0.001
+#Dataset 3
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
@@ -53,7 +58,8 @@ if args.path == 4:
   b = 50
   e = 600
   be = 0.0001
-  
+
+#Set up output folder
 path = os.getcwd()
 path = os.path.join(path, "test_results/{}/{}".format(file_loc,start))
 try:
@@ -78,11 +84,15 @@ for train_index, test_index in kf.split(X_split):
   y_train, y_val = y_split['X'][train_index], y_split['X'][test_index]
   y_train = to_categorical(y_train, num_lab)
   y_val = to_categorical(y_val, num_lab)
+  
+  #Train model
   net = Sequential()
   net.add(RBFLayer(num_lab,initializer=InitCentersKMeans(X_train),betas=be,input_shape=(data.n_vars,)))
   net.add(Dense(num_lab, activation='softmax'))
   net.compile(loss="categorical_crossentropy", optimizer="Adamax")
   history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=e,batch_size=b)
+  
+  #Test model
   outputs = net.predict(X_test)
   labels_predicted= np.argmax(outputs, axis=1)
   y_test_decoded = np.argmax(y_test, axis=1) 
@@ -100,7 +110,7 @@ for train_index, test_index in kf.split(X_split):
   counter +=1
   accuracy_list.append(correctly_classified)
 
-#define variables
+#output results
 print(accuracy_list)
 df = pd.DataFrame(list(zip(accuracy_list)),columns =['accuracy_list'])
 df.to_csv("test_results/{}/{}.csv".format(file_loc, start))
