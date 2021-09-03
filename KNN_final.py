@@ -29,25 +29,27 @@ counter = 0
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 start = time.time()
-
 args = parser.parse_args()
+#Dataset 1
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
   n = 3
   file_loc = "DS1/KNN"
+#Dataset 2
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "DS2/KNN"
   n = 9
+#Dataset 3
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
   file_loc = "DS4/KNN"
   n = 5
   
- 
+#Create output directory 
 path = os.getcwd()
 path = os.path.join(path, "test_results/{}/{}".format(file_loc,start))
 try:
@@ -66,8 +68,12 @@ kf = KFold(n_splits=5, shuffle = True)
 for train_index, test_index in kf.split(data.X):
   X_train, X_test = data.X[train_index], data.X[test_index]
   y_train, y_test = labels[train_index], labels[test_index]
+  
+  #Create model
   neigh = KNeighborsClassifier(n_neighbors=n)
   neigh.fit(X_train, y_train)
+  
+  #Test model
   print(neigh.score(X_test, y_test))
   print("the classification result with the current settings  is {}".format(neigh.score(X_test, y_test)))
   y_pred = neigh.predict(X_test)
