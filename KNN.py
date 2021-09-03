@@ -11,15 +11,21 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.neighbors import KNeighborsClassifier
 
 start = time.time()
+
+#Load data
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 args = parser.parse_args()
+
+#Dataset 1
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
+#Dataset 2
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
-  data = sc.read("results_2.h5ad")
+  data = sc.read("results_2.h5ad
+#Dataset 3
 if args.path == 3:
   labels =pd.read_csv("labels_3.csv", names = ["X"])
   data = sc.read("results_3.h5ad")
@@ -29,6 +35,7 @@ if args.path == 4:
 
 neighbours = [1,3,5,7,9]
 
+#Create model for each number of neighbours
 for n in neighbours:
   X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state = 42)
   neigh = KNeighborsClassifier(n_neighbors=n)
