@@ -27,24 +27,29 @@ from numpy import savetxt
 accuracy_list = []
 counter = 0
 
+#Load data
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 start = time.time()
 
 args = parser.parse_args()
+#Dataset 1
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
   file_loc = "DS1/SVM"
+#Dataset 2
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "DS2/SVM"
+#Dataset 3
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
-  file_loc = "DS4/SVM"
-  
+  file_loc = "DS3/SVM"
+
+#Create working directory
 path = os.getcwd()
 path = os.path.join(path, "test_results/{}/{}".format(file_loc,start))
 try:
@@ -54,6 +59,7 @@ except OSError:
 else:
   print("Successfully created the directory %s" % path)
 
+#define variables
 num_lab = len(labels["X"].unique())
 label_encoder = LabelEncoder()
 labels = label_encoder.fit_transform(labels)
@@ -63,8 +69,12 @@ kf = KFold(n_splits=5, shuffle = True)
 for train_index, test_index in kf.split(data.X):
   X_train, X_test = data.X[train_index], data.X[test_index]
   y_train, y_test = labels[train_index], labels[test_index]
+  
+  #Create classifier
   Classifier = sklearn.svm.SVC(kernel = "rbf")
   Classifier.fit(X_train, y_train)
+  
+  #Test and save data
   print("the classification result with the current settings  is {}".format(Classifier.score(X_test, y_test)))
   y_pred = Classifier.predict(X_test)
   with open('test_results/{}/{}/summary{}.txt'.format(file_loc, start, counter), 'w') as fr:
