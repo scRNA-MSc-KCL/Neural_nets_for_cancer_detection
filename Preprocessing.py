@@ -10,6 +10,8 @@ import argparse
 import anndata
 import os
 
+#Note; this program assumes that files have been unzipped and are stored in a local repository ~/Original_Data/
+#Helper functions that can be used to unzip files
 def unzip_file(filename):
   os.system('gunzip ' + filename)
   
@@ -18,6 +20,7 @@ def unzip_gz_file(txt_file_name, csv_file_name):
   out_csv = csv.writer(open(csv_file_name, 'w'))
   out_csv.writerows(in_txt)
 
+#Helper function for parsing label data
 def label_adaption(labels):
   label_encoder = LabelEncoder()
   labels = label_encoder.fit_transform(labels)
@@ -28,26 +31,28 @@ def label_adaption(labels):
   labels = labels.to_numpy()
   return labels  
   
-
-#3 is UMI raw
-#4 is normalized
+#Load data
 
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 args = parser.parse_args()
+
+#Dataset 1
 if args.path == 1:
   labels =pd.read_csv("Original_data/Labels.csv")
   data = sc.read_csv("Original_data/Combined_10x_CelSeq2_5cl_data.csv")
   results = 'results_1.h5ad'
+  
+#Dataset 2
 if args.path == 2:
-  data = sc.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_UMIs.csv") #26485 x 65662
+  data = sc.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_UMIs.csv") 
   data = anndata.AnnData.transpose(data)
-  #labels = pd.read_csv("human_cell_atlas/krasnow_hlca_facs_metadata.csv") #9409 x 141
-  ##data = sc.read_csv("human_cell_atlas/krasnow_hlca_facs_counts.csv")  #58683 x 9409
-  labels = pd.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_metadata.csv") #65662 x 21
+  labels = pd.read_csv("Original_data/human_cell_atlas/krasnow_hlca_10x_metadata.csv")
   labels = labels["free_annotation"]
   labels.to_csv("labels_2_unencoded")
   results = 'results_2.h5ad'
+  
+#Dataset 3
 if args.path == 4:
   data_pos = pd.read_csv("Original_data/GSM3783354_4T1_CherryPositive_RawCounts.csv")
   data_neg = pd.read_csv("Original_data/GSM3783356_4T1_CherryNegative_RawCounts.csv")
@@ -68,20 +73,24 @@ if args.path == 4:
   labels = label_pos + label_neg
   pd.Series(labels).to_csv("labels_4_unencoded")
   results = 'results_4.h5ad'
+  
+#Intradata Splits
+#Dataset 1 SmartSeq
 if args.path == 5:
   labels =pd.read_csv("Original_data/Labels_10x_5cl.csv")
   data = sc.read_csv("Original_data/10x_5cl_data.csv")
   results = 'results_5.h5ad'
+#Dataset 1 CelSeq
 if args.path == 6:
   labels =pd.read_csv("Original_data/Labels_CelSeq2_5cl.csv")
   data = sc.read_csv("Original_data/CelSeq2_5cl_data.csv")
   results = 'results_6.h5ad'
 
-
+#Adjust labels
 labels = label_adaption(labels)
 print("The original shape of the data1 is {}".format(data))
 
-#Pipeline 1
+#Pipeline 1 - filtering genes based on highly variable counts
 if args.path == 1 or args.path == 4 or args.path == 5 or args.path == 6: 
   #read data
   sc.pp.filter_genes(data, min_cells=1)
@@ -94,7 +103,7 @@ if args.path == 1 or args.path == 4 or args.path == 5 or args.path == 6:
   data = data[:, data.var.highly_variable]
   print("The final shape of the data is {}".format(data.shape))
 
-#Pipeline 2
+#Pipeline 2 - filtering genes based on summary statistics
 if args.path == 2 or args.path == 3: 
   #read data
   sc.pp.filter_genes(data, min_cells=5)
@@ -106,7 +115,8 @@ if args.path == 2 or args.path == 3:
   sc.pp.highly_variable_genes(data , min_mean=.125, max_mean=3, min_disp=0.25)
   data = data[:, data.var.highly_variable]
   print("The final shape of the data is {}".format(data.shape))  
-  
+
+#Save results
 data.write(results)
 print("data shape", data)
 np.savetxt("labels_{}.csv".format(args.path), labels, delimiter=",")
