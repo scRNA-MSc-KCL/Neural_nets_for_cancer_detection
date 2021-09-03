@@ -99,7 +99,7 @@ net.add(MaxPool2D(pool_size=(2, 2)))
 net.add(Flatten())
 net.add(Dense(256, activation='softplus'))
 net.add(Dropout(rate=0.2))           
-net.add(Dense(num_lab, activation='softmax'))
+net.add(Dense(5, activation='softmax'))
 net.summary()
 net.compile(loss='categorical_crossentropy', optimizer='adamax')
 history = net.fit(X_train_img, y_train,validation_data=(X_test_img, y_test),
