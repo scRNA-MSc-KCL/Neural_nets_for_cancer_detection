@@ -44,20 +44,23 @@ start = time.time()
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 args = parser.parse_args()
+#Dataset 1
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
   data = sc.read("results_1.h5ad")
   file_loc = "test_results/DS1/CNN/Final"
   b = 50
+#Dataset 2
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "test_results/DS2/CNN/Final"
   b = 500
+#Dataset 3
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
-  file_loc = "test_results/DS4/CNN/Final"
+  file_loc = "test_results/DS3/CNN/Final"
   b = 50
 num_lab = len(labels["X"].unique())
 counter = 0
