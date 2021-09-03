@@ -17,6 +17,13 @@ from keras.layers import Dense
 from tensorflow.keras.utils import to_categorical
 from rbflayer import RBFLayer, InitCentersRandom
 from kmeans_initializer import InitCentersKMeans
+from pyDeepInsight import ImageTransformer, LogScaler
+import matplotlib.ticker as ticker
+from keras.layers import Conv2D 
+from keras.layers import MaxPool2D
+from keras.layers import Flatten
+from keras.layers import Dropout
+from keras.layers import BatchNormalization
 
 labels_10x =pd.read_csv("labels_5.csv", names = ["X"])
 labels_10x = labels_10x['X']
