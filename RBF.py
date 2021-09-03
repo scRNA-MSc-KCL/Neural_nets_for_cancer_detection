@@ -20,10 +20,14 @@ import os
 from rbflayer import RBFLayer, InitCentersRandom
 from kmeans_initializer import InitCentersKMeans
 
+#Note; the rbf layer for keras was taken from the following source https://github.com/PetraVidnerova/rbf_keras. This repository must be downloaded to run this file
+
+#Load datasets
 parser = argparse.ArgumentParser(description='Select dataset')
 parser.add_argument('path', type = int)
 start = time.time()
 
+#Dataset 1
 args = parser.parse_args()
 if args.path == 1:
   labels =pd.read_csv("labels_1.csv", names = ["X"])
@@ -31,19 +35,24 @@ if args.path == 1:
   file_loc = "DS1/RBF"
   b = 50
   e = 100
+
+#Dataset 2
 if args.path == 2:
   labels =pd.read_csv("labels_2.csv", names = ["X"])
   data = sc.read("results_2.h5ad")
   file_loc = "DS2/RBF"
   b = 500
   e = 100
+  
+#Dataset 3
 if args.path == 4:
   labels =pd.read_csv("labels_4.csv", names = ["X"])
   data = sc.read("results_4.h5ad")
   file_loc = "DS4/RBF"
   b = 50
   e = 100
-  
+
+#Make directory
 path = os.getcwd()
 path = os.path.join(path, "test_results/{}/{}".format(file_loc,start))
 try:
@@ -53,6 +62,7 @@ except OSError:
 else:
   print("Successfully created the directory %s" % path)
 
+#Split data
 X_train, X_test, y_train, y_test = train_test_split(data.X, labels, test_size=0.2, random_state=42)
 X_test, X_val, y_test, y_val= train_test_split(X_test, y_test, test_size=0.5, random_state=42)
 
@@ -64,12 +74,16 @@ y_train = to_categorical(y_train, num_lab)
 y_test = to_categorical(y_test, num_lab)
 y_val = to_categorical(y_val, num_lab)
 
-
+#Create model
 net = Sequential()
 net.add(RBFLayer(num_lab,initializer=InitCentersKMeans(X_train),betas=.01,input_shape=(data.n_vars,)))
 net.add(Dense(num_lab, activation='softmax'))
+
+#Train model
 net.compile(loss="categorical_crossentropy", optimizer="adam")
 history = net.fit(X_train, y_train,validation_data=(X_val, y_val),epochs=100,batch_size=b)
+
+#Test model
 outputs = net.predict(X_test)
 labels_predicted= np.argmax(outputs, axis=1)
 y_test_decoded = np.argmax(y_test, axis=1) 
@@ -83,7 +97,7 @@ plt.ylabel('loss')
 plt.legend()
 fig.savefig('test_results/{}/{}/fig'.format(file_loc, start))
 
-
+#save output
 net.summary()
 from contextlib import redirect_stdout
 with open('test_results/{}/{}/model_summary.txt'.format(file_loc, start), 'w') as f:
