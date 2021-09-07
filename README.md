@@ -1,3 +1,5 @@
+The files contained in this repository are for the creation and optimization of neural networks to classify scRNA single cell sequencing data
+
 Prior to running of the models in contained in this folder the appropriate datasets must be downloaded from their source files. 
 
 These can found in the following locations
